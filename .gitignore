@@ -1,0 +1,11 @@
+/.bundle
+/log
+/tmp
+/.assets_cache
+
+*/.DS_Store
+.DS_Store
+.DS_Store?
+Icon?
+ehthumbs.db
+Thumbs.db
