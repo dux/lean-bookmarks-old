@@ -1,5 +1,4 @@
-class MasterHelper
-
+module RailsHelper
   def path_to_image(src)
     return src if src[0, 4] == 'http'
     src = "/images/#{src}" unless srcsrc[0, 1] == '/'
@@ -22,5 +21,4 @@ class MasterHelper
     opts[:href] = where
     opts.tag :a, name
   end
-
 end

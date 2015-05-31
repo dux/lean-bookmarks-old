@@ -1,4 +1,4 @@
-class UserApi < MasterApi
+class UserApi < LuxApi
 
   def test
     'Ono radi super'

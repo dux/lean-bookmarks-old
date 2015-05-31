@@ -1,0 +1,11 @@
+- @users = User.all
+
+%table.table
+  %tr
+    %th ID
+    %th Name
+  - for user in @users
+    %tr
+      %td= user.id
+      %td= user.name
+      %td= user.email

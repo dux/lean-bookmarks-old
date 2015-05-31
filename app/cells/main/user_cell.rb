@@ -1,7 +1,7 @@
 module Main
-  class UserApp < MasterApp
+  class UserCell < LuxCell
 
-    def self.router(*args)
+    def self.resolve(*args)
       what = args.first
       return get :random if what == 'random'
       return render :index unless what
@@ -16,7 +16,7 @@ module Main
       sinatra.headers({ 'X-Test'=>"123456789" })
     
       id = (1..10).to_a.sample
-      self.class.render(:show, id)
+      render(:show, id)
     end
 
     def index

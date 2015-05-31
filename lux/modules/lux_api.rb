@@ -1,4 +1,4 @@
-class MasterApi
+class LuxApi
 
   def self.render_root
     data = []

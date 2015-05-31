@@ -15,19 +15,24 @@ class Template
 
     # only engine for now
     # @engine = Haml::Engine.new(data)
-    if Lux.in_production
-      @@template_cache[@template] ||= Haml::Engine.new(data)
-      @engine = @@template_cache[@template]
-    else
-      @engine = Haml::Engine.new(data)
-    end
+    @@template_cache[@template] ||= Haml::Engine.new(data)
+    @engine = @@template_cache[@template]
   end  
 
-  def render(opts={})
+  def self.part(path, opts={})
+    Template.new(path).part(opts)
+  end
+
+  def self.render(path, opts={})
+    Template.new(path).render(opts)
+  end
+
+  def part(opts={})
     base_class = @template.split('/')[3]
 
-    helper = MasterHelper.new
-    eval %[helper.extend #{base_class.capitalize}Helper]
+    helper = LuxHelper.new
+    eval %[helper.extend DefaultHelper] rescue false
+    eval %[helper.extend #{base_class.capitalize}Helper] rescue false
 
     Lux.try "Template [#{@template}] render error" do
       @engine.render(helper, opts) do
@@ -36,15 +41,10 @@ class Template
     end
   end
 
-  def self.with_layout(path, opts={})
-    Template.new(path).with_layout(opts)
-  end
-
-  def with_layout(opts={})
-    @part_data = render(opts)
-
+  def render(opts={})
+    @part_data = part(opts)
     layout_path = "#{@original_template.split('/')[0]}/layout"
-    Template.new(layout_path).render do
+    Template.new(layout_path).part do
       @part_data
     end
   end

@@ -1,10 +1,14 @@
-# require 'rubygems'
-# require 'bundler'
+#config.ru
+require 'rubygems'
+require 'bundler'
 
-# Bundler.require
+Bundler.require
 
-# set :run, false
-# set :environment, :production
+require 'rack/protection'
 
-require './app'
+require './lux'
+
+set :root, Pathname(__FILE__).dirname
+set :environment, :production
+set :run, false
 run Sinatra::Application

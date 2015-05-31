@@ -1,23 +1,18 @@
 def load_lib(name)
   if name.index('*')
-    files = Dir[name]
-    puts " #{files.length} files in dir #{name}".green
-    for file in Dir[name]
-      load_lib file.split('.rb')[0]
+    files = `find #{name.split('/*')[0]} | grep .rb`.split("\n").sort
+    puts "* modules in #{name} - #{files.length} files".white
+    for klass in files
+      require klass.split('.rb')[0]
     end
-    return
+  else
+    puts "* module #{name}".white
+    require name
   end
-
-  puts "Loading module'#{name}'".green
-  require name
-  also_reload "#{name}.rb" if development?
 end
 
-load_lib './lux/lux'
 load_lib './lux/modules/*'
 load_lib './lux/overload/*'
 load_lib './config/*'
-
-for klass in `find ./app | grep .rb`.split("\n").sort
-  load_lib klass.split('.rb')[0]
-end
+load_lib './app/*'
+load_lib './lux/lux_config'

@@ -24,9 +24,12 @@
                 %a{ href:'/users' } Users
               %li
                 %a{ href:'/users/random' } Random user
+              %li
+                %a{ href:'/test' } Test
             %ul.nav.navbar-nav.navbar-right
               %li
                 %a{:href => "#about"} About
           / /.nav-collapse
       .container
+        %h1= test1
         = yield

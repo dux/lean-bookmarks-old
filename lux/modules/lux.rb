@@ -1,6 +1,5 @@
 class Lux
   cattr_accessor :sinatra
-  cattr_accessor :in_production
 
   def self.try(name)
     begin
@@ -20,8 +19,17 @@ class Lux
     return %[<pre style="color:red; background:#eee; padding:10px; ">Sinatra Lux error!\n\n#{data}</pre>]
   end
 
-  def app(name)
-    eval "#{name.to_s.capitalize}App.new"
+  def self.status(id, desc)
+    what = case id
+      when :forbiden;  [403, 'Forbiden']
+      when :not_found; [404, 'Page not found']
+      when :error;     [500, 'Server error']
+      else
+        Lux.error! "Unknown Lux.status #{id}"
+    end
+
+    Lux.sinatra.status what[0]
+    Template.part('error', { :@short=>what[1], :@code=>what[0], :@descripton=>desc })
   end
 
 end
