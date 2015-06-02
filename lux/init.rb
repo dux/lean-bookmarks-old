@@ -11,8 +11,10 @@ def load_lib(name)
   end
 end
 
+load_lib './lux/lib/*'
 load_lib './lux/modules/*'
 load_lib './lux/overload/*'
-load_lib './config/*'
 load_lib './app/*'
 load_lib './lux/lux_config'
+load_lib './config/*'
+

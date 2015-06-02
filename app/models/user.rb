@@ -1,6 +1,11 @@
 class User < ActiveRecord::Base
-  cattr_accessor :request
-  cattr_accessor :current
+  def self.current
+    Thread.current[:lux][:user]    
+  end
+
+  def self.request
+    Thread.current[:lux][:request]    
+  end
 
   def avatar(size=200)
     return self[:avatar] if self[:avatar]# .or('avatar.jpeg')

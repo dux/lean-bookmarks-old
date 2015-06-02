@@ -4,9 +4,7 @@ require 'bundler'
 
 Bundler.require
 
-require 'rack/protection'
-
-require './lux'
+require './app'
 
 set :root, Pathname(__FILE__).dirname
 set :environment, :production

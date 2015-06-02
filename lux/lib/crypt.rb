@@ -37,15 +37,3 @@ class Crypt
     Base64.encode64(str)
   end
 end
-
-# CloudFlare "aware" IP get
-class ActionController::Request
-  def encrypt(data)
-    Crypt.encrypt(data, (headers["CF-Connecting-IP"] || remote_ip))      
-  end
-
-  def decrypt(text)
-    Crypt.decrypt(text, (headers["CF-Connecting-IP"] || remote_ip))
-  end
-
-end

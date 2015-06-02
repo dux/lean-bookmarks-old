@@ -1,25 +1,41 @@
 #MasterApp 
-# :get    - return any data
-# :part   - render only part
+# :get    - automatic render routing to render(:index) or render(:show)
+# :part   - render only part without layout
 # :render - render part with layout
 
 class LuxCell
-  def self.get(*args)
-    copy = args.dup
-    method_name = copy.shift
+  # /           - empty route is self.render(:index)
+  # /5          - Numeric is self.render(:show, 5) or show!(5)
+  # /random
+  #   - is new.random!() if  cell has method "random!" (useful if you dont want to render template)
+  #   - is render(:random) if  cell has method "random"
+  # /5/comments - is self.render(:comments, 5) or is comments!(5)
+  def self.get(args)
+    local_args = args.flatten.dup
+
+    if !local_args[0]
+      local_args[0] = :index
+    elsif local_args[1]
+      local_args = local_args.reverse
+    elsif local_args[0].to_i.to_s == local_args[0].to_s
+      local_args.unshift(:show)
+    end
 
     obj = new
-    
-    unless obj.respond_to?(method_name)
-      list = self.instance_methods - Object.instance_methods
-      list -= [:render, :render_part]
 
-      err = ["No instance method <b>#{method_name}</b> in class <b>#{self.name}</b>"]
+    return render(*local_args) if obj.respond_to?(local_args[0])
+
+    local_args[0] += '!'
+
+    unless obj.respond_to?(local_args[0])
+      list = self.instance_methods - Object.instance_methods - [:render, :render_part]
+
+      err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> in class <b>#{self.name}</b>"]
       err.push %[You have defined \n- #{(list).join("\n- ")}]
-      return Lux.error!(err)
+      return Lux.error(err)
     end
-    
-    obj.send(method_name, *copy)
+
+    return obj.send(*local_args)
   end
 
   def self.part(*args)
@@ -40,10 +56,6 @@ class LuxCell
     end
   end
 
-  def initialize(opts={})
-  
-  end
-
   def sinatra
     Lux.sinatra
   end
@@ -58,5 +70,38 @@ class LuxCell
 
   def render(*args)
     self.class.render(*args)
+  end
+end
+
+
+class HelperLuxCell
+
+  def self.debug
+    ret = []
+    ret.push ">>> Routes"
+    for file in `find ./app/cells | grep .rb`.split("\n").sort
+      el = file.split(/\.|\//).reverse
+      klass = "#{el[2]}/#{el[1]}".classify
+      ret.push "\n  * #{klass}"
+      for m in (klass.constantize.instance_methods - Object.instance_methods - [:render, :render_part, :sinatra])
+        ret.push "    - #{m}"
+      end
+    end
+
+    ret.push "\n\n\>>> Templates\n"
+
+    last = nil
+    for file in `find ./app/views`.split("\n").map{|el| el.sub('./app/views','')}.sort.reverse.select{|el| el.index('.') }
+      elms = file.split('/')
+      elms.shift
+      if last != elms[0]
+        ret.push "    * #{elms[0]}/"
+        last = elms[0]
+      end
+      elms.shift
+      ret.push "      - #{elms.join('/').sub('.haml','')}"
+    end
+
+    ret.join("\n")
   end
 end
