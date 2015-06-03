@@ -3,6 +3,8 @@ def load_lib(name)
     files = `find #{name.split('/*')[0]} | grep .rb`.split("\n").sort
     puts "* modules in #{name} - #{files.length} files".white
     for klass in files
+      next unless klass.index('.rb')
+      # puts "  - module #{klass}".white
       require klass.split('.rb')[0]
     end
   else
@@ -18,3 +20,5 @@ load_lib './app/*'
 load_lib './lux/lux_config'
 load_lib './config/*'
 
+Tilt.register Tilt::ERBTemplate, 'erb'
+Tilt.register Haml::Engine, 'haml'

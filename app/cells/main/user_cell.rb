@@ -9,6 +9,17 @@ module Main
     # end
 
     def show(id)
+      
+      mail = Mail.new do
+        from    'Dux <reic.dino@gamil.com>'
+        to      'rejotl@gmail.com'
+        subject 'MAil in sinatre'
+        body    'I ovo smo uspjeli'
+      end
+
+      # mail.deliver!
+
+
       @user = User.find(id)
     end
 

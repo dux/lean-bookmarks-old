@@ -1,0 +1,36 @@
+// vars
+$grid-spacing: 20px;
+
+// grid
+.container { min-width:600px; max-width:1100px; margin:0 auto; }
+.row {
+  display: flex;
+  margin: 0 -$grid-spacing 0 0;
+  > div { margin-right:$grid-spacing; }
+}
+
+@for $i from 1 through 6 {
+  .col-#{$i} { flex: $i; }
+}
+
+@each $size in 200, 250, 300, 350, 400, 450, 500 {
+  .col-#{$size} { flex:0 0 #{$size}px; }
+}
+
+
+// %h1 Simple CSS flex-box grid 
+
+// %h2 fluid
+
+// .row
+//   .col-2
+//   .col-3
+//   .col-3
+
+// %h2 fluid with fixed left col
+
+// .row
+//   .col-300
+//   .col-1
+//   .col-1
+

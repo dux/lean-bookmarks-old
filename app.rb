@@ -5,7 +5,7 @@ get '*' do
   return Template.render('main/index') unless @root_part
 
   case @root_part.singularize.to_sym
-    when :api;   return Template.part('api')
+    when :api;   return LuxApi.render_root
     when :user;  return Main::UserCell.get(@path)
     else
       Lux.status :not_found, "Unknown route for path /#{@root_part}"

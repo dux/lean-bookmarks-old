@@ -3,15 +3,18 @@ class LuxApi
   def self.render_root
     data = []
     
+    @modules = []
+
     for api_file in Dir["./app/api/*.rb"].map{ |el| el.split('/').last.split('_api.rb').first }
-      data.push %[<h2>#{api_file.humanize.pluralize} - <small>/api/#{api_file.pluralize}</small></h2>]
+      data = {}.h
+      data[:name] = api_file.humanize.pluralize
+      data[:location] = "/api/#{api_file.pluralize}"
+      data[:methods]  = "#{api_file}_api".classify.constantize.instance_methods - Object.methods
+
+      @modules.push data
     end
 
-
-    data.push '<br /></body></html>'
-    data = data.join('')
-
-    Template.new('api').render({ data:data })
+    Template.part('api', instance_variables_hash)
   end
 
   def self.exec(path)
@@ -38,7 +41,7 @@ class LuxApi
   end
 
 
-  def initialize(opts)
+  def initialize(opts={})
     @opts = opts    
   end
 

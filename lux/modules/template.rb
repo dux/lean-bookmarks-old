@@ -1,22 +1,22 @@
-require 'haml'
-
 class Template
   @@template_cache = {}
 
   def initialize(template)
-    template.sub!(/^\//,'')
+    template.sub! /^[^\w]+/, ''
     @original_template = template
-    @template = "./app/views/#{template}.haml"
-    unless File.exists?(@template)
-      @template = "./lux/views/#{template}.haml" 
-      raise "Template [#{@template}] not found" unless File.exists?(@template)
-    end
-    data = File.read(@template)
 
-    # only engine for now
-    # @engine = Haml::Engine.new(data)
-    @@template_cache[@template] ||= Haml::Engine.new(data)
-    @engine = @@template_cache[@template]
+    for dir in ['./app/views','./lux/views']
+      for ext in ['haml', 'erb']
+        next if @template
+        test = "#{dir}/#{template}.#{ext}"
+        @template = test if File.exists?(test)
+      end
+    end
+
+    raise "Template [#{template}] not found" unless @template
+
+    @@template_cache[template] ||= Tilt.new(@template)
+    @engine = @@template_cache[template]
   end  
 
   def self.part(path, opts={})
@@ -33,9 +33,13 @@ class Template
     helper = LuxHelper.new
     eval %[helper.extend DefaultHelper] rescue false
     eval %[helper.extend #{base_class.capitalize}Helper] rescue false
+    
+    for k, v in opts
+      helper.instance_variable_set(k, v)
+    end
 
     Lux.try "Template [#{@template}] render error" do
-      @engine.render(helper, opts) do
+      @engine.render(helper) do
         yield if block_given?
       end
     end
