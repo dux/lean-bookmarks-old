@@ -11,8 +11,8 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand(href="#") Lux API reference
-        .navbar-collapse.collapse.navbar-responsive-collapse
+        %a.navbar-brand{ href:'/api' } Lux API reference
+        .navbar-collapse.collapse.navbar-responsive-collapse.pull-right
           %ul.nav.navbar-nav
             %li= link_to "Home", "/"
 
@@ -22,8 +22,8 @@
       - for el in @modules
         %h2= el.name
 
-        %h3 Methods
+        - for method in el.actions
+          .well
+            %h3= method
 
-        - for method in el.methods
-          %h4= method
 

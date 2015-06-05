@@ -1,15 +1,17 @@
 class UserApi < LuxApi
 
-  def test
-    'Ono radi super'
+  action :show do
+    name 'Show single user based on email'
+    params :email, :email
+    lambda do
+      @error = {}
+      @message = 'all good for now'
+      User.where(email:params[:email]).first.attributes
+    end
   end
 
-  def show
-    User.find(params[:id].to_i).attributes
-  end
-
-  def list
-    User.select('id, email, name').all
+  inline_action :index do
+    User.select('id, email, name')
   end
 
 end

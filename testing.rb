@@ -1,12 +1,15 @@
 require 'json'
 require 'pp'
+require 'activerecord'
 
-class MasterApi
+class LuxApi
 
   @@opts = {}
   @@actions = {}
+  @@params = {}
 
-  def self.params(key, *values)
+  def self.params(key=nil, *values)
+    return @@params unless key
     @@opts[:params] ||= {}
     @@opts[:params][key] = *values
   end
@@ -37,16 +40,23 @@ class MasterApi
     @@opts = {}
   end
 
-  def self.run(proc_name, options={})
+  def self.run(what, options={})
+    klass, proc_name = what.split('#')
+    klass = klass.singularize.camelize+'Api'
+    puts klass
+
     @response = {}
     @error = {}
     @message  = nil
-    res = @@actions[proc_name] ? @@actions[proc_name][:proc].call : new.send(proc_name)
+    @@params = options
+    res = @@actions[proc_name] ? @@actions[proc_name][:proc].call : send(proc_name)
     res = res.call if res.kind_of?(Proc)
+    @@_params = options
     @response[:data] = res
     @response[:message] = @message if @message
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
+    @response[:params] = options
     @response
   end
 
@@ -62,18 +72,22 @@ class MasterApi
     details
   end
 
+  def sinatra
+    Lux.sinatra
+  end
+
 end
 
 
-class UserApi < MasterApi
+class UserApi < LuxApi
 
   action :show do
     name        'Show user data'
     params      :email, :email, :req
     params      :id, :integer
     lambda do
-      return 12344
-      2222
+      @user = User.where(email:params[:email]).first
+      @user.slice(:id, :name, :avatar, :email)
     end
   end
 
@@ -106,14 +120,14 @@ class UserApi < MasterApi
 
 end
 
-pp UserApi.run(:show, { email:'rejotl@gmail.com'})
-pp UserApi.run(:index, { email:'rejotl@gmail.com'})
-pp UserApi.run(:name)
-pp UserApi.run(:inline)
+pp LuxApi.run('user#show', { email:'rejotl@gmail.com'})
+# pp UserApi.run(:index, { email:'rejotl@gmail.com'})
+# pp UserApi.run(:name)
+# pp UserApi.run(:inline)
 
-puts 'Desc'
+# puts 'Desc'
 
-for el in UserApi.actions
-  pp UserApi.action_details(el)
-end
+# for el in UserApi.actions
+#   pp UserApi.action_details(el)
+# end
 

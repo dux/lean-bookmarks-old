@@ -105,6 +105,7 @@ All common Rails inflectors are included
 * singularize
 * camelize
 * tableize
+* to_sentence
 
 ## Why?
 
