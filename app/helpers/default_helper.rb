@@ -1,7 +1,7 @@
 module DefaultHelper
   include RailsHelper
+  include MasterHelper
+  include FormHelper
+  include TableHelper
 
-  def test1 
-    'ok'
-  end
 end

@@ -28,8 +28,13 @@
                 %a{ href:'/test' } Test
             %ul.nav.navbar-nav.navbar-right
               %li
+                - if User.current
+                  %a Log off
+                - else
+                  %a{ :href=>'/login' } Login or signup
+              %li
                 %a{:href => "#about"} About
           / /.nav-collapse
       .container
-        %h1= test1
+
         = yield

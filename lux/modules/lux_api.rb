@@ -63,7 +63,7 @@ class LuxApi
   # use as LuxApi.run 'users', 'show', { email:'rejotl@gmail.com' }
   def self.run(klass, action, options=nil)
     @@params = options || Lux.sinatra.params
-    @@params = @@params.reject{ |el| r el; [:captures, :splat].index(el.to_sym) }
+    @@params = @@params.reject{ |el| [:captures, :splat].index(el.to_sym) }
     @@params = @@params.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
 
     klass = (klass.singularize.camelize+'Api').constantize
@@ -108,6 +108,7 @@ class LuxApi
   
       @response[:data] = res
       @response[:message] = @message if @message
+      @response[:message] = res if !@message && res.kind_of?(String)
       @error = "Wrong type for @error" if @error && !@error.kind_of?(String)
       @error = "Wrong type for @message" if @message && !@message.kind_of?(String)
     else
@@ -122,28 +123,3 @@ class LuxApi
 
 end
 
-class LuxApiRender
-
-  def self.render_root
-    data = []
-    
-    @modules = []
-
-    for api_file in Dir["./app/api/*.rb"].map{ |el| el.split('/').last.split('_api.rb').first }
-      data = {}.h
-      data[:name] = api_file.humanize.pluralize
-      data[:location] = "/api/#{api_file.pluralize}"
-      data[:actions]  = "#{api_file}_api".classify.constantize.actions
-
-      @modules.push data
-    end
-
-    Template.part('api', instance_variables_hash)
-  end
-
-  def self.get(*path)
-      return Lux.error 'API error: action not defined' unless path[1]
-      return LuxApi.run path[0], path[1]
-  end
-
-end

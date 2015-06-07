@@ -33,7 +33,8 @@ class Lux
   end
 
   def self.dev?
-    Lux.sinatra.request.ip == '127.0.0.1' ? true : false
+    # Lux.sinatra.request.ip == '127.0.0.1' ? true : false
+    ENV['SINATRA_ENV'][0,1] == 'd' ? true : false
   end
 
   def self.prod?
@@ -51,6 +52,11 @@ class Lux
 
   def self.sinatra
     Thread.current[:lux][:sinatra]
+  end
+
+  @@uid = 0
+  def self.uid
+    "uid-#{++@@uid}"
   end
 
 end

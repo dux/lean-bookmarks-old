@@ -4,10 +4,14 @@ get '*' do
   return @body if @body
   return Template.render('main/index') unless @root_part
 
+  return Template.render('main/users/login') if ['login','signup'].index(@root_part)
+
   case @root_part.singularize.to_sym
+    when :mailer
+      return LuxRenderCell.mailer
     when :api
-      return LuxApiRender.render_root unless @path[0]
-      return LuxApiRender.get(*@path) if Lux.dev?
+      return LuxRenderCell.api_root unless @path[0]
+      return LuxRenderCell.get_api(*@path) if Lux.dev?
       return Lux.error 'You can only POST to API in production'
     when :user
       return Main::UserCell.get(@path)

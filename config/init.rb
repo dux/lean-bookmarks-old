@@ -1,3 +1,4 @@
+# database
 ActiveRecord::Base.establish_connection(
   adapter:    'postgresql',
   host:       'localhost',
@@ -5,9 +6,9 @@ ActiveRecord::Base.establish_connection(
   username:   'dux',
   password:   "!Netlife",
   port:       5432
-  # schema_search_path: 'cleanpay'
 )
 
+# mail
 Mail.defaults do
   delivery_method :smtp, {
     :address        => 'smtp.mandrillapp.com',

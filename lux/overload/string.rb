@@ -77,6 +77,10 @@ class String
     end
     ret
   end
+
+  def html_safe
+    self
+  end
 end
 
 class NilClass

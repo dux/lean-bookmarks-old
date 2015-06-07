@@ -1,4 +1,5 @@
 #= req js/*
+#= req ../components/toastr/toastr.coffee
 
 $ ->
   Pjax.init('#full-page')
@@ -7,4 +8,5 @@ $ ->
     $('a[href]').click -> Pjax.load(this)
 
   Pjax.on_get()
+
 

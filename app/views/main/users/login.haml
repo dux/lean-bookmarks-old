@@ -1,0 +1,21 @@
+.row
+  .col-3
+  .col-3
+    %h1 Login
+    
+    .well
+      = form '/api/users/login', :template=>:ver do
+        = input :email
+        = input :pass
+        = submit 'Login'
+
+    %h2 or signup
+
+    .well
+      = form '/api/users/signup', :template=>:ver do
+        = input :email
+        = submit 'Signup'
+
+
+  .col-3
+

@@ -1,7 +1,7 @@
 class Object
 
   def r(what=nil)
-    what.kind_of?(String) ? what : what.to_json
+    raise what.kind_of?(String) ? what : what.to_json
   end
   
   def instance_variables_hash

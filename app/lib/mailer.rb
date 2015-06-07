@@ -21,6 +21,10 @@ class Mailer
     mail(opts).deliver!
   end
 
+  def confirm_email_preview
+    @link = 'some link'
+  end
+
 
 
 end

@@ -11,7 +11,11 @@ class UserApi < LuxApi
   end
 
   inline_action :index do
-    User.select('id, email, name')
+    User.order('users.id asc').select('id, email, name')#.limit(3).offset(3)
+  end
+
+  def login
+    'ok'
   end
 
 end
