@@ -5,6 +5,7 @@ ActiveRecord::Base.establish_connection(
   database:   'cleanpay',
   username:   'dux',
   password:   "!Netlife",
+  pool:       10,
   port:       5432
 )
 
