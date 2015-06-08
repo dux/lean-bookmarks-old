@@ -10,9 +10,9 @@ class LuxCell
   #   - is new.random!() if  cell has method "random!" (useful if you dont want to render template)
   #   - is render(:random) if  cell has method "random"
   # /5/comments - is self.render(:comments, 5) or is comments!(5)
-  def self.get(args)
-    local_args = args.flatten.dup
-
+  def self.raw(args)
+    local_args = args.kind_of?(Array) ? args.flatten.dup : [args]
+ 
     if !local_args[0]
       local_args[0] = :index
     elsif local_args[1]
@@ -28,7 +28,7 @@ class LuxCell
     local_args[0] += '!'
 
     unless obj.respond_to?(local_args[0])
-      list = self.instance_methods - Object.instance_methods - [:render, :render_part]
+      list = self.instance_methods - Object.instance_methods - [:render, :render_part, :params, :request]
 
       err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> in class <b>#{self.name}</b>"]
       err.push %[You have defined \n- #{(list).join("\n- ")}]
@@ -70,6 +70,22 @@ class LuxCell
 
   def render(*args)
     self.class.render(*args)
+  end
+
+  def self.params
+    Lux.sinatra.params
+  end
+
+  def self.request
+    Lux.sinatra.request
+  end
+
+  def params
+    Lux.sinatra.params
+  end
+
+  def request
+    Lux.sinatra.request
   end
 end
 

@@ -15,7 +15,7 @@
               %span.icon-bar
               %span.icon-bar
               %span.icon-bar
-            %a.navbar-brand{:href => "#"} Brand
+            %a.navbar-brand{:href=>"/"} Brand
           .collapse.navbar-collapse
             %ul.nav.navbar-nav
               %li.active
@@ -31,7 +31,7 @@
                 - if User.current
                   %a Log off
                 - else
-                  %a{ :href=>'/login' } Login or signup
+                  %a{ :href=>'/users/login' } Login or signup
               %li
                 %a{:href => "#about"} About
           / /.nav-collapse

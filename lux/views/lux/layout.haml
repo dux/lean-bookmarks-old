@@ -4,19 +4,19 @@
     %title API referfence
     %link{ rel:'stylesheet', href:'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css' }
   %body
-    
-    .container
-      .navbar.navbar-default{ :style=>"margin-top:20px;" }
+    %div{ :style=>"background-color:#FBB03B; padding:10px 0;"}
+      .container
+        %a{ :href=>'/lux', :style=>"color:#fff; font-size:22pt; font-weight:bold;" } Lux <small> &rarr; on sinatra</small>
+    .navbar.navbar-default
+      .container
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand{ href:'/debug' } Lux debug
         %ul.nav.navbar-nav
-          %li
-            %a{ href:'/api' } API
-          %li
-            %a{ href:'/mailer' } Mailer
+          - for el in [['debug','Routes'], ['api','API'], ['mailer','Mailer']]
+            %li{ :class=>request.path.index(el[0]) ? :active : nil }
+              %a{ href:"/lux/#{el[0]}" }= el[1]
         %ul.nav.navbar-nav.pull-right
           %li= link_to "Home", "/"
 

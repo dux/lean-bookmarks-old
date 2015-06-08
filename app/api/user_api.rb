@@ -6,7 +6,9 @@ class UserApi < LuxApi
     lambda do
       @error = {}
       @message = 'all good for now'
-      User.where(email:params[:email]).first.attributes
+      return User.where(email:params[:email]).first.attributes if params[:email]
+      return User.find(params[:_id]).attributes if params[:_id]
+      'What to find on?'
     end
   end
 
@@ -14,8 +16,15 @@ class UserApi < LuxApi
     User.order('users.id asc').select('id, email, name')#.limit(3).offset(3)
   end
 
-  def login
-    'ok'
+  name 'Login via email and pass'
+  params :email, :email, :req
+  params :pass, :req
+  action :login do
+    usr = User.login(@_email, @_pass)
+
+    raise 'User not found, bad passord or email' unless usr
+    
+    usr.attributes
   end
 
 end

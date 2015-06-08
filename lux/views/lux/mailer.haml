@@ -1,1 +1,28 @@
-asdadasd
+.row
+  - if prev = params[:preview]
+    - Mailer.send("#{prev}_preview") rescue false
+    .col-md-9
+      %h2 Preview: Mailer.#{prev}
+
+      %p Instance variables
+
+      %table.table
+        - for k,v in LuxMailer.ivh
+          %tr
+            %td
+              %b= k
+            %td= v
+
+      
+      %hr
+
+      %iframe{ :src=>"/lux/mailer/#{prev}", :style=>"width:100%; height:1200px;" }
+
+  .col-md-3
+    %h2 Mails with defined previews
+
+    %p To list email for preview here you have to create method with sifix preview in mailer
+
+    %ul
+      - for mail in @mailer_methods
+        %li= link_to mail, "?preview=#{mail}"

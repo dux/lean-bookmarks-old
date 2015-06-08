@@ -48,7 +48,7 @@ class Template
   def render(opts={})
     @part_data = part(opts)
     layout_path = "#{@original_template.split('/')[0]}/layout"
-    Template.new(layout_path).part do
+    Template.new(layout_path).part(opts) do
       @part_data
     end
   end

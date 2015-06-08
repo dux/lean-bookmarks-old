@@ -10,12 +10,10 @@ before do
   @path = request.path.split('/')
   @path.shift
   @root_part = @path[0] ? @path.shift : nil
+  @first_part = @path[0]
   
   Thread.current[:lux] = {}
-  Thread.current[:lux][:request] = request
   Thread.current[:lux][:sinatra] = self
-
-  @body = LuxRenderCell.debug if Lux.dev? && @root_part == 'debug'
 end
 
 after do

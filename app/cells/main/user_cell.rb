@@ -38,6 +38,10 @@ module Main
       'nice'
     end
 
+    def login
+
+    end
+
   end
 
 end

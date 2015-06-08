@@ -54,9 +54,25 @@ class Lux
     Thread.current[:lux][:sinatra]
   end
 
+  def self.params
+    Thread.current[:lux][:sinatra].params
+  end
+
+  def self.host
+    "#{sinatra.request.env['rack.url_scheme']}://#{sinatra.request.host}:#{sinatra.request.port}".sub(':80','')
+  end
+
   @@uid = 0
   def self.uid
     "uid-#{++@@uid}"
+  end
+
+  def self.flash(key, value)
+    Lux.sinatra.session[:flash] = [key, value]
+  end
+
+  def self.redirect(location)
+    Lux.sinatra.redirect(location)
   end
 
 end

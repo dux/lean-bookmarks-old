@@ -1,8 +1,23 @@
 - for el in @modules
   %h2= el.name
 
-  - for method in el.actions
+  - for method in el.actions.map{ |el| LuxApi.action_details(el) }
+    - full_action = "#{el.location}/#{method.action}"
     .well
-      %h3= method
+      %h3{ :style=>"margin-top:0;" }= method.name
+      %h4 
+        %a{ :target=>:_new, :href=>full_action }= full_action
 
+      - if method.params
+        %form{ :action=>full_action, :target=>:_new }
+          %table.table
+            - for k,v in method.params
+              %tr
+                %td{ :style=>'width:150px;' }= k
+                %td
+                  %input{ type:'text', :style=>"width:200px;", :name=>k }
+            %tr
+              %td
+              %td
+                %button.btn.btn-default Test
 

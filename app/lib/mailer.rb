@@ -1,30 +1,16 @@
-class Mailer
+class Mailer < LuxMailer
 
-  def default_from
-    'rejotl@gmail.com'  
+  before do
+    @from = 'rejotl@gmail.com'
   end
 
-  def render
-    # renda iz ./app/views/mailer foldera
+  def confirm_email(email)
+    @to = email
+    @link = "#{Lux.host}/action/confirm_email?data=#{Crypt.encrypt(@to)}"
   end
 
-  def mail(opts)
-    Mail.new do
-      from    opts[:from] || default_from
-      to      opts[:to]
-      subject opts[:subject]
-      body    opts[:body]
-    end
+  def self.confirm_email_preview
+    render(:confirm_email, 'rejotl@gmailcom')
   end
-
-  def deliver(opts)
-    mail(opts).deliver!
-  end
-
-  def confirm_email_preview
-    @link = 'some link'
-  end
-
-
 
 end

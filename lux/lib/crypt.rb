@@ -30,7 +30,7 @@ class Crypt
   end
 
   def self.secret
-    'mentions12345654321!'
+    'b1e4f4cf45ffe47efb0c70ac64397e36'
   end
 
   def self.base64(str)

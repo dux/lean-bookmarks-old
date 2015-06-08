@@ -44,7 +44,7 @@ module AdminHelper
     #   name = "#{@bs_object.class.name.downcase}[#{name}]"
     # end
 
-    opts[:id] ||= App.uid
+    opts[:id] ||= Lux.uid
     
     if @bs_inline # only text can be in inline form
       opts[:class] ||= 'form-control'

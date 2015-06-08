@@ -43,6 +43,7 @@ module FormHelper
 
     data = ''
 
+    opts[:onsubmit] ||= "Api.send('/api/#{opts.delete('api-action')}', $(this).serializeHash()); return false;"
     @form = FormTemplate.create(@form_template, @form_object, opts)
     
     # copy some fields for new objects, experimental
@@ -150,7 +151,7 @@ class FormTemplateHor < FormTemplate
 
   def row(name, opts, label)
     opts[:class] = "#{opts[:class]} form-control" if opts[:as] != :checkbox
-    opts[:id] ||= App.uid
+    opts[:id] ||= Lux.uid
     input = opts[:input] || Input.new(@object).render(name, opts.dup)
     hint = opts[:hint]
     if opts[:as] == :checkbox
@@ -207,7 +208,7 @@ class FormTemplateTab < FormTemplate
 
   def row(name, opts, label)
     opts[:class] = "#{opts[:class]} form-control"
-    opts[:id] ||= App.uid
+    opts[:id] ||= Lux.uid
     input = opts[:input] || Input.new(@object).render(name, opts)
     %[<tr><td><label for="#{opts[:id]}">#{label}</label></td><td>#{input}</td></tr>]
   end

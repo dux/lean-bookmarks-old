@@ -1,11 +1,31 @@
 class LuxRenderCell < LuxCell
 
-  def self.mailer
-    im =  Mailer.instance_methods.select{ |el| el.to_s.index('_preview') }.map{ |el| el.to_s.sub('_preview','') } 
-    Template.render('lux/mailer', :@im=>im)
+  # usuaal usage in main router
+  #  when :lux
+  #    return LuxRenderCell.dev_mount(*@path)
+  def self.dev_row(*path)
+    return Template.render('lux/index') unless path.first
+    return dev_mount_api_root if path.first == 'api'
+    return dev_mount_mailer(path[1]) if path.first == 'mailer'
+    return dev_mount_debug if path.first == 'debug'
+
+    Lux.status :error, "<b>#{path[0]}</b> is not supported route part for /lux route"
   end
 
-  def self.api_root
+  # renders list of emails in /mailer or perticular template in /mailer/[tempplate_name]_preview
+  def self.dev_mount_mailer(template=nil)
+    if template
+      method_name = "#{template}_preview"
+      return Mailer.send(method_name) if Mailer.respond_to?(method_name)
+      return Lux.error "There is no class method >><b>#{method_name}</b><< in Mailer class.\n\nMailer.#{method_name}() failed"
+    end
+
+    im =  Mailer.methods.select{ |el| el.to_s.index('_preview') }.map{ |el| el.to_s.sub('_preview','') } 
+    Template.render('lux/mailer', :@mailer_methods=>im)
+  end
+
+  # API methods and functions
+  def self.dev_mount_api_root
     data = []
     
     @modules = []
@@ -27,14 +47,14 @@ class LuxRenderCell < LuxCell
       return LuxApi.run path[0], path[1]
   end
 
-  def self.debug
+  def self.dev_mount_debug
     ret = []
     ret.push ">>> Routes"
     for file in `find ./app/cells | grep .rb`.split("\n").sort
       el = file.split(/\.|\//).reverse
       klass = "#{el[2]}/#{el[1]}".classify
       ret.push "\n  * #{klass}"
-      for m in (klass.constantize.instance_methods - Object.instance_methods - [:render, :render_part, :sinatra])
+      for m in (klass.constantize.instance_methods - Object.instance_methods - [:render, :render_part, :sinatra, :params, :request])
         ret.push "    - #{m}"
       end
     end

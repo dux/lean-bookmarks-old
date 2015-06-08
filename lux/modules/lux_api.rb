@@ -14,10 +14,9 @@ class LuxApi
   #     @user.slice(:id, :name, :avatar, :email)
   #   end
   # end
-  def self.action(proc_name)
-    proc = yield
+  def self.action(proc_name, &block)
     @@actions[proc_name] = @@opts.dup
-    @@actions[proc_name][:proc] = proc
+    @@actions[proc_name][:proc] = block
     @@opts = {}
   end
 
@@ -30,6 +29,21 @@ class LuxApi
     @@actions[proc_name][:name] = name
     @@actions[proc_name][:proc] = block
     @@opts = {}
+  end
+
+  # public mount method
+  def self.raw(*path)
+    return 'Unsupported API call' if path[3]
+    return 'Unsupported API call' unless path[1]
+      
+    opts = Lux.params
+
+    return run(path[0], path[1], opts) unless path[2]
+    
+    opts[:id] = path[1]
+    r opts[:id]
+
+    return run(path[0], path[2], opts)
   end
 
   # helper for getting parameters
@@ -62,9 +76,8 @@ class LuxApi
   # public method for running actions on global class
   # use as LuxApi.run 'users', 'show', { email:'rejotl@gmail.com' }
   def self.run(klass, action, options=nil)
-    @@params = options || Lux.sinatra.params
-    @@params = @@params.reject{ |el| [:captures, :splat].index(el.to_sym) }
-    @@params = @@params.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+    @@params = options || Lux.params
+    @@params.delete_if{ |el| [:captures, :splat].index(el.to_sym) }
 
     klass = (klass.singularize.camelize+'Api').constantize
     klass.new.instance_run(action.to_sym)
@@ -81,11 +94,8 @@ class LuxApi
     @@actions[name] ||= {}
     details = @@actions[name].reject { |key| [:proc].index(key) }
     details[:name] ||= "#{name.to_s} action"
-    details
-  end
-
-  def sinatra
-    Lux.sinatra
+    details[:action] ||= name
+    details.h
   end
 
   # internal method for running actions
@@ -96,28 +106,55 @@ class LuxApi
 
     res = nil
 
-    if @@actions[action]
-      res = @@actions[action][:proc].call
-    elsif respond_to?(action)
-      res = send(action)
+    if @@actions[action] && @@actions[action][:params]
+      for k,v in @@actions[action][:params]
+        next if @error
+        value = params[k]
+        eval "@_#{k} = value"
+        for type in v
+          case type
+            when :req          
+              @error = "[#{k}] is required" unless value
+            when :email
+              begin
+                Validate.email value                
+              rescue
+                @error ||= "[#{k}] #{$!.message}"     
+              end
+          end
+        end
+      end
+    end
+
+    unless @error
+      begin
+        if @@actions[action]
+          res = instance_eval(&@@actions[action][:proc])
+        elsif respond_to?(action)
+          res = send(action)
+        end
+      rescue
+        @error ||= $!.message.split(' for #').first
+        @response[:backtrace] = $!.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] } if Lux.dev?
+      end
     end
 
     if res
-      res = res.call if res.kind_of?(Proc)
+      res = instance_eval(&res) if res.kind_of?(Proc)
       res = res.all.map{ |el| el.attributes } if res.class.name == 'ActiveRecord::Relation'
   
       @response[:data] = res
       @response[:message] = @message if @message
       @response[:message] = res if !@message && res.kind_of?(String)
-      @error = "Wrong type for @error" if @error && !@error.kind_of?(String)
-      @error = "Wrong type for @message" if @message && !@message.kind_of?(String)
+      @error ||= "Wrong type for @error" if @error && !@error.kind_of?(String)
+      @error ||= "Wrong type for @message" if @message && !@message.kind_of?(String)
     else
-      @error = "Action #{action} not found, available #{self.class.actions.to_sentence}"
+      @error ||= "Action #{action} not found, available #{self.class.actions.to_sentence}"
     end
 
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
-    @response[:params] = @@params if @@params.keys.length > 0
+    # @response[:params] = @@params if @@params.keys.length > 0
     @response
   end
 
