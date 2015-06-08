@@ -10,7 +10,7 @@ class Lux
   end  
 
   def self.report_error_html(o, name=nil)
-    trace = o.backtrace.reject{ |el| el.index('/.rbenv/') }.map{ |el| "- #{el}" }.join("\n")
+    trace = o.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] }.map{ |el| "- #{el}" }.join("\n")
     return %[<pre style="color:red; background:#eee; padding:10px; ">#{name || 'Undefined name'}\nError: #{o.message}\n#{trace}</pre>]
   end
 

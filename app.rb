@@ -16,6 +16,8 @@ get '*' do
       return Main::UserCell.raw(@path)
     when :action
       return Main::ActionCell.raw(@first_part)
+    when :grid
+      return Template.part('grid')
     else
       Lux.status :not_found, "Unknown route for path /#{@root_part}"
   end

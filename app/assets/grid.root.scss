@@ -1,0 +1,44 @@
+// vars
+$grid-spacing: 20px;
+$grid-padding: 10px;
+
+// helper for basic display
+
+body { font-family: Helvetica; }
+div { box-sizing: border-box; }
+.row > div { background-color:skyblue; margin-right:$grid-spacing; padding:$grid-padding; height:40px; }
+.br { margin:20px 0; }
+h2 { margin-top:50px; }
+
+// grid
+
+.row {
+  display: flex;
+  margin-right: -$grid-spacing;
+  flex-direction: row; 
+  // for mobile -> flex-direction:column; 
+}
+
+.container { max-width:1100px; margin:0 auto; }
+
+@for $i from 1 through 6 {
+  .col-#{$i} { flex: $i; }
+}
+
+@each $size in 200, 250, 300, 350, 400, 450, 500 {
+  .col-#{$size} { flex:0 0 #{$size}px; }
+}
+
+.mobile {
+  .container { max-width: none; margin:0; }
+
+  .row {
+    flex-direction: column; 
+    .mobile-hide { display:none; }
+    > div { margin-bottom:10px; flex:none; } 
+  }
+
+  .mobile-order-1 { order:1 ; }
+  .mobile-order-2 { order:2 ; }
+  .mobile-order-3 { order:3 ; }
+}

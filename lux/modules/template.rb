@@ -15,6 +15,7 @@ class Template
 
     raise "Template [#{template}] not found" unless @template
 
+
     @@template_cache[template] ||= Tilt.new(@template)
     @engine = @@template_cache[template]
   end  
@@ -27,8 +28,14 @@ class Template
     Template.new(path).render(opts)
   end
 
+  def self.last_template_path
+    @@last_template_path
+  end
+
   def part(opts={})
     base_class = @template.split('/')[3]
+
+    @@last_template_path = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
 
     helper = LuxHelper.new
     eval %[helper.extend DefaultHelper] rescue false

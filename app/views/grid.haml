@@ -1,0 +1,53 @@
+!!!
+%html
+  %head
+    %title Grid title
+    %link{ :href=>"/assets/grid.css", rel:'stylesheet' }
+  %body
+    #body{ :class=>params[:device] }
+
+      %h1 Simple CSS flex-box grid
+      %h3 (<span id="target"></span>)
+
+      %h2 fluid
+
+      .row
+        .col-1 .col-1
+        .col-1 .col-1
+        .col-1.mobile-hide .col-1 .mobile-hide
+
+      %h2 fluid with fixed left col
+
+      .row
+        .col-300 .col-300 300px
+        .col-1 .col-1 : (screen.width - 300px)/2
+        .col-1 .col-1 : (screen.width - 300px)/2
+
+      %h2 Fixed size grid with different order for mobile
+
+      .container
+        .row
+          .col-1.mobile-order-2 col-1 .mobile-order-2
+          .col-2.mobile-order-1 col-2 .mobile-order-1
+          .col-1.mobile-order-3 col-1 .mobile-order-3
+         
+      %h2 Fixed size grid with one fixed size col
+
+      .container
+        .row
+          .col-300 .col-300 300px
+          .col-1 col-1
+         
+
+      :javascript
+        window.on_resize = function () {
+          klass = 'desktop';
+          if (window.innerWidth < 800) {
+            klass = 'mobile';
+          }
+          document.getElementsByTagName('HTML')[0].setAttribute('class', klass);
+          document.getElementById('target').innerHTML = klass;
+        };
+
+        window.onresize = window.on_resize;
+        window.on_resize();

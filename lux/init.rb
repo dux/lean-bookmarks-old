@@ -13,6 +13,11 @@ def load_lib(name)
   end
 end
 
+# create modules for main cell directory
+for el in Dir.entries('./app/cells').reject{ |el| el[0,1]=='.'}
+  eval "module #{el.classify}; end"
+end
+
 load_lib './lux/lib/*'
 load_lib './lux/modules/*'
 load_lib './lux/overload/*'
@@ -21,3 +26,4 @@ load_lib './config/*'
 
 Tilt.register Tilt::ERBTemplate, 'erb'
 Tilt.register Haml::Engine, 'haml'
+

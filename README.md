@@ -13,7 +13,7 @@ Cell is just a class with instance methods that retuns data or redirect to anoth
 
 * we call methods in cells via class method like ```UserCell.render(:show, 2)``` and send method mane as symbol argument
 * there are three basic MasterCell class methods
-  * **get** - ```UserCell.get(:random)``` - returns generic data
+  * **raw** - ```UserCell.get(:random)``` - returns generic data
   * **render** - ```UserCell.render(:show, 2)``` - renders page with layout
   * **part** - ```UserCell.part(:show, 2)``` - returns single template without layout
 
@@ -25,7 +25,7 @@ If you inherit from MasterCell you will have helper methods as render
 
 		# in this example cell acts as router
 		# aceepts arguments and behaves accordingly
-        def self.router(*args)
+        def self.raw(*args)
           what = args.first
 
 	      # /users -> UserCell.render(:index)
@@ -61,13 +61,42 @@ If you inherit from MasterCell you will have helper methods as render
     end
 
 
+### Inside (HAML) templates
+
+#### render with block given
+
+renders code part as micro layout. same thing as render :layout in rails
+
+we are inside /app/views/main/users/index.haml so :show is translated to "main/users/show"
+
+    = render :show, :@user=>user do
+      ...
+    = render 'main/users/show', :@user=>user do
+      ...
+
+#### render without block
+
+renders code part inside /app/views/main/users/index.haml 
+
+    = render :show, :@user=>user
+    = render 'main/users/show', :@user=>user
+
+
+#### direct render cell
+
+renders code part inside /app/views/main/users/index.haml
+
+    = Main::UserCell.part(:show, user.id)
+    = cell(:user, :show, user.id)
+
+
 
 ## Template class
 
 Template instead of Cell renders only template without backend logic. It you need simple templates witout complex logic you can use Template class instead of Lux::Cell 
 
 * ```Template.part('main/index', { foo:'bar' })``` renders single template './app/views/main/index.haml'
-* ```Template.render('main/index', { foo:'bar' })``` renders single template with layout './app/views/main/layout.haml'
+* ```Template.render('main/index', { foo:'bar', :@baz=>123 })``` renders single template with layout './app/views/main/layout.haml'
 
 
 ## LuxHelper
