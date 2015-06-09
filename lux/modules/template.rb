@@ -15,7 +15,7 @@ class Template
 
     raise "Template [#{template}] not found" unless @template
 
-
+    @@template_cache = {} if Lux.dev?
     @@template_cache[template] ||= Tilt.new(@template)
     @engine = @@template_cache[template]
   end  
@@ -34,6 +34,8 @@ class Template
 
   def part(opts={})
     base_class = @template.split('/')[3]
+
+    # return 'adad'
 
     @@last_template_path = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
 

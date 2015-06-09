@@ -49,10 +49,9 @@ class String
   end
 
   def trim(len)
-    self.gsub!(/([^\s]{30})/,'\1 ')
     return self if self.length<len
-    self.gsub!(/<[^>]+>/,'')
-    return self[0,len]+'...'
+    data = self.dup[0,len]+'&hellip;'
+    data.html_safe
   end
 
   def in?(*what)

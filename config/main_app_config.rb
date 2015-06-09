@@ -17,8 +17,6 @@ before do
 end
 
 after do
-  Thread.current[:lux] = nil
-
   if Hash === response.body
     content_type :json
     ret = JSON.generate(response.body)
@@ -26,8 +24,5 @@ after do
     body ret
   else
     content_type('text/plain') unless response.body[0].to_s[0,1] == '<'
-  end  
+  end
 end
-
-
- 

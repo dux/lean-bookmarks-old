@@ -34,7 +34,7 @@ class Lux
 
   def self.dev?
     # Lux.sinatra.request.ip == '127.0.0.1' ? true : false
-    ENV['SINATRA_ENV'][0,1] == 'd' ? true : false
+    ENV['SINATRA_ENV'][0,4] == 'prod' ? false : true
   end
 
   def self.prod?

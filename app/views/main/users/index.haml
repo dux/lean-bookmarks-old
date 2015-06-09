@@ -11,5 +11,3 @@
     
   .well{ :style=>"width:33%; float:left;"}
     = render :show, :@user=>user
-    = Main::UserCell.part(:show, user.id)
-    = cell(:user, :show, user.id)
