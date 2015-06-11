@@ -1,18 +1,15 @@
 class BeforeAndAfter
 
-  def initialzie(klass)
-    @bef_and_aft = { before:[], after:[] }
+  def initialzie
+    @bef_and_aft = { }
   end
 
-  def before(&block)
-    @bef_and_aft[:before].push(block)
+  def add(what, &block)
+    @bef_and_aft[what] ||= []
+    @bef_and_aft[what].push(block)
   end
 
-  def after(&block)
-    @bef_and_aft[:after].push(block)
-  end
-
-  def exec(obj, what)
+  def exec(what, obj)
     for m in @bef_and_aft[what]
       obj.instance_exec(&m)
     end
@@ -24,40 +21,29 @@ end
 
 class LuxMailer
   @@ivh = {}
-  @@before_and_after = {}
+  @@before_and_after = BeforeAndAfter.new
 
   def self.ivh
     @@ivh
   end
 
   def self.before(&block)
-    n = self.name.underscore
-    @@before_and_after[n] ||= { b:[], a:[] }
-    @@before_and_after[n][:b].push(block)
+    @@before_and_after.add :before, block
   end
 
   def self.after(&block)
-    n = self.name.underscore
-    @@before_and_after[n] ||= { b:[], a:[] }
-    @@before_and_after[n][:a].push(block)
+    @@before_and_after.add :after, block
   end
 
   # Mailer.render(:confirm_email, 'rejotl@gmailcom')
   def self.render(template, *args)
     obj = new
-
-    n = self.name.underscore
-    @@before_and_after[n] ||= { b:[], a:[] }
-
-    for m in @@before_and_after[n][:b]
-      obj.instance_exec(&m)
-    end
+    
+    @@before_and_after.exec :before, obj
 
     obj.send(template, *args)
-
-    for m in @@before_and_after[n][:a]
-      obj.instance_exec(&m)
-    end
+    
+    @@before_and_after.exec :after, obj
 
     @@ivh = obj.instance_variables_hash
     Template.render("mailer/#{template}", @@ivh);
