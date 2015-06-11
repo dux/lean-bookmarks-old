@@ -1,3 +1,25 @@
+class BeforeAndAfter
+
+  def initialzie(klass)
+    @bef_and_aft = { before:[], after:[] }
+  end
+
+  def before(&block)
+    @bef_and_aft[:before].push(block)
+  end
+
+  def after(&block)
+    @bef_and_aft[:after].push(block)
+  end
+
+  def exec(obj, what)
+    for m in @bef_and_aft[what]
+      obj.instance_exec(&m)
+    end
+  end
+
+end
+
 # LuxMailer.render(:method_name, *args)
 
 class LuxMailer
