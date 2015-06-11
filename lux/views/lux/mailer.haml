@@ -1,22 +1,22 @@
 .row
   - if prev = params[:preview]
-    - Mailer.send("#{prev}_preview") rescue false
+    - @mail_object = Mailer.send("#{prev}_preview") rescue false
     .col-md-9
+      %button.btn.btn-info.btn-sm{ :style=>"float:right;", :onclick=>%[window.open("/lux/mailer/#{prev}?send=true")]  } Send preview
       %h2 Preview: Mailer.#{prev}
 
       %p Instance variables
 
       %table.table
-        - for k,v in LuxMailer.ivh
+        - for k,v in @mail_object.instance_variables_hash
           %tr
             %td
               %b= k
             %td= v
 
-      
       %hr
 
-      %iframe{ :src=>"/lux/mailer/#{prev}", :style=>"width:100%; height:1200px;" }
+      %iframe#mail{ :src=>"/lux/mailer/#{prev}", :style=>"width:100%; height:1200px;" }
 
   .col-md-3
     %h2 Mails with defined previews

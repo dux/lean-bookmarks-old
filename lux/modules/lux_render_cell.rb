@@ -14,11 +14,26 @@ class LuxRenderCell < LuxCell
 
   # renders list of emails in /mailer or perticular template in /mailer/[tempplate_name]_preview
   def self.dev_mount_mailer(template=nil)
-    if template
+    
+    if template # we are in iframe
       method_name = "#{template}_preview"
-      return Mailer.send(method_name) if Mailer.respond_to?(method_name)
+      # return Mailer.render(method_name) if Mailer.respond_to?(method_name)
+
+      if Lux.sinatra.params['send']
+        Mailer.send(method_name).deliver
+        return 'Email sent'
+      else
+        return Mailer.send(method_name).body
+      end
+
+      # return Mailer.send(method_name).body if Mailer.respond_to?(method_name)
       return Lux.error "There is no class method >><b>#{method_name}</b><< in Mailer class.\n\nMailer.#{method_name}() failed"
     end
+
+    # if Lux.params[:preview] && Lux.params[:send]
+    #   Mailer.send(Lux.params[:preview])
+    #   Lux.sinatra.redirect Url.current.delete(:send).to_s
+    # end
 
     im =  Mailer.methods.select{ |el| el.to_s.index('_preview') }.map{ |el| el.to_s.sub('_preview','') } 
     Template.render('lux/mailer', :@mailer_methods=>im)

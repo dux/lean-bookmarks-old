@@ -4,7 +4,7 @@ class Mailer < LuxMailer
   end
 
   after do
-    @subject = "[#{@to}] #{@subject}"
+    @subject = "[For: #{@to}] #{@subject}"
     @to = 'reic.dino@gmail.com'
   end
 
@@ -15,7 +15,7 @@ class Mailer < LuxMailer
   end
 
   def self.confirm_email_preview
-    render(:confirm_email, 'rejotl@gmailcom')
+    confirm_email('rejotl@gmailcom')
   end
 
 end
