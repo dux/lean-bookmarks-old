@@ -4,6 +4,10 @@ class Object
     raise what.kind_of?(String) ? what : what.to_json
   end
   
+  def l(what=nil)
+    puts (what.kind_of?(String) ? what : what.to_json).red
+  end
+  
   def instance_variables_hash
     Hash[instance_variables.map { |name| [name, instance_variable_get(name)] } ]
   end
