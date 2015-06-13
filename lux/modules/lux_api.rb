@@ -145,7 +145,7 @@ class LuxApi
   
       @response[:data] = res
       @response[:message] = @message if @message
-      @response[:message] = res if !@message && res.kind_of?(String)
+      # @response[:message] = res if !@message && res.kind_of?(String)
       @error ||= "Wrong type for @error" if @error && !@error.kind_of?(String)
       @error ||= "Wrong type for @message" if @message && !@message.kind_of?(String)
     else

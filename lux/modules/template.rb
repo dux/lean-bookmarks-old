@@ -28,16 +28,14 @@ class Template
     Template.new(path).render(opts)
   end
 
-  def self.last_template_path
-    @@last_template_path
+  def self.`
+    Thread.current[:last_template_path]
   end
 
   def part(opts={})
     base_class = @template.split('/')[3]
 
-    # return 'adad'
-
-    @@last_template_path = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
+    Thread.current[:last_template_path] = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
 
     helper = LuxHelper.new
     eval %[helper.extend DefaultHelper] rescue false

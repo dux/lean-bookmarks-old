@@ -14,6 +14,8 @@ class LuxHelper
 
   def render(name, opts={}, &block)
     name = name.to_s
+    name = "#{Template.last_template_path}/#{name}" unless name.index('/')
+
     if block_given?
       name = "#{name}/layout" unless name.index('/')
       local_data = capture(&block)

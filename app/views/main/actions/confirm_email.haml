@@ -1,0 +1,7 @@
+= render :wrapper do # render 'main/actions/wrapper' do
+  
+  = form '/api/users/set_password', :template=>:ver, :done=>'alert(1)' do
+    = input :user, :value=>params[:data], :as=>:hidden
+    = input :pass, :label=>'Password'
+    = input :pass_check, :label=>'Password check'
+    = submit 'Set password'

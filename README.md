@@ -5,6 +5,59 @@ small sinatra and rails inspired framework
 
 # Main API
 
+## Router
+
+There is no router in Lux, requests are handled Sinatra style. 
+
+Here is example that 
+
+* captures all GET requests
+* POST request to '/api' are handled by API controller
+* all other POST posts are not allowed
+
+      get '*' do
+        # @body can be defined in before filter
+        return @body if @body
+
+        # /
+        return Template.render('main/index') unless @root_part
+
+        # application routes
+        case @root_part.singularize.to_sym
+          when :test
+            Lux.flash :info, 'all ok'
+            return redirect '/'
+          when :user
+            return Main::UserCell.raw(@path)
+          when :action
+            return Main::ActionCell.raw(@first_part)
+          when :grid
+            return Template.part('grid')
+          else
+            Lux.status :not_found, "Unknown route for path /#{@root_part}"
+        end
+
+        # debug routes
+        if Lux.dev?
+          case @root_part.singularize.to_sym
+            when :lux
+              return LuxRenderCell.dev_row(*@path)
+            when :api
+              return LuxApi.raw(*@path)
+          end
+        end
+
+        Lux.status :not_found, "Page not found not route /#{@root_part}"
+      end
+
+      post '/api/*' do
+        return LuxApi.raw(*@path)
+      end
+
+      post '*' do
+        Lux.status :forbiden, 'Request not allowed'
+      end
+
 ## LuxCell
 
 Cell is just a class with instance methods that retuns data or redirect to another page. It can act as Rails controler but offers more freedom.
@@ -91,7 +144,7 @@ renders code part inside /app/views/main/users/index.haml
 
 
 
-## Template class
+### Template class
 
 Template instead of Cell renders only template without backend logic. It you need simple templates witout complex logic you can use Template class instead of Lux::Cell 
 
@@ -99,7 +152,7 @@ Template instead of Cell renders only template without backend logic. It you nee
 * ```Template.render('main/index', { foo:'bar', :@baz=>123 })``` renders single template with layout './app/views/main/layout.haml'
 
 
-## LuxHelper
+### LuxHelper
 
 Same thing as Rails helpers. By default loads nothing and you have to defined in each cell what you want included in templates
 
@@ -122,7 +175,52 @@ DefaultHelper is loaded by default for all cells. If you want :rails helpers in 
 
 after that RailsHelper will be included by default
        
-       
+ 
+## Mailer
+
+Mailers have to inherit from LuxMailer
+
+#### sugessted usage
+
+    Mailer.deliver(:confirm_email, 'rejotl@gmailcom')
+    Mailer.render(:confirm_email, 'rejotl@gmailcom')
+
+	# natively works like
+    Mailer.prepare(:confirm_email, 'rejotl@gmailcom').deliver
+    Mailer.prepare(:confirm_email, 'rejotl@gmailcom').body
+
+    # Rails mode via method missing is also suported
+    Mailer.confirm_email('rejotl@gmailcom').deliver
+    Mailer.confirm_email('rejotl@gmailcom').body
+
+
+This all will deliver mail that has template in /app/views/mailer/confim_email
+ 
+#### Sample mailer class 
+
+That will create default @from adress and redirect all mails to develper address in development mode. 
+No need for mail cachers here.
+
+    class Mailer < LuxMailer
+      before do
+        @from = 'lux@luxlib.com'
+      end
+
+      after do
+        @subject = "[For: #{@to}] #{@subject}"
+        @to = 'reic.dino@gmail.com'
+      end if Lux.dev?
+
+      def confirm_email(email)
+        @subject = 'Wellcom to Lux!'
+        @to = email
+        @link = "#{Lux.host}/action/confirm_email?data=#{Crypt.encrypt(@to)}"
+      end
+
+      def self.confirm_email_preview
+        confirm_email('rejotl@gmailcom')
+      end
+    end
 
 ## Inflectors
 

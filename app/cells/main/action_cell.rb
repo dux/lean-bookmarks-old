@@ -16,12 +16,15 @@ class Main::ActionCell < LuxCell
   end
   
   def confirm_email
-    email = Crypt.decrypt(params[:data])
+    @email = Crypt.decrypt(params[:data])
+
+    template #:confirm_email
+
     # do shit
 
-    Lux.flash :info, 'All ok'
+    # Lux.flash :info, 'All ok'
     # Lux.redirect_to('/login')
-    Lux.sinatra.redirect('/login')
+    # Lux.sinatra.redirect('/login')
   end
 
   def unsubscribe
