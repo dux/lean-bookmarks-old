@@ -11,7 +11,7 @@ class Mailer < LuxMailer
   def confirm_email(email)
     @subject = 'Wellcom to Lux!'
     @to = email
-    @link = "#{Lux.host}/action/confirm_email?data=#{Crypt.encrypt(@to)}"
+    @link = "#{Lux.host}/users/set_password?user_hash=#{Crypt.encrypt(@to)}"
   end
 
   def self.confirm_email_preview

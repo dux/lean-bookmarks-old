@@ -9,9 +9,15 @@
   auto: (res, follow_redirects) ->
     res = jQuery.parseJSON(res) if typeof(res) == 'string'
     
-    Info.show('info', res['info']) if res['info']
-    Info.show('info', res['message']) if res['message']
-    Info.show('error', res['error']) if res['error']
+    if res['info']
+      Info.show('info', res['info'])
+    else if res['error']
+      Info.show('error', res['error'])
+    else
+      if res['message']
+        Info.show('info', res['message'])
+      else
+        Info.show('info', res['data'])
 
     location.href = res['redirect_to'] if res['redirect_to'] && follow_redirects
     true

@@ -4,12 +4,12 @@ module ApplicationHelper
 
   def base_js
     ret = ['<script>']
-    ret.push "window.DEV = #{Rails.env.development? ? 'true' : 'false' };"
-    
+    ret.push "window.DEV = #{Lux.dev? ? 'true' : 'false' };"
     ret.push "window.app = {}"
 
-    for el in [:info, :alert, :success, :error].select{ |e| flash[e] }
-      ret.push "Info.#{el}(#{flash[el].to_json})"
+    if flash = (Lux.session[:flash] || Thread.current[:lux][:flash])
+      ret.push "Info.#{flash[0]}(#{flash[1].to_json})"
+      Lux.session.delete(:flash)
     end
 
     ret.push ['</script>']

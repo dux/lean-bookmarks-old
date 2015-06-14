@@ -2,9 +2,10 @@
 %html{:lang => "en"}
   %head
     %title Test
-    %link{ :rel=>:stylesheet, :href=>'/assets/main-index.css' }
+    / %link{ :rel=>:stylesheet, :href=>'/assets/main-index.css' }
     %script{ :src=>'https://code.jquery.com/jquery-2.1.1.min.js' }
-    %script{ :src=>'/assets/main-index.js' }
+    = Asset.get 'main/index.scss'
+    = Asset.get 'main/index.coffee'
   / HTML code from Bootply.com editor
   %body
     #full-page
@@ -27,14 +28,17 @@
               %li
                 %a{ href:'/test' } Test
             %ul.nav.navbar-nav.navbar-right
-              %li
-                - if User.current
-                  %a Log off
-                - else
+              - if User.current
+                %li
+                  %a{ :href=>'/users/bye' } Log off
+                %li
+                  %a{ :href=>'/users/profile' }= User.current.email
+              - else
+                %li
                   %a{ :href=>'/users/login' } Login or signup
-              %li
-                %a{:href => "#about"} About
           / /.nav-collapse
       .container
 
         = yield
+
+        = base_js

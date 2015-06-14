@@ -28,7 +28,7 @@ class Template
     Template.new(path).render(opts)
   end
 
-  def self.`
+  def self.last_template_path
     Thread.current[:last_template_path]
   end
 

@@ -14,6 +14,10 @@ before do
   
   Thread.current[:lux] = {}
   Thread.current[:lux][:sinatra] = self
+
+  if session[:u_id]
+    User.current = User.find(session[:u_id])
+  end
 end
 
 after do

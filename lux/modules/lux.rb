@@ -9,9 +9,14 @@ class Lux
     end
   end  
 
+  def self.root
+    __FILE__.sub('/lux/modules/lux.rb','')
+  end
+
   def self.report_error_html(o, name=nil)
     trace = o.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] }.map{ |el| "- #{el}" }.join("\n")
-    return %[<pre style="color:red; background:#eee; padding:10px; ">#{name || 'Undefined name'}\nError: #{o.message}\n#{trace}</pre>]
+    msg   = o.message.gsub('","',%[",\n "])
+    return %[<pre style="color:red; background:#eee; padding:10px; ">#{name || 'Undefined name'}\nError: #{msg}\n#{trace}</pre>]
   end
 
   def self.error(data)
@@ -50,14 +55,6 @@ class Lux
     @@irregulars
   end
 
-  def self.sinatra
-    Thread.current[:lux][:sinatra]
-  end
-
-  def self.params
-    Thread.current[:lux][:sinatra].params
-  end
-
   def self.host
     "#{sinatra.request.env['rack.url_scheme']}://#{sinatra.request.host}:#{sinatra.request.port}".sub(':80','')
   end
@@ -67,12 +64,37 @@ class Lux
     "uid-#{++@@uid}"
   end
 
+  def self.sinatra
+    Thread.current[:lux][:sinatra]
+  end
+
   def self.flash(key, value)
-    Lux.sinatra.session[:flash] = [key, value]
+    Thread.current[:lux][:sinatra].session[:flash] = [key, value]
+  end
+
+  def self.flash_now(key, value)
+    Thread.current[:lux][:flash] = [key, value]
+  end
+
+  def self.params
+    unless Thread.current[:lux][:params]
+      Thread.current[:lux][:params] = Thread.current[:lux][:sinatra].params.h
+      Thread.current[:lux][:params].delete(:splat)
+      Thread.current[:lux][:params].delete(:captures)
+    end
+    Thread.current[:lux][:params]
   end
 
   def self.redirect(location)
-    Lux.sinatra.redirect(location)
+    Thread.current[:lux][:sinatra].redirect(location)
+  end
+
+  def self.request
+    Thread.current[:lux][:sinatra].request
+  end
+
+  def self.session
+    Thread.current[:lux][:sinatra].request.session
   end
 
 end

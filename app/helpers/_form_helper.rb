@@ -43,7 +43,7 @@ module FormHelper
 
     data = ''
 
-    opts[:onsubmit] ||= "Api.send('/api/#{opts.delete('api-action')}', $(this).serializeHash()); return false;"
+    opts[:onsubmit] ||= "Api.send('/api/#{opts.delete('api-action')}', $(this).serializeHash(), function(){ #{opts.delete(:done)}; }); return false;"
     @form = FormTemplate.create(@form_template, @form_object, opts)
     
     # copy some fields for new objects, experimental
@@ -78,7 +78,7 @@ module FormHelper
 
     # auto fill value for GET forms
     @form_opts ||= {}
-    opts[:value] ||= User.request.params[name] if @form_opts[:method] == 'get'
+    opts[:value] ||= Lux.params[name] if @form_opts[:method] == 'get'
 
     return Input.new(@form_object).render(name, opts).html_safe if opts[:as] == :hidden || !@form
 

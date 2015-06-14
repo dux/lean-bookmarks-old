@@ -4,17 +4,19 @@
     %h1 Login
     
     .well
-      = form '/api/users/login', :template=>:ver do
+      = form '/api/users/login', :template=>:ver, :done=>"Pjax.load('/')" do
         = input :email
-        = input :pass
+        = input :pass, :as=>:password
         = submit 'Login'
 
-    %h2 or signup
+    %hr
+
+    %h3 signup or lost password
 
     .well
       = form '/api/users/signup', :template=>:ver do
         = input :email
-        = submit 'Send confirmation link in email'
+        = submit 'Send password set link'
 
 
   .col-3

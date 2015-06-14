@@ -14,9 +14,10 @@ class LuxApi
   #     @user.slice(:id, :name, :avatar, :email)
   #   end
   # end
-  def self.action(proc_name, &block)
+  def self.action(proc_name)
+    proc = yield
     @@actions[proc_name] = @@opts.dup
-    @@actions[proc_name][:proc] = block
+    @@actions[proc_name][:proc] = proc
     @@opts = {}
   end
 
@@ -106,20 +107,24 @@ class LuxApi
 
     res = nil
 
-    if @@actions[action] && @@actions[action][:params]
-      for k,v in @@actions[action][:params]
+    unless @@actions[action]
+      @error ||= "Action #{action} not found, available #{self.class.actions.to_sentence}"
+    end
+
+    if !@error && @@actions[action][:params]
+      for key, values in @@actions[action][:params]
         next if @error
-        value = params[k]
-        eval "@_#{k} = value"
-        for type in v
+        value = Lux.params[key]
+        eval "@_#{key} = value" if value.present?
+        for type in values
           case type
             when :req          
-              @error = "[#{k}] is required" unless value
+              @error = "[#{key}] is required" unless value
             when :email
               begin
                 Validate.email value                
               rescue
-                @error ||= "[#{k}] #{$!.message}"     
+                @error ||= "[#{key}] #{$!.message}"     
               end
           end
         end
@@ -129,7 +134,7 @@ class LuxApi
     unless @error
       begin
         if @@actions[action]
-          res = instance_eval(&@@actions[action][:proc])
+          res = instance_exec &@@actions[action][:proc]
         elsif respond_to?(action)
           res = send(action)
         end
@@ -148,13 +153,10 @@ class LuxApi
       # @response[:message] = res if !@message && res.kind_of?(String)
       @error ||= "Wrong type for @error" if @error && !@error.kind_of?(String)
       @error ||= "Wrong type for @message" if @message && !@message.kind_of?(String)
-    else
-      @error ||= "Action #{action} not found, available #{self.class.actions.to_sentence}"
     end
 
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
-    # @response[:params] = @@params if @@params.keys.length > 0
     @response
   end
 

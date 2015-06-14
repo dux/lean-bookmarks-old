@@ -3,5 +3,6 @@ module DefaultHelper
   include MasterHelper
   include FormHelper
   include TableHelper
+  include ApplicationHelper
 
 end

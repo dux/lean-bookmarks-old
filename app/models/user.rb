@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
     Thread.current[:lux][:user]    
   end
 
+  def self.current=(u)
+    Thread.current[:lux][:user] = u
+  end
+
   def self.request
     Thread.current[:lux][:sinatra].request
   end
@@ -21,6 +25,15 @@ class User < ActiveRecord::Base
 
   def self.login(e, p)
     User.where( email:e, pass:Crypt.sha1(p) ).first || nil
+  end
+
+  def self.quick_create(email)
+    email = email.downcase
+    Validate.email(email)
+
+    u = User.where( email:email ).first
+    return u if u
+    u = User.create :email=>email, :name=>email.split('@')[0].capitalize.gsub(/\./,' ')
   end
 
 end

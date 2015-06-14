@@ -34,9 +34,9 @@ class LuxCell
     local_args[0] += '!'
 
     unless obj.respond_to?(local_args[0])
-      list = self.instance_methods - Object.instance_methods - [:render, :render_part, :params, :request]
+      list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part]
 
-      err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> in class <b>#{self.name}</b>"]
+      err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> found in class <b>#{self.name}</b>"]
       err.push %[You have defined \n- #{(list).join("\n- ")}]
       return Lux.error(err)
     end
@@ -60,10 +60,6 @@ class LuxCell
     Template.new(layout_path).part do
       @part_data
     end
-  end
-
-  def sinatra
-    Lux.sinatra
   end
 
   def _find_template_path(path)
@@ -92,20 +88,5 @@ class LuxCell
     self.class.render(name, *args)
   end
 
-  def self.params
-    Lux.sinatra.params
-  end
-
-  def self.request
-    Lux.sinatra.request
-  end
-
-  def params
-    Lux.sinatra.params
-  end
-
-  def request
-    Lux.sinatra.request
-  end
 end
 

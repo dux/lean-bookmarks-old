@@ -221,6 +221,39 @@ No need for mail cachers here.
         confirm_email('rejotl@gmailcom')
       end
     end
+    
+
+## API
+
+API has to inherit from LuxApi and can be writter in three ways as shown below
+
+    class UserApi < LuxApi
+
+      # action with options in block
+      # only possible way if you want to params cecking
+      action :show do
+        name 'Show single user based on email'
+        params :email, :email, :req
+        lambda do
+          User.where(email:params[:email]).first.attributes
+        end
+      end
+
+	  # if you dont need options you can use inline_action shorthand
+      inline_action :show, 'Show single user based on email' do
+        User.where(email:params[:email]).first.attributes
+      end
+
+	  # without name and optsion
+      def show
+        User.where(email:params[:email]).first.attributes
+      end
+
+    end
+
+Show method on user can be accesible via /api/users/show or /api/v1/users/show pr whatever
+    
+
 
 ## Inflectors
 

@@ -5,7 +5,7 @@ class LuxHelper
   end
 
   def params
-    Lux.sinatra.params
+    Lux.params
   end
 
   def request
