@@ -154,16 +154,14 @@ class FormTemplateHor < FormTemplate
     opts[:id] ||= Lux.uid
     input = opts[:input] || Input.new(@object).render(name, opts.dup)
     hint = opts[:hint]
-    if opts[:as] == :checkbox
-      hint &&= " (#{hint})"
-      return %[<div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          <div class="checkbox"><label>#{input}#{label}<small>#{hint}</small></label></div>
-        </div>
-      </div>]
-    end
+    # if opts[:as] == :checkbox
+    #   hint &&= " (#{hint})"
+    #   return %[<div class="form-group type-checkbox">
+    #     <div class="checkbox"><label>#{input}#{label}<small>#{hint}</small></label></div>
+    #   </div>]
+    # end
 
-    %[<div class="form-group">
+    %[<div class="form-group type-#{opts[:as].or(:string)}">
       <label class="col-sm-3 control-label" for="#{opts[:id]}">#{label}</label>
       <div class="col-sm-9">#{input}<small>#{hint}</small></div>
     </div>]
@@ -186,12 +184,12 @@ class FormTemplateVer < FormTemplate
     opts[:id] ||= Lux.uid
     input = opts[:input] || Input.new(@object).render(name, opts.dup)
     hint = opts[:hint]
-    if opts[:as] == :checkbox
-      hint &&= " <small>(#{hint})</small>"
-      return %[<div class="form-group"><div class="checkbox"><label for="#{opts[:id]}">#{input} #{label}<small>#{hint}</small></label></div></div>]
-    end
+    # if opts[:as] == :checkbox
+    #   hint &&= " <small>(#{hint})</small>"
+    #   return %[<div class="form-group"><div class="checkbox"><label for="#{opts[:id]}">#{input} #{label}<small>#{hint}</small></label></div></div>]
+    # end
 
-    %[<div class="form-group"><label for="#{opts[:id]}">#{label}</label>#{input}<small>#{hint}</small></div>]
+    %[<div class="form-group type-#{opts[:as]}"><label for="#{opts[:id]}">#{label}</label>#{input}<small>#{hint}</small></div>]
   end
 
   def submit(name, opts={})

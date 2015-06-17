@@ -59,9 +59,9 @@ class Lux
     "#{sinatra.request.env['rack.url_scheme']}://#{sinatra.request.host}:#{sinatra.request.port}".sub(':80','')
   end
 
-  @@uid = 0
   def self.uid
-    "uid-#{++@@uid}"
+    Thread.current[:uid_cnt] ||= 0
+    "uid-#{Thread.current[:uid_cnt]+=1}"
   end
 
   def self.sinatra

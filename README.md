@@ -254,6 +254,11 @@ API has to inherit from LuxApi and can be writter in three ways as shown below
 Show method on user can be accesible via /api/users/show or /api/v1/users/show pr whatever
     
 
+## Flash
+
+	Lux.flash :info, 'Page loaded'
+	Lux.flash_now :info, 'Page loaded'
+	
 
 ## Inflectors
 
@@ -266,6 +271,7 @@ All common Rails inflectors are included
 * camelize
 * tableize
 * to_sentence
+
 
 ## Why?
 

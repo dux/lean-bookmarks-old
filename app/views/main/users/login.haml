@@ -1,4 +1,4 @@
-.row
+.row.nudge
   .col-3
   .col-3
     %h1 Login
@@ -16,7 +16,7 @@
     .well
       = form '/api/users/signup', :template=>:ver do
         = input :email
-        = submit 'Send password set link'
+        = submit 'Send me link to set password'
 
 
   .col-3

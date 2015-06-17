@@ -2,12 +2,20 @@ class Asset
 
   attr_accessor :public_file
 
-  def self.get(path)
+  def self.get_link(path)
+    return path if path.index(/https?:/)
     ext = path.split('.').last.to_sym
     path = "#{Lux.root}/app/assets/#{path}".gsub('//','/')
     ass = new(path, { :root=>Lux.root })
-    
-    [:js, :coffee].index(ext) ? %[<script src="#{ass.public_file}"></script>] : %[<link rel="stylesheet" href="#{ass.public_file}" />]
+    ass.public_file
+  end
+
+  def self.css(href)
+    %[<link href="#{get_link(href)}" rel="stylesheet" type="text/css">]
+  end
+
+  def self.js(src)
+    %[<script src="#{get_link(src)}"></script>]
   end
 
   def initialize(file, opts={})
@@ -24,6 +32,7 @@ class Asset
     @opts[:root] ||= './'
     @opts[:cache] ||= "#{@opts[:root]}/.assets_cache"
     Dir.mkdir(@opts[:cache]) unless Dir.exists?(@opts[:cache])
+    Dir.mkdir("#{@opts[:root]}/public/assets") unless Dir.exists?("#{@opts[:root]}/public/assets")
 
     fill_source_files
     compile_source_files
@@ -131,7 +140,7 @@ class Asset
 
     @public_file = "/assets/"+local(@file).gsub('/','-').sub(/\.\w+/,'')+".#{cache_file(@file, :ext)}"
 
-    File.open("#{@opts[:root]}/public/#{public_file}", 'w') { |f| f.write(public_data.join("\n")) } 
+    File.open("#{@opts[:root]}/public#{public_file}", 'w') { |f| f.write(public_data.join("\n")) } 
   end
 
   def cache_file(original_file, get_only_ext=false)

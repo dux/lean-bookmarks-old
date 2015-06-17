@@ -1,0 +1,40 @@
+@mixin animation($animation) {
+  -webkit-animation: $animation;
+       -o-animation: $animation;
+          animation: $animation;
+}
+
+@mixin animation-duration($duration) {
+  -webkit-animation-duration: $duration;
+          animation-duration: $duration;
+}
+
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
+          box-shadow: $shadow;
+}
+
+@mixin opacity ($ratio) {
+  -webkit-opacity:  $ratio;
+  -moz-opacity:     $ratio;
+  opacity:          $ratio;
+}
+
+@mixin scale($ratio...) {
+  -webkit-transform: scale($ratio);
+      -ms-transform: scale($ratio); // IE9 only
+       -o-transform: scale($ratio);
+          transform: scale($ratio);
+}
+
+@mixin user-select($select) {
+  -webkit-user-select: $select;
+     -moz-user-select: $select;
+      -ms-user-select: $select; // IE10+
+          user-select: $select;
+}
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}

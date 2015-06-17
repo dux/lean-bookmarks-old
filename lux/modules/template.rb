@@ -38,7 +38,7 @@ class Template
     Thread.current[:last_template_path] = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
 
     helper = LuxHelper.new
-    eval %[helper.extend DefaultHelper] rescue false
+    eval %[helper.extend ApplicationHelper] rescue false
     eval %[helper.extend #{base_class.capitalize}Helper] rescue false
     
     for k, v in opts

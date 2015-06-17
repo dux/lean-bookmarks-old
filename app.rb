@@ -9,15 +9,16 @@ get '*' do
 
   # application routes
   case @root_part.singularize.to_sym
-    when :test
-      Lux.flash :info, 'all ok'
-      return redirect '/'
+    when :link
+      return Main::LinkCell.raw(@path)
+    when :bucket
+      return Main::BucketCell.raw(@path)
     when :user
       return Main::UserCell.raw(@path)
     when :action
       return Main::ActionCell.raw(@first_part)
-    when :grid
-      return Template.part('grid')
+    when :css
+      return Template.render('main/css')
     else
       Lux.status :not_found, "Unknown route for path /#{@root_part}"
   end

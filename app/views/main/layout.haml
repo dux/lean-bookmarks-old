@@ -1,44 +1,28 @@
 !!!
 %html{:lang => "en"}
   %head
-    %title Test
-    / %link{ :rel=>:stylesheet, :href=>'/assets/main-index.css' }
+    %title StashBuckets
     %script{ :src=>'https://code.jquery.com/jquery-2.1.1.min.js' }
-    = Asset.get 'main/index.scss'
-    = Asset.get 'main/index.coffee'
-  / HTML code from Bootply.com editor
+    = Asset.css 'main/index.scss'
+    = # Asset.css 'http://fonts.googleapis.com/css?family=Lato:300,400,700,900,400italic'
+    = Asset.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300,600'
+    = Asset.js  'main/index.coffee'
   %body
     #full-page
-      .navbar.navbar-default.navbar-static-top
-        .container
-          .navbar-header
-            %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-            %a.navbar-brand{:href=>"/"} Brand
-          .collapse.navbar-collapse
-            %ul.nav.navbar-nav
-              %li.active
-                %a{ href:'/' } Home
-              %li
-                %a{ href:'/users' } Users
-              %li
-                %a{ href:'/users/random' } Random user
-              %li
-                %a{ href:'/test' } Test
-            %ul.nav.navbar-nav.navbar-right
-              - if User.current
-                %li
-                  %a{ :href=>'/users/bye' } Log off
-                %li
-                  %a{ :href=>'/users/profile' }= User.current.email
-              - else
-                %li
-                  %a{ :href=>'/users/login' } Login or signup
-          / /.nav-collapse
-      .container
+      .navbar
+        %ul= main_menu
 
+        %ul.pull-right
+          - if User.current
+            %li
+              %a{ :href=>'/users/bye' } Log off
+            %li
+              %a{ :href=>'/users/profile' }= User.current.email
+          - else
+            %li
+              %a{ :href=>'/users/login' } Login or signup
+
+      .container#content
         = yield
 
         = base_js

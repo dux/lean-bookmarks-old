@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem 'pg'
+gem 'auto_migrations_rails4', :github=>'dux/auto_migrations_rails4'
+gem 'rails', '4.0.2'

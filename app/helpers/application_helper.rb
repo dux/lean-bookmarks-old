@@ -1,6 +1,8 @@
-# application specific
-
 module ApplicationHelper
+  include RailsHelper
+  include MasterHelper
+  include FormHelper
+  include TableHelper
 
   def base_js
     ret = ['<script>']
@@ -15,6 +17,15 @@ module ApplicationHelper
     ret.push ['</script>']
 
     ret.join("\n").html_safe
+  end
+
+  def main_menu
+    menu = Menu.new
+    menu.add '/', 'Home'
+    menu.add '/users', 'Users'
+    menu.add '/users/random', 'Random users'
+    menu.active_by_path
+    menu.render_li
   end
 
   def svg_ico(name, size, style=nil)
@@ -70,5 +81,7 @@ module ApplicationHelper
     # version="1.1" shape-rendering="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
     %[<svg class="svgicon" id="svgicon-#{name}" style="#{style}" width="#{size}" height="#{size}" viewBox="#{view_box}" xml:space="preserve"><path style="stroke-antialiasing:true;" d="#{icon}"></path></svg>].html_safe
   end
+
+
 
 end

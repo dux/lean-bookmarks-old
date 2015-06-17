@@ -1,0 +1,20 @@
+.navbar {
+  background-color: #ddd;
+  border-bottom:1px solid #ccc;
+  margin-bottom:20px;
+
+  > ul {
+    display:inline;
+    > li { 
+      display: inline-block; 
+      &.active { background-color: #fff; }
+      a {
+       display: inline-block; padding:10px; 
+       text-decoration:none;
+       color: #444;
+      }
+    }
+  } 
+
+  ul.pull-right {  float:right; }
+}

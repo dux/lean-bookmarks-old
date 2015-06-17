@@ -1,0 +1,178 @@
+%h3  Titles
+
+%h1.d h1 Sample title
+%h2.d h2 Sample title
+%h3.d h3 Sample title
+%h4.d h4 Sample title
+%h5.d h5 Sample title
+%h6.d h6 Sample title
+
+%hr
+
+%h3 Buttons 
+.d.btn btn
+%br
+.d.btn.btn-default btn btn-default
+- for el in [:success, :error, :warning, :light, :dark, :empty]
+  %br
+  %button{ :class=>"d btn btn-#{el}" } btn btn-#{el}
+
+
+%hr
+
+%h3 Tables
+
+%p You have to use THEAD AND TBODY
+
+%br
+
+.row.gutter
+  .col-2
+    %xmp .table
+  .col-3
+    %table.table
+      %thead
+        %tr
+          %th Row 1
+          %th Row 2
+          %th Row 3
+      %tbody
+        %tr
+          %td Row 1 Col 1
+          %td Row 1 Col 2
+          %td Row 1 Col 3
+        %tr
+          %td Row 2 Col 1
+          %td Row 3 Col 2
+          %td Row 4 Col 3
+
+
+.row.gutter
+  .col-2
+    %xmp .table.table-striped.table-condensed 
+
+  .col-3
+    %table.table.table-striped.table-condensed 
+      %thead
+        %tr
+          %th Row 1
+          %th Row 2
+          %th Row 3
+      %tbody
+        %tr
+          %td Row 1 Col 1
+          %td Row 1 Col 2
+          %td Row 1 Col 3
+        %tr
+          %td Row 2 Col 1
+          %td Row 2 Col 2
+          %td Row 2 Col 3
+        %tr
+          %td Row 3 Col 1
+          %td Row 3 Col 2
+          %td Row 3 Col 3
+
+.row.gutter
+  .col-2
+    %xmp .table.table-bordered
+
+  .col-3
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Row 1
+          %th Row 2
+          %th Row 3
+      %tbody
+        %tr
+          %td Row 1 Col 1
+          %td Row 1 Col 2
+          %td Row 1 Col 3
+        %tr
+          %td Row 2 Col 1
+          %td Row 3 Col 2
+          %td Row 4 Col 3
+
+
+
+%br
+%br
+
+%h3 Forms
+.row
+  .col-2
+    %xmp inline form
+  .col-3
+    = form '?', :inline do
+      = input :name, :label=>'Name', :hint=>'This is some hint'
+      = input :name1, :as=>:checkbox, :label=>'Checkbox field'
+      = input :name1, :as=>:select, :collection=>['One', 'Two']
+
+.row.gutter
+  .col-2
+    %xmp
+      :plain
+        = form '?', :vertical do
+          = input :name, :label=>'Name'
+          = input :name1, :as=>:checkbox
+          = input :name1, :as=>:select
+  .col-3
+    = form '?', :vertical do
+      = input :name, :label=>'Name', :hint=>'This is some hint'
+      = input :name1, :as=>:checkbox, :label=>'Checkbox field'
+      = input :name1, :as=>:select, :collection=>['One', 'Two']
+
+.row.gutter
+  .col-2
+    %xmp
+      :plain
+        = form '?', :horizontal do
+          %h5 Form group 1
+          = input :name, :label=>'Name', :hint=>'This...'
+          = input :name1, :as=>:checkbox, :label=>'Chec...'
+          = input :name1, :as=>:select, :collection=>['One', ...
+          = input :name, :label=>'Name'
+          %h5 Form group 2
+          = input :name, :label=>'Name'
+  .col-3
+    = form '?', :horizontal do
+      %h5 Form group 1
+      = input :name, :label=>'Name', :hint=>'This is some hint'
+      = input :name1, :as=>:checkbox, :label=>'Checkbox field'
+      = input :name1, :as=>:select, :collection=>['One', 'Two'], :hint=>'This is some hint'
+      = input :name, :label=>'Name'
+      %h5 Form group 2
+      = input :name, :label=>'Name'
+
+%br
+%br
+
+
+%hr
+
+%br
+
+
+:coffee
+  $('.d').each -> 
+    nn = this.nodeName.toLowerCase()
+    kl = this.getAttribute('class').replace(/^d\s?/,'')
+    klass = if kl then ' class="'+kl+'"' else ''
+    $(this).before('<xmp><'+nn+klass+'>...</xmp>')
+
+  $('xmp').each -> 
+    this.innerHTML = this.innerHTML.replace(/\n\s{14}/g,"\n")
+
+:css
+  xmp { 
+    background-color:#eee;
+    padding:7px;
+    margin:10px 0 4px 0; 
+    border:1px solid #ddd;
+    width:400px; float:left; clear:both;
+    margin-right:20px; margin-top:1px;
+  }
+
+  .gutter { margin-top:30px; }
+
+

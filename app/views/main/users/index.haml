@@ -1,6 +1,6 @@
 %h3 Users in app
 
-%ul
+%ul.list
   - for user in @users
     %li= link_to user.email, "/user/#{user.id}"
 

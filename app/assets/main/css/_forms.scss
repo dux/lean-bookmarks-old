@@ -1,0 +1,44 @@
+input[type=text], input[type=password] { 
+  padding:7px;
+  font-size:13pt;
+  border:1px solid #ccc;
+  border-radius: 3px;
+  width:95%; 
+}
+
+select { 
+    min-width:200px;
+    color: rgb(85, 85, 85);
+    display: block;
+    height: 37px;
+    min-height: 15px;
+    border: 1px solid rgb(142, 186, 222);
+    font-size:11pt;
+    outline: rgb(85, 85, 85) none 0px;
+    position:relative;
+    top:-1px;
+}
+
+.form-vertical {
+  .form-group {
+    margin-bottom:20px; 
+    label { display:block; margin-bottom:5px; font-size:12pt; font-weight:bold; font-weight:600; }
+    &.type-checkbox label { position:absolute; margin-top:1px; margin-left:20px; }
+    small { font-size: 10pt; position:relative; top:5px; display:block; padding-bottom:10px; color:#888; }
+  }
+}
+
+.form-horizontal {
+  label { position:relative; margin-left:-200px; width:180px; font-weight:600; top:23px; text-align: right; display: inline-block; }
+  h5 {
+    color:#444; margin-left:170px; padding-left:30px; margin-bottom:4px; margin-top:15px; border-top:1px solid #ddd; padding-top:15px;
+    &:first-child { border-top:none; margin-top: 0;}
+  }
+
+  .type-checkbox label { position:relative; top:16px; left:150px; }
+
+  .form-group {
+    padding-left:200px; padding-bottom:5px;
+    small { font-size: 10pt; position:relative; top:5px; display:block; padding-bottom:10px; color:#888; }
+  }
+}
