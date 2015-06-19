@@ -1,0 +1,8 @@
+= narrow do
+ 
+  %h2 Edit profile data
+
+  .well
+    = form User.current, :ver do
+      = input :name
+      = submit 'Save'

@@ -36,4 +36,10 @@ class User < ActiveRecord::Base
     u = User.create :email=>email, :name=>email.split('@')[0].capitalize.gsub(/\./,' ')
   end
 
+  def can?(what=:read)
+    return true if what == :read
+    return true if id == User.current.try(:id)
+    false
+  end
+
 end

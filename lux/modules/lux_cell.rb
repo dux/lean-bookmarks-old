@@ -62,28 +62,29 @@ class LuxCell
     end
   end
 
-  def _find_template_path(path)
-    return path if path.to_s.index('/')
-    "#{self.class.name.tableize.split('_cell')[0].pluralize}/#{path}"
-  end
+  # def _find_template_path(path)
+  #   return path if path.to_s.index('/')
+  #   "#{self.class.name.tableize.split('_cell')[0].pluralize}/#{path}"
+  # end
 
-  # inside instance method when you want to render specific template
-  def template(template=nil)
-    # template is second part part unless defined.
-    # for path /action/confirm_email -> template is "confirm_email"
-    template ||= Lux.sinatra.request.path.split('/')[2]
+  # # inside instance method when you want to render specific template
+  # def template(template=nil)
+  #   # template is second part part unless defined.
+  #   # for path /action/confirm_email -> template is "confirm_email"
+  #   template ||= Lux.sinatra.request.path.split('/')[2]
     
-    path = _find_template_path(template)
-    Template.new(path).render( instance_variables_hash )
-  end
+  #   path = _find_template_path(template)
+  #   Template.new(path).render( instance_variables_hash )
+  # end
 
-  # inside instance method when you want to render specific template part
-  def template_part(template)
-    path = _find_template_path(template)
-    Template.new(path).part( instance_variables_hash )
-  end
+  # # inside instance method when you want to render specific template part
+  # def template_part(template)
+  #   path = _find_template_path(template)
+  #   Template.new(path).part( instance_variables_hash )
+  # end
 
-  # inside instance method when you want to class render method
+  # # inside instance method when you want to class render method
+  # render(:show, id)
   def render(name, *args)
     self.class.render(name, *args)
   end

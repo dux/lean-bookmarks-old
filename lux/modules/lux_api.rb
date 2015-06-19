@@ -36,13 +36,15 @@ class LuxApi
   def self.raw(*path)
     return 'Unsupported API call' if path[3]
     return 'Unsupported API call' unless path[1]
-      
+
+    @@class_name = path[0].classify
+
     opts = Lux.params
 
     return run(path[0], path[1], opts) unless path[2]
     
+    # set path vaiable to id
     opts[:id] = path[1]
-    r opts[:id]
 
     return run(path[0], path[2], opts)
   end
@@ -107,11 +109,10 @@ class LuxApi
 
     res = nil
 
-    unless @@actions[action]
-      @error ||= "Action #{action} not found, available #{self.class.actions.to_sentence}"
-    end
+    # load default object
+    eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:id].to_i)"
 
-    if !@error && @@actions[action][:params]
+    if @@actions[action] && @@actions[action][:params]
       for key, values in @@actions[action][:params]
         next if @error
         value = Lux.params[key]
@@ -137,10 +138,14 @@ class LuxApi
           res = instance_exec &@@actions[action][:proc]
         elsif respond_to?(action)
           res = send(action)
+        else
+          @error ||= "Action #{action} not found, available #{self.class.actions.to_sentence}"
         end
       rescue
-        @error ||= $!.message.split(' for #').first
-        @response[:backtrace] = $!.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] } if Lux.dev?
+        if $!
+          @error ||= $!.message.split(' for #').first
+          @response[:backtrace] = $!.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] } if Lux.dev?
+        end
       end
     end
 
@@ -158,6 +163,33 @@ class LuxApi
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
     @response
+  end
+
+  def can?(what, object=nil)
+    object ||= @object
+    raise "#{@@class_name} not found, can't check for :#{what} permission" unless object
+    raise "No [#{what}] permission on #{object.class.name}" unless object.can? what
+  end
+
+  def show
+    can? :read
+    @object.attributes
+  end
+
+  def update
+    return 'asd'
+
+    old = @object.attributes
+    for k,v in @params
+      eval %[@object.#{k} = v] if old.keys.index(k.to_s)
+    end
+    can? :write
+    @object.save
+    report_errros_if_any @object
+    respond "#{@@class_name} updated"
+    @root[:diff] = old.diff_compare @object.attributes
+    @root[:path] = @object.path
+    @object.attributes
   end
 
 end

@@ -1,6 +1,6 @@
 # menu = Menu.new
 # menu.add '/', 'Home'
-# menu.add '/users', 'Users'
+# menu.add '/users', 'Users', lambda { |path| ['/users','/user'].index(path) }
 # menu.add '/users/random', 'Random users'
 # menu.active_by_path
 # menu.render
@@ -11,14 +11,21 @@ class Menu
     @menu = []
   end
 
-  def add(link, name, active=nil)
-    @menu.push({ href:link, name:name })
+  def add(href, name, check=nil)
+    @menu.push({ href:href, name:name, check:check })
   end
 
   def active_by_path
     path = Lux.request.path
     for el in @menu
-      el[:active] = @we_have_active = true if el[:href] == path
+      break if @we_have_active
+      if el[:check]
+        if el[:check].call(path)
+          el[:active] = @we_have_active = true
+        end
+      elsif el[:href] == path
+        el[:active] = @we_have_active = true
+      end
     end
   end
 

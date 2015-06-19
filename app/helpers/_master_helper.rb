@@ -1,6 +1,6 @@
 module MasterHelper
 
-  def widget(path, obj={})
+  def ___widget(path, obj={})
     unless path.kind_of?(String)
       cname = path.class.name.tableize
       obj[:_id] ||= "w-#{cname.singularize}-#{path.id}"
@@ -60,17 +60,6 @@ module MasterHelper
 
   def cache(*opts, &block)
     Cache.view *opts, &block
-  end
-
-  def once(rule, &block)
-    @Once_Hash ||= {}
-    return if @Once_Hash[rule]
-    @Once_Hash[rule] = true
-    yield
-  end
-
-  def once_reset
-    @Once_Hash = {}
   end
 
 end

@@ -39,5 +39,9 @@ class Main::UserCell < LuxCell
     Lux.redirect '/'
   end
 
+  def profile
+    
+  end
+
 
 end
