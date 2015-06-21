@@ -1,0 +1,3 @@
+class BucketApi < LuxApi
+
+end

@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.integer  "created_by", null: false
     t.datetime "updated_at", null: false
     t.integer  "updated_by", null: false
-    t.boolean  "active"
+    t.boolean  "active",     default: true
   end
 
   create_table "links", force: true do |t|
@@ -35,8 +35,9 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active"
+    t.boolean  "active",     default: true
     t.boolean  "is_article"
+    t.integer  "bucket_id",  null: false
   end
 
   create_table "notes", force: true do |t|
@@ -46,8 +47,8 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.integer  "created_by", null: false
     t.datetime "updated_at", null: false
     t.integer  "updated_by", null: false
-    t.integer  "board_id",   null: false
-    t.boolean  "active"
+    t.integer  "bucket_id",  null: false
+    t.boolean  "active",     default: true
   end
 
   create_table "comments", force: true do |t|

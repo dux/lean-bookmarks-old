@@ -1,7 +1,7 @@
 class Object
 
   def r(what=nil)
-    raise what.kind_of?(String) ? what : what.to_json
+    raise what.kind_of?(String) ? "String -> #{what}" : "#{what.class.name} -> #{what.to_json}"
   end
   
   def l(what=nil)

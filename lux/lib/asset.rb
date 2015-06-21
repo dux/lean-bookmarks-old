@@ -18,6 +18,10 @@ class Asset
     %[<script src="#{get_link(src)}"></script>]
   end
 
+  def self.jquery
+    js 'https://code.jquery.com/jquery-2.1.1.min.js'
+  end
+
   def initialize(file, opts={})
     ext = file.split('.').reverse[0].to_sym
     unless [:js, :css, :coffee, :less, :scss, :sass, :haml, :coffe].index(ext)

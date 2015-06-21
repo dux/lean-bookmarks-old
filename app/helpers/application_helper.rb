@@ -21,9 +21,18 @@ module ApplicationHelper
 
   def main_menu
     menu = Menu.new
-    menu.add '/', 'Home'
-    menu.add '/users', 'Users', Proc.new { |path| path == '/users' || path.index('/user/') ? true : false }
-    menu.add '/users/random', 'Random users'
+
+    if User.current
+      menu.add '/', 'Home'
+      # menu.add '/users', 'Users', Proc.new { |path| path == '/users' || path.index('/user/') ? true : false }
+      # menu.add '/users/random', 'Random users'
+      menu.add '/buckets', 'Buckets', '/bucket'
+      menu.add '/links', 'Links', '/link'
+      menu.add '/notes', 'Notes', '/note'
+    else
+      menu.add '/', 'Home'
+    end
+
     menu.active_by_path
     menu.render_li
   end

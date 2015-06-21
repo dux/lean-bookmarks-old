@@ -1,13 +1,6 @@
 # database
-ActiveRecord::Base.establish_connection(
-  adapter:    'postgresql',
-  host:       'localhost',
-  database:   'cleanpay',
-  username:   'dux',
-  password:   "!Netlife",
-  pool:       10,
-  port:       5432
-)
+db_config = YAML.load_file('./auto_migrate/config/database.yml')[Lux.dev? ? 'development' : 'production']
+ActiveRecord::Base.establish_connection(db_config)
 
 # mail
 Mail.defaults do

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < MasterModel
 
   def self.current
     Thread.current[:lux][:user]    

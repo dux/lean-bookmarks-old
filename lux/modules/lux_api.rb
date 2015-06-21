@@ -32,23 +32,6 @@ class LuxApi
     @@opts = {}
   end
 
-  # public mount method
-  def self.raw(*path)
-    return 'Unsupported API call' if path[3]
-    return 'Unsupported API call' unless path[1]
-
-    @@class_name = path[0].classify
-
-    opts = Lux.params
-
-    return run(path[0], path[1], opts) unless path[2]
-    
-    # set path vaiable to id
-    opts[:id] = path[1]
-
-    return run(path[0], path[2], opts)
-  end
-
   # helper for getting parameters
   def params
     @@params
@@ -76,16 +59,6 @@ class LuxApi
     @@opts[:proc] = block
   end
 
-  # public method for running actions on global class
-  # use as LuxApi.run 'users', 'show', { email:'rejotl@gmail.com' }
-  def self.run(klass, action, options=nil)
-    @@params = options || Lux.params
-    @@params.delete_if{ |el| [:captures, :splat].index(el.to_sym) }
-
-    klass = (klass.singularize.camelize+'Api').constantize
-    klass.new.instance_run(action.to_sym)
-  end
-
   # list all availabe actions in a class
   def self.actions
     instance_level_actions = UserApi.instance_methods - Object.instance_methods - [:sinatra, :instance_run, :params]
@@ -101,6 +74,37 @@ class LuxApi
     details.h
   end
 
+  # public mount method
+  def self.raw(*path)
+    return 'Unsupported API call' if path[3]
+    return 'Unsupported API call' unless path[1]
+
+    @@class_name = path[0].classify
+
+    opts = Lux.params
+
+    return run(path[0], path[1], opts) unless path[2]
+    
+    # set path vaiable to id
+    opts[:_id] = path[1]
+
+    return run(path[0], path[2], opts)
+  end
+
+  # public method for running actions on global class
+  # use as LuxApi.run 'users', 'show', { email:'rejotl@gmail.com' }
+  def self.run(klass, action, options=nil)
+    @@params = options || Lux.params
+    @@params.delete_if{ |el| [:captures, :splat].index(el.to_sym) }
+
+    if @@params[@@class_name.underscore]
+      @@params.merge! @@params.delete(@@class_name.underscore)
+    end
+
+    klass = (klass.singularize.camelize+'Api').constantize
+    klass.new.instance_run(action.to_sym)
+  end
+
   # internal method for running actions
   def instance_run(action)
     @response = {}
@@ -110,7 +114,7 @@ class LuxApi
     res = nil
 
     # load default object
-    eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:id].to_i)"
+    eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:_id].to_i)" if @@params[:_id]
 
     if @@actions[action] && @@actions[action][:params]
       for key, values in @@actions[action][:params]
@@ -139,7 +143,7 @@ class LuxApi
         elsif respond_to?(action)
           res = send(action)
         else
-          @error ||= "Action #{action} not found, available #{self.class.actions.to_sentence}"
+          @error ||= "Action #{action} not found in #{self.class.name.sub('Cell','')} API, available #{self.class.actions.to_sentence}"
         end
       rescue
         if $!
@@ -165,10 +169,45 @@ class LuxApi
     @response
   end
 
+
+  # default active model
+
   def can?(what, object=nil)
     object ||= @object
     raise "#{@@class_name} not found, can't check for :#{what} permission" unless object
     raise "No [#{what}] permission on #{object.class.name}" unless object.can? what
+  end
+
+  def report_errros_if_any(obj)
+    if obj.errors.count > 0
+      error = []
+      @response[:errors] = {}
+      for k,v in obj.errors
+        @response[:errors][k] = v
+        error.push v
+      end
+      raise error.join ', '
+    end
+  end
+
+  def create
+    @object = @@class_name.constantize.new
+
+    @last = @@class_name.constantize.my.last rescue @@class_name.constantize.last
+    if @last && @last[:name].present? && @last[:name] == params[:name]
+      raise "#{@class_name} is same as last one created."
+    end
+
+    old = @object.attributes
+    for k,v in @@params
+      eval %[@object.#{k} = v] if old.keys.index(k.to_s)
+    end
+    can? :create
+    @object.save
+    report_errros_if_any @object
+    respond "#{@class_name.capitalize} created"
+    @response[:path] = @object.path
+    @object.attributes
   end
 
   def show
@@ -177,20 +216,46 @@ class LuxApi
   end
 
   def update
-    return 'asd'
-
     old = @object.attributes
-    for k,v in @params
+
+    for k,v in @@params
       eval %[@object.#{k} = v] if old.keys.index(k.to_s)
     end
+
     can? :write
     @object.save
+
     report_errros_if_any @object
-    respond "#{@@class_name} updated"
-    @root[:diff] = old.diff_compare @object.attributes
-    @root[:path] = @object.path
+    @message = "#{@@class_name} updated"
+    @response[:path] = @object.path
     @object.attributes
   end
 
+  # if you put active boolean field to objects, then they will be unactivated on destroy
+  def destroy
+    can? :write
+
+    if @object.respond_to?(:active)
+      @object.update_attributes :active=>false
+      return respond 'Object deleted (exists in trashcan)'
+    end
+
+    @object.destroy
+    report_errros_if_any @object
+    respond "#{@response[:class]} deleted"
+    @object.attributes
+  end
+
+  def undelete
+    can? :write
+
+    if @object.respond_to?(:active)
+      @object.update_attributes :active=>true
+      return respond 'Object raised from the dead.'
+    else
+      return respond 'Object has no attriute [active]'
+    end
+
+  end
 end
 

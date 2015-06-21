@@ -16,9 +16,11 @@ class LuxCell
   #   - is new.random!() if  cell has method "random!" (useful if you dont want to render template)
   #   - is render(:random) if  cell has method "random"
   # /5/comments - is self.render(:comments, 5) or is comments!(5)
-  def self.raw(args)
+  def self.raw(*args)
     local_args = args.kind_of?(Array) ? args.flatten.dup : [args]
- 
+
+    local_args[0] = local_args[0].to_s if local_args[0].kind_of?(Symbol)
+
     if !local_args[0]
       local_args[0] = :index
     elsif local_args[1]
@@ -31,17 +33,16 @@ class LuxCell
 
     return render(*local_args) if obj.respond_to?(local_args[0])
 
-    local_args[0] += '!'
+    local_args[0] = "#{local_args[0]}!"
+    return obj.send(*local_args) if obj.respond_to?(local_args[0])
 
-    unless obj.respond_to?(local_args[0])
-      list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part]
 
-      err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> found in class <b>#{self.name}</b>"]
-      err.push %[You have defined \n- #{(list).join("\n- ")}]
-      return Lux.error(err)
-    end
+    list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part]
 
-    return obj.send(*local_args)
+    err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> found in class <b>#{self.name}</b>"]
+    err.push ["Expected so see def show(id) ..."] if local_args[0] == 'show!'
+    err.push %[You have defined \n- #{(list).join("\n- ")}]
+    return Lux.error(err)
   end
 
   def self.part(*args)
@@ -51,15 +52,54 @@ class LuxCell
     obj.send(method_name, *copy)
     @local_path = obj.class.name.index('::') ? obj.class.name.sub(/Cell$/,'').tableize : obj.class.name.sub(/Cell$/,'').downcase
     @local_path += "/#{method_name}"
-    Template.new(@local_path).part( obj.instance_variables_hash )
+    Lux.try 'Temmplate error' do
+      Template.new(@local_path).part( obj.instance_variables_hash )
+    end
   end
 
   def self.render(*args)
+    # look for before methods
+    if @@before[self.name]
+      for el in @@before[self.name]
+        before_data = el.call
+        return before_data if before_data.kind_of?(String)
+      end
+    end
+
     @part_data = part(*args)
-    layout_path = "#{@local_path.split('/')[0]}/layout"
+    layout_path = get_layout_path
     Template.new(layout_path).part do
       @part_data
     end
+  end
+
+  @@layout = {}
+  def self.layout(what)
+    @@layout[self.name] = what
+  end
+
+  def self.get_layout_path
+    if l = @@layout[self.name]
+      l = "#{l}/layout" if l.kind_of?(Symbol)
+      l = l.call if l.kind_of?(Proc)
+      return l
+    else
+      return "#{@local_path.split('/')[0]}/layout"
+    end
+  end
+
+  def self.template(*args)
+    for el in args
+      define_method el do
+        true
+      end
+    end
+  end
+
+  @@before = {}
+  def self.before(&block)
+    @@before[self.name] = []
+    @@before[self.name].push(block)
   end
 
   # def _find_template_path(path)

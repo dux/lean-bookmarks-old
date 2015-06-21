@@ -30,6 +30,7 @@
 
 # load all libs
   load_lib './lux/lib/*'
+  load_lib './lux/plugins/*'
   load_lib './lux/modules/*'
   load_lib './lux/overload/*'
   load_lib './app/*'

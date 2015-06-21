@@ -27,11 +27,15 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     colorize (0.7.7)
+    domain_name (0.5.24)
+      unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.5.2)
     haml (4.0.5)
       tilt
     hashie (3.3.1)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
     i18n (0.7.0)
     json (1.8.2)
     mail (2.6.3)
@@ -39,6 +43,7 @@ GEM
     mime-types (2.6.1)
     minitest (5.7.0)
     multi_json (1.10.1)
+    netrc (0.10.3)
     pg (0.18.2)
     rack (1.6.1)
     rack-protection (1.5.3)
@@ -46,6 +51,10 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     sass (3.4.14)
     sinatra (1.4.6)
       rack (~> 1.4)
@@ -65,6 +74,9 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
 
 PLATFORMS
   ruby
@@ -79,6 +91,7 @@ DEPENDENCIES
   mail
   pg
   rake
+  rest-client
   sass
   sinatra
   sinatra-activerecord

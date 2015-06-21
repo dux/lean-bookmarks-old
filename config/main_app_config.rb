@@ -9,14 +9,19 @@ use BetterErrors::Middleware; BetterErrors.application_root = __dir__
 before do
   @path = request.path.split('/')
   @path.shift
-  @root_part = @path[0] ? @path.shift : nil
+  @root_part = @path[0] ? @path.shift.gsub('-','_').singularize.to_sym : nil
   @first_part = @path[0]
-  
+
   Thread.current[:lux] = {}
   Thread.current[:lux][:sinatra] = self
 
+  # load user if there is session string
   if session[:u_id]
-    User.current = User.find(session[:u_id])
+    begin
+      User.current = User.find(session[:u_id])
+    rescue
+      session.delete(:u_id)
+    end
   end
 end
 

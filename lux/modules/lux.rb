@@ -16,7 +16,7 @@ class Lux
   def self.report_error_html(o, name=nil)
     trace = o.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] }.map{ |el| "- #{el}" }.join("\n")
     msg   = o.message.gsub('","',%[",\n "])
-    return %[<pre style="color:red; background:#eee; padding:10px; ">#{name || 'Undefined name'}\nError: #{msg}\n#{trace}</pre>]
+    return %[<pre style="color:red; background:#eee; padding:10px; font-family:'Lucida Console'; line-height:14pt; font-size:10pt;">#{name || 'Undefined name'}\nError: #{msg}\n#{trace}</pre>]
   end
 
   def self.error(data)

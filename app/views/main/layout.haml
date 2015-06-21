@@ -2,7 +2,7 @@
 %html{:lang => "en"}
   %head
     %title StashBuckets
-    %script{ :src=>'https://code.jquery.com/jquery-2.1.1.min.js' }
+    = Asset.jquery 
     = Asset.css 'main/index.scss'
     = # Asset.css 'http://fonts.googleapis.com/css?family=Lato:300,400,700,900,400italic'
     = Asset.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300,600'
@@ -20,7 +20,7 @@
               %a{ :href=>'/users/profile' }= User.current.email
           - else
             %li
-              %a{ :href=>'/users/login' } Login or signup
+              %a{ :href=>'/login' } Login or signup
 
       .container#content
         = yield

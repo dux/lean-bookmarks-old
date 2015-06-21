@@ -14,3 +14,5 @@ gem 'hashie'
 gem 'better_errors'
 gem 'sass'
 gem 'coffee-script'
+gem 'rest-client'
+

@@ -1,1 +1,13 @@
-s
+.row.nudge
+  .col-2
+
+    - for bucket in @buckets
+      .well{ :style=>"width:40%; float:left; margin-bottom:20px; margin-left:20px; " }
+        %h4= bucket.as_link
+
+
+  .col-1
+    .well
+      = form Bucket.new, :ver do
+        = input :name
+        = submit 'Create new bucket'

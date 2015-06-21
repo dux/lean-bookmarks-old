@@ -69,49 +69,57 @@ Cell is just a class with instance methods that retuns data or redirect to anoth
   * **raw** - ```UserCell.get(:random)``` - returns generic data
   * **render** - ```UserCell.render(:show, 2)``` - renders page with layout
   * **part** - ```UserCell.part(:show, 2)``` - returns single template without layout
+* inside Cell class you can
+  * define **before** filters as in Rails
+  * define **layout** as in Rails (but withot bugs)
+  * quick define index methods with **template**
 
 
 If you inherit from MasterCell you will have helper methods as render
 
-    module Main
-      class UserCell < MasterCell
+    class Main::UserCell < MasterCell
 
-		# in this example cell acts as router
-		# aceepts arguments and behaves accordingly
-        def self.raw(*args)
-          what = args.first
+      template :login, :profile
 
-	      # /users -> UserCell.render(:index)
-          return render :index unless what
+      before do
+        raise 'Only for registred users' unless User.current
+      end
 
-	      # /user/random -> UserCell.get(:random)
-	      return get :random if what == 'random'
+	  # in this example cell acts as router
+	  # aceepts arguments and behaves accordingly
+	  def self.raw(*args)
+        what = args.first
 
-	      # /user/2 -> UserCell.render(:show, 2)
-          return render :show, what.to_i
-        end
+	    # /users -> UserCell.render(:index)
+        return render :index unless what
 
-        def show(id)
-          @user = User.find(id)
-        end
+	    # /user/random -> UserCell.get(:random)
+	    return get :random if what == 'random'
 
-        def random
-          # in cells Sinatra API is exposed via [sinatra] method
-          sinatra.headers({ 'X-Test'=>"123456789" })
+	    # /user/2 -> UserCell.render(:show, 2)
+        return render :show, what.to_i
+      end
+
+      def show(id)
+        @user = User.find(id)
+      end
+
+      def random
+        # in cells Sinatra API is exposed via [sinatra] method
+        sinatra.headers({ 'X-Test'=>"123456789" })
         
-          id = (1..10).to_a.sample # get radom user id
-		  render(:show, id)        # execute /user/2 without redirect
-        end
+        id = (1..10).to_a.sample # get radom user id
+		render(:show, id)        # execute /user/2 without redirect
+      end
 
-        # same thing as
-        # Template.render('main/users/index', { :@users=>User.all })
-        def index
-          @users = User.all
-        end
-
+      # same thing as
+      # Template.render('main/users/index', { :@users=>User.all })
+      def index
+        @users = User.all
       end
 
     end
+
 
 
 ### Inside (HAML) templates

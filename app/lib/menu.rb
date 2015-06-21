@@ -20,8 +20,12 @@ class Menu
     for el in @menu
       break if @we_have_active
       if el[:check]
-        if el[:check].call(path)
-          el[:active] = @we_have_active = true
+        if el[:check].kind_of?(Proc)
+          if el[:check].call(path)
+            el[:active] = @we_have_active = true
+          end
+        else
+          el[:active] = @we_have_active = true if path.index(el[:check])
         end
       elsif el[:href] == path
         el[:active] = @we_have_active = true
