@@ -75,7 +75,7 @@ class LuxApi
   end
 
   # public mount method
-  def self.raw(*path)
+  def self.resolve(*path)
     return 'Unsupported API call' if path[3]
     return 'Unsupported API call' unless path[1]
 
@@ -148,7 +148,8 @@ class LuxApi
       rescue
         if $!
           @error ||= $!.message.split(' for #').first
-          @response[:backtrace] = $!.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] } if Lux.dev?
+          root = __FILE__.sub('lux/lux/modules/lux_api.rb','')
+          @response[:backtrace] = $!.backtrace.reject{ |el| el.index('/gems/') }.map{ |el| el.sub(root, '') }
         end
       end
     end
@@ -205,7 +206,7 @@ class LuxApi
     can? :create
     @object.save
     report_errros_if_any @object
-    respond "#{@class_name.capitalize} created"
+    @message = "#{@@class_name.capitalize} created"
     @response[:path] = @object.path
     @object.attributes
   end
@@ -237,12 +238,12 @@ class LuxApi
 
     if @object.respond_to?(:active)
       @object.update_attributes :active=>false
-      return respond 'Object deleted (exists in trashcan)'
+      @message = 'Object deleted (exists in trashcan)'
     end
 
     @object.destroy
     report_errros_if_any @object
-    respond "#{@response[:class]} deleted"
+    @message = "#{@response[:class]} deleted"
     @object.attributes
   end
 
@@ -251,9 +252,9 @@ class LuxApi
 
     if @object.respond_to?(:active)
       @object.update_attributes :active=>true
-      return respond 'Object raised from the dead.'
+      @message = 'Object raised from the dead.'
     else
-      return respond 'Object has no attriute [active]'
+      @message = 'Object has no attriute [active]'
     end
 
   end

@@ -1,7 +1,7 @@
 class Main::BucketCell < LuxCell
 
   def index
-    @buckets = Bucket.all
+    @buckets = Bucket.all.paginate(2)
   end
 
   def show(id)

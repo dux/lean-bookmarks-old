@@ -13,7 +13,7 @@ class Object
   end
 
   def or(_or)
-    self.blank? ? _or : self
+    self.blank? || self == 0 ? _or : self
   end
 
 end

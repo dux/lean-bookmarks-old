@@ -1,12 +1,14 @@
-require 'active_support/concern'
-
 module PgarrayPlugin
   module Model
     extend ActiveSupport::Concern
     included do
       def self.array_on(*fields)
         for field in fields
-          eval %[def #{field}=(data)
+          self.class_eval %[def #{field}=(data)
+            unless data
+              self[:#{field}] = []
+              return
+            end
             if data.kind_of?(String)
               self[:#{field}] = data.split(/\s*,\s*/)
             else

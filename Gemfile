@@ -15,4 +15,5 @@ gem 'better_errors'
 gem 'sass'
 gem 'coffee-script'
 gem 'rest-client'
+# gem 'will_paginate'
 

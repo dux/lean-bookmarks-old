@@ -33,7 +33,7 @@ module MasterHelper
       begin
         yield(el)
       rescue
-        concat(raw %[<pre style="background-color:#fdd; padding:4px; border:1px solid #ccc;"><ul><li>Object: #{}#{el.as_link rescue '-'} (#{el.class.name})</li><li>Error: #{$!}</li></ul></pre>])
+        concat(%[<pre style="background-color:#fdd; padding:4px; border:1px solid #ccc;"><ul><li>Object: #{}#{el.as_link rescue '-'} (#{el.class.name})</li><li>Error: #{$!}</li></ul></pre>])
       end
     end
   end

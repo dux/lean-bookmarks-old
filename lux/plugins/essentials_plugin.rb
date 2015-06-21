@@ -1,106 +1,23 @@
 require 'active_support/concern'
 
 module EssentialsPlugin
-  module Controller
-    extend ActiveSupport::Concern
-
-    def current_user
-      User.current
-    end
-
-    def bounce(err, path=:back)
-      flash[:error] = err
-      redirect_to path
-    end
-
-    def respond(text, path=:back)
-      flash[:info] = text
-      redirect_to path
-    end
-
-    def error(err)
-      flash.now[:error] = err
-    end
-
-    def raise_to_user
-      begin
-        yield
-      rescue
-        flash.now[:error] = $!.message
-      end
-    end    
-
-    def page_error(status=nil, text=nil, &block)
-      begin
-        yield
-      rescue
-        status ||= 500
-        case status
-          when 500
-            text ||= 'Runtime error'
-          when 403
-            return error 'Login required', '/' unless User.current
-          when 404
-            text ||= 'Page not found' if status == 404
-          else
-            text = "Unknown status #{status}"
-        end
-        @status = status
-        @text = text
-        render status:status, :template=>'www/root/error', layout:false
-      end
-    end
-
-    def speed(cnt=10)
-      t = Time.now
-      for i in (1..cnt)
-        yield
-      end
-      diff = Time.now-t
-      render text:"#{diff} ms for #{cnt} loops which is #{diff/cnt*1000} ms per loop"
-    end
-
-    def fix_params_if_needed
-      params[:id] = params[:id].split('-')[0] if params[:id]
-
-      begin
-        params[:id] = StringBase.decode(params[:id]) if params[:id] =~ /^[a-z]+$/ # StringBase encoded  
-      rescue 
-        return page_error 503, $!.message                
-      end
-
-      for k,v in params
-        params[k] = params[k].to_i if k =~ /_id$/ # k == 'id' ||
-        next unless params[k].class.name == 'HashWithIndifferentAccess'
-        for kk,vv in params[k]
-          params[k][kk] = params[k][kk].to_i if kk == 'id' || kk =~ /_id$/
-        end
-      end
-    end
-
-    included do
-      rescue_from StandardError do |exception|
-        new_logger = Logger.new('log/exceptions.log')
-        new_logger.info("EXCEPTION: #{User.current ? User.current.email : 'guest'}, #{request.url}")
-        new_logger.info(" #{exception.message}")
-        new_logger.info(" #{exception.backtrace}")
-
-        if Rails.env.development?
-          raise exception
-        else
-          page_error 500, exception.message.split('for #')[0]
-        end
-      end
-
-      helper_method :current_user
-      before_filter :fix_params_if_needed
-    end
-  end
-
-module Model
+  
+  module Model
     extend ActiveSupport::Concern
 
     class_methods do
+      def paginate(per_page=20, page_var=:page)
+        page = Lux.params[page_var] || 1
+        page = page.to_i - 1
+
+        ret = where({}).limit(per_page).offset(page * per_page).all.to_a
+        ret.define_singleton_method(:paginate_var) do; page_var ;end
+        ret.define_singleton_method(:paginate_page) do; page ;end
+        ret.define_singleton_method(:paginate_per_page) do; per_page ;end
+        ret.define_singleton_method(:paginate) do; per_page ;end
+        ret
+      end
+
       def scoped(options=nil)
         options ? where(nil).apply_finder_options(options, true) : where(nil)
       end

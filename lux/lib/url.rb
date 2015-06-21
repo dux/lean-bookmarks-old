@@ -119,7 +119,7 @@ class Url
     [host_with_port,path, qs_val, @hash].join('')
   end
 
-  def local_url
+  def relative
     [path, qs_val, @hash].join('')
   end
 

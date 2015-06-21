@@ -40,6 +40,7 @@ class Array
   def wrap(tag)
     map{ |el| %[<#{tag}>#{el}</#{tag}>] } 
   end
+
 end
 
 # class WillPaginate::Collection 

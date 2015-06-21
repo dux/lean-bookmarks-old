@@ -3,7 +3,7 @@ class LuxRenderCell < LuxCell
   # usuaal usage in main router
   #  when :lux
   #    return LuxRenderCell.dev_mount(*@path)
-  def self.raw(*path)
+  def self.resolve(*path)
     return Template.render('lux/index') unless path.first
     return dev_mount_api_root if path.first == 'api'
     return dev_mount_mailer(path[1]) if path.first == 'mailer'

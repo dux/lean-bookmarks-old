@@ -23,6 +23,8 @@ before do
       session.delete(:u_id)
     end
   end
+
+  @path[0] = StringBase.decode(@path[0]) rescue @path[0] if @path[0]
 end
 
 after do

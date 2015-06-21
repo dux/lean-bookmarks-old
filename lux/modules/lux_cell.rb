@@ -16,7 +16,7 @@ class LuxCell
   #   - is new.random!() if  cell has method "random!" (useful if you dont want to render template)
   #   - is render(:random) if  cell has method "random"
   # /5/comments - is self.render(:comments, 5) or is comments!(5)
-  def self.raw(*args)
+  def self.resolve(*args)
     local_args = args.kind_of?(Array) ? args.flatten.dup : [args]
 
     local_args[0] = local_args[0].to_s if local_args[0].kind_of?(Symbol)

@@ -33,5 +33,29 @@ class LuxHelper
     "#{klass}::#{name.to_s.classify}Cell".constantize.part(action, *args)
   end
 
+  def paginate(list)
+    ret = ['<div class="paginate"><div>']
+
+    if list.paginate_page > 0
+      url = Url.current
+      list.paginate_page == 1 ? url.delete(list.paginate_var) : url.qs(list.paginate_var, list.paginate_page)
+      ret.push %[<a href="#{url.relative}">&larr;</a>]
+    else
+      ret.push %[<span>&larr;</span>]
+    end
+
+    ret.push %[<i>#{list.paginate_page.or('&bull;')}</i>]
+
+    if list.paginate_per_page == list.length
+      url = Url.current
+      url.qs(list.paginate_var, list.paginate_page+2)
+      ret.push %[<a href="#{url.relative}">&rarr;</a>]
+    else
+      ret.push %[<span>&rarr;</span>]
+    end
+
+    ret.push '</div></div>'
+    ret.join('')
+  end
 end
 

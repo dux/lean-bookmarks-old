@@ -28,9 +28,9 @@ Here is example that
             Lux.flash :info, 'all ok'
             return redirect '/'
           when :user
-            return Main::UserCell.raw(@path)
+            return Main::UserCell.resolve(@path)
           when :action
-            return Main::ActionCell.raw(@first_part)
+            return Main::ActionCell.resolve(@first_part)
           when :grid
             return Template.part('grid')
           else
@@ -43,7 +43,7 @@ Here is example that
             when :lux
               return LuxRenderCell.dev_row(*@path)
             when :api
-              return LuxApi.raw(*@path)
+              return LuxApi.resolve(*@path)
           end
         end
 
@@ -51,7 +51,7 @@ Here is example that
       end
 
       post '/api/*' do
-        return LuxApi.raw(*@path)
+        return LuxApi.resolve(*@path)
       end
 
       post '*' do
@@ -66,7 +66,7 @@ Cell is just a class with instance methods that retuns data or redirect to anoth
 
 * we call methods in cells via class method like ```UserCell.render(:show, 2)``` and send method mane as symbol argument
 * there are three basic MasterCell class methods
-  * **raw** - ```UserCell.get(:random)``` - returns generic data
+  * **resolve** - ```UserCell.get(:random)``` - returns generic data
   * **render** - ```UserCell.render(:show, 2)``` - renders page with layout
   * **part** - ```UserCell.part(:show, 2)``` - returns single template without layout
 * inside Cell class you can
@@ -87,7 +87,7 @@ If you inherit from MasterCell you will have helper methods as render
 
 	  # in this example cell acts as router
 	  # aceepts arguments and behaves accordingly
-	  def self.raw(*args)
+	  def self.resolve(*args)
         what = args.first
 
 	    # /users -> UserCell.render(:index)
