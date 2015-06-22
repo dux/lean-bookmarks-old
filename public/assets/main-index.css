@@ -98,6 +98,7 @@ select { min-width: 200px; color: #555555; display: block; height: 37px; min-hei
 .navbar ul > li.active { background-color: #eee; }
 .navbar ul > li.active a { color: #000; font-weight: 600; }
 .navbar ul > li:hover { background-color: #f7f7f7; }
+.navbar ul.main li { width: 80px; text-align: center; }
 .navbar ul.pull-right { float: right; }
 
 button, input[type="submit"], input[type="button"] { font-weight: 600; font-size: 1em; -webkit-appearance: none; -webkit-font-smoothing: antialiased; cursor: pointer; }
