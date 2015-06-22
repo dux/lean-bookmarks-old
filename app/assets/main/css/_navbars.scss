@@ -1,20 +1,25 @@
 .navbar {
-  background-color: #ddd;
+  background-color: #fff;
   border-bottom:1px solid #ccc;
   margin-bottom:20px;
 
-  > ul {
+  ul {
     display:inline;
     > li { 
       display: inline-block; 
-      &.active { background-color: #fff; }
       a {
-       display: inline-block; padding:10px; 
+       display: inline-block; padding:15px;
+       text-align:center; 
        text-decoration:none;
-       color: #444;
+       color: #888;
       }
+      &.active { 
+        background-color: #eee; 
+        a { color:#000; font-weight:600; }
+      }
+      &:hover { background-color: #f7f7f7; }
     }
   } 
 
-  ul.pull-right {  float:right; }
+  ul.pull-right { float:right; }
 }

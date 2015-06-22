@@ -1,22 +1,12 @@
 //= req css/index.scss
 //= req ../components/toastr/toastr.min.css
 
-.paginate {
-  clear: both; 
-  padding:20px 0;
-  text-align:center;
+body { background-color: #f7f7f7; }
 
-  > div {
-    border:1px solid #ddd; 
-    display:inline-block;
-    border-radius:4px;
-    margin:0 auto;
-
-    i, span, a { display:inline-block; width:40px; padding:10px; text-align:center; text-decoration:none; color:#aaa; }
-    i { border-left:1px solid #eee; border-right:1px solid #eee; }
-    a {
-      color:#444;
-      &:hover { background-color: #f7f7f7; }
-    }
-  }
+.colorize {
+  display:flex;
+  > div { flex: 1; height:3px; }
+  .buckets { background-color:#8767A6; }
+  .links   { background-color:#E98811; }
+  .notes   { background-color:#F7CA0F; }
 }

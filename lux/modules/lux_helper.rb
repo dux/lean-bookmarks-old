@@ -44,7 +44,7 @@ class LuxHelper
       ret.push %[<span>&larr;</span>]
     end
 
-    ret.push %[<i>#{list.paginate_page.or('&bull;')}</i>]
+    ret.push %[<i>#{list.paginate_page == 0 ? '&bull;' : list.paginate_page+1}</i>]
 
     if list.paginate_per_page == list.length
       url = Url.current

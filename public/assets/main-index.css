@@ -40,7 +40,7 @@ h6 { font-size: 14pt; font-weight: 700; font-color: #444; margin-bottom: 20px; }
 
 hr { border: none; border-bottom: 1px solid #ccc; margin: 30px 0 20px 0; }
 
-.well { background-color: #f3f3f3; padding: 20px; border: 1px solid #eee; }
+.well { background-color: #fff; padding: 20px; border: 1px solid #eee; }
 
 .toast-message { line-height: 16pt; }
 
@@ -91,11 +91,13 @@ select { min-width: 200px; color: #555555; display: block; height: 37px; min-hei
 
 .col-500 { flex: 0 0 500px; }
 
-.navbar { background-color: #ddd; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
-.navbar > ul { display: inline; }
-.navbar > ul > li { display: inline-block; }
-.navbar > ul > li.active { background-color: #fff; }
-.navbar > ul > li a { display: inline-block; padding: 10px; text-decoration: none; color: #444; }
+.navbar { background-color: #fff; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
+.navbar ul { display: inline; }
+.navbar ul > li { display: inline-block; }
+.navbar ul > li a { display: inline-block; padding: 15px; text-align: center; text-decoration: none; color: #888; }
+.navbar ul > li.active { background-color: #eee; }
+.navbar ul > li.active a { color: #000; font-weight: 600; }
+.navbar ul > li:hover { background-color: #f7f7f7; }
 .navbar ul.pull-right { float: right; }
 
 button, input[type="submit"], input[type="button"] { font-weight: 600; font-size: 1em; -webkit-appearance: none; -webkit-font-smoothing: antialiased; cursor: pointer; }
@@ -170,6 +172,13 @@ table td[class*="col-"], table th[class*="col-"] { position: static; float: none
 #content ul, #content ol { padding-left: 20px; }
 #content ul li, #content ol li { list-style-type: circle; padding-bottom: 10px; }
 
+.paginate { clear: both; padding: 20px 0; text-align: center; }
+.paginate > div { border: 1px solid #ddd; display: inline-block; border-radius: 4px; margin: 0 auto; background-color: #fff; }
+.paginate > div i, .paginate > div span, .paginate > div a { display: inline-block; width: 40px; padding: 10px; text-align: center; text-decoration: none; color: #aaa; }
+.paginate > div i { border-left: 1px solid #eee; border-right: 1px solid #eee; }
+.paginate > div a { color: #444; }
+.paginate > div a:hover { background-color: #f7f7f7; }
+
 /*# sourceMappingURL=main-css-index.css.map */
 
 
@@ -178,12 +187,13 @@ table td[class*="col-"], table th[class*="col-"] { position: static; float: none
 
 
 /* Asset file: main/index.scss */
-.paginate { clear: both; padding: 20px 0; text-align: center; }
-.paginate > div { border: 1px solid #ddd; display: inline-block; border-radius: 4px; margin: 0 auto; }
-.paginate > div i, .paginate > div span, .paginate > div a { display: inline-block; width: 40px; padding: 10px; text-align: center; text-decoration: none; color: #aaa; }
-.paginate > div i { border-left: 1px solid #eee; border-right: 1px solid #eee; }
-.paginate > div a { color: #444; }
-.paginate > div a:hover { background-color: #f7f7f7; }
+body { background-color: #f7f7f7; }
+
+.colorize { display: flex; }
+.colorize > div { flex: 1; height: 3px; }
+.colorize .buckets { background-color: #8767A6; }
+.colorize .links { background-color: #E98811; }
+.colorize .notes { background-color: #F7CA0F; }
 
 /*# sourceMappingURL=main-index.css.map */
 

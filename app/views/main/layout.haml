@@ -7,20 +7,29 @@
     = # Asset.css 'http://fonts.googleapis.com/css?family=Lato:300,400,700,900,400italic'
     = Asset.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300,600'
     = Asset.js  'main/index.coffee'
-  %body
+  %body{ :class=>@class  }
     #full-page
-      .navbar
-        %ul= main_menu
+      .colorize
+        - if @class
+          %div{ :class=>@class }
+        - else
+          .buckets
+          .links
+          .notes
 
-        %ul.pull-right
-          - if User.current
-            %li
-              %a{ :href=>'/users/bye' } Log off
-            %li
-              %a{ :href=>'/users/profile' }= User.current.email
-          - else
-            %li
-              %a{ :href=>'/login' } Login or signup
+      .navbar
+        .container
+          %ul= main_menu
+
+          %ul.pull-right
+            - if User.current
+              %li
+                %a{ :href=>'/users/bye' } Log off
+              %li
+                %a{ :href=>'/users/profile' }= User.current.email
+            - else
+              %li
+                %a{ :href=>'/login' } Login or signup
 
       .container#content
         = yield

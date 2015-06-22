@@ -24,8 +24,6 @@ module ApplicationHelper
 
     if User.current
       menu.add '/', 'Home'
-      # menu.add '/users', 'Users', Proc.new { |path| path == '/users' || path.index('/user/') ? true : false }
-      # menu.add '/users/random', 'Random users'
       menu.add '/buckets', 'Buckets', '/bucket'
       menu.add '/links', 'Links', '/link'
       menu.add '/notes', 'Notes', '/note'

@@ -64,6 +64,16 @@ class Lux
     "uid-#{Thread.current[:uid_cnt]+=1}"
   end
 
+  def self.init(sin)
+    Thread.current[:lux] = {}
+    Thread.current[:lux][:sinatra] = sin
+    Thread.current[:lux][:locals] = {}
+  end
+
+  def self.locals
+    Thread.current[:lux][:locals]
+  end
+
   def self.sinatra
     Thread.current[:lux][:sinatra]
   end

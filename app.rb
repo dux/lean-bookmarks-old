@@ -20,6 +20,8 @@ get '*' do
   # application routes
   if [:link, :note, :bucket, :user].index(@root_part)
     return Lux.status :forbiden, 'Only for registred users' unless User.current
+
+    Lux.locals[:class] = @root_part.to_s.pluralize
     
     return "Main::#{@root_part.to_s.classify}Cell".constantize.resolve(*@path)
   end

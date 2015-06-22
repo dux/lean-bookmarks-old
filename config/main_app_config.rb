@@ -12,8 +12,7 @@ before do
   @root_part = @path[0] ? @path.shift.gsub('-','_').singularize.to_sym : nil
   @first_part = @path[0]
 
-  Thread.current[:lux] = {}
-  Thread.current[:lux][:sinatra] = self
+  Lux.init(self)
 
   # load user if there is session string
   if session[:u_id]

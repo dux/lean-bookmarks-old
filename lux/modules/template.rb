@@ -45,6 +45,10 @@ class Template
       helper.instance_variable_set(k, v)
     end
 
+    for k, v in Lux.locals
+      helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
+    end
+
     Lux.try "Template [#{@template}] render error" do
       @engine.render(helper) do
         yield if block_given?
