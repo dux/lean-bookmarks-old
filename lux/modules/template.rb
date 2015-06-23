@@ -44,9 +44,9 @@ class Template
     else
       eval %[helper.extend ApplicationHelper] rescue false
     end
-    
+
     for k, v in opts
-      helper.instance_variable_set(k, v)
+      helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
     end
 
     for k, v in Lux.locals

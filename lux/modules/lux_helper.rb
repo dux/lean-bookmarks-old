@@ -12,6 +12,9 @@ class LuxHelper
     Lux.sinatra.request
   end
 
+  # renders just template but it is called 
+  # = render :_link, link:link
+  # = render 'main/links/_link', link:link
   def render(name, opts={}, &block)
     name = name.to_s
     name = "#{Template.last_template_path}/#{name}" unless name.index('/')
@@ -23,7 +26,6 @@ class LuxHelper
         local_data
       end
     else
-      name = "#{Template.last_template_path}/#{name}" unless name.index('/')
       Template.new(name).part(instance_variables_hash.merge(opts))
     end
   end
@@ -34,7 +36,13 @@ class LuxHelper
   end
 
   def paginate(list)
+    return if list.empty?
+
     ret = ['<div class="paginate"><div>']
+
+    unless list.respond_to?(:paginate_page)
+      return Lux.error('Paginate recieved list but it is not paginated in model scope. ')
+    end
 
     if list.paginate_page > 0
       url = Url.current

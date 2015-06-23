@@ -1,0 +1,5 @@
+.bucket.link
+  .wrap
+    %h4= @link.as_link
+    %small= link_to @link.url.trim(30), @link.url, :target=>:new
+  = image_tag @link.thumbnail

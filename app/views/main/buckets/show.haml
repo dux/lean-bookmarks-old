@@ -1,4 +1,6 @@
-.nudge
+.top-menu
+  %a.btn.btn-sm.btn-empty{ :onclick=>"Popup.go.form(this, 'Add new bucket', '/api/buckets/create', 'name', '')" } Add new link
+  %a.btn.btn-sm.btn-empty{ :href=>'/buckets/archive' } Archived
 
 %h2
   = @bucket.name

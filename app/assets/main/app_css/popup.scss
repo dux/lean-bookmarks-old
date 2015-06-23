@@ -1,0 +1,32 @@
+// popup
+#popup {
+  display:inline-block;
+  font-size: 14px;
+  z-index:100000;
+  border:1px solid #b9b9b9; 
+  border-radius: 3px;
+  min-width:250px;
+  // max-width:350px;
+  padding:8px;
+  background-color: #fff;
+  position:absolute;
+  margin-top:3px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  #popup_title {
+    font-weight: bold;
+    color:#777;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 7px;
+    padding-bottom: 5px;
+  }
+  #popup_body {
+    input[type=text], textarea { border-radius:3px; margin-bottom:10px; background-color:#eee; display:block; margin-bottom: 10px; }
+    input[type=checkbox] { width:auto; }
+    input[type=text]:focus, textarea:focus { background-color:#fff; }
+    textarea { height:72px; }
+    hr { margin:10px 0; }
+    label { margin-top:10px; clear:both; display:block;}
+    .stick { margin:-8px 0 -10px -10px; }
+  }
+}

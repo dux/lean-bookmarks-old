@@ -5,7 +5,8 @@ class Link < MasterModel
 
   array_on :tags
 
-  default_scope -> { order('links.updated_at desc') }
+  default_scope -> { order('links.updated_at desc').where('active=?', true) }
+
   scope :is_article, -> { where('is_article=?', true) }
   scope :not_article, -> { where('coalesce(is_article, false)=?', false) }
 
@@ -15,8 +16,6 @@ class Link < MasterModel
       self[el] = self[el][0, 255] if self[el]
     end
   end
-
-  def self.base_route; 'bm'; end
 
   def domain
     return self[:domain] if self[:domain].present?

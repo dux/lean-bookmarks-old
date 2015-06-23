@@ -76,6 +76,11 @@ module EssentialsPlugin
         return where("id in (?)", list)
       end
 
+      def my
+        raise 'Not loged in for my' unless User.current
+        where('created_by=?', User.current.id)
+      end
+
     # taggable
       def tagged_with?(*what)
         return self if what.to_s == ''
@@ -212,11 +217,6 @@ module EssentialsPlugin
         return false unless User.current
         return true if User.current.id == created_by
         return false
-      end
-
-      def my
-        raise 'Not loged in for my' unless User.current
-        where('created_by=?', User.current.id)
       end
 
       def for(obj)

@@ -26,7 +26,7 @@
       });
     },
     send: function(method, opts, func) {
-      if (typeof opts === 'object') {
+      if (opts.getAttribute) {
         opts = $(opts).serializeHash();
       }
       if (typeof opts === 'function') {

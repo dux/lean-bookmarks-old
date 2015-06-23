@@ -1,0 +1,79 @@
+//
+// Labels
+// --------------------------------------------------
+
+@mixin label-variant($color) {
+  background-color: $color;
+  border:1px solid darken($color, 10%);
+  color: darken($color, 50%);
+
+  &[href] {
+    &:hover,
+    &:focus {
+      background-color: darken($color, 10%);
+    }
+  }
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 400;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+
+  // [converter] extracted a& to a.label
+
+  // Empty labels collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+
+  // Quick fix for labels in buttons
+  .btn & {
+    position: relative;
+    top: -1px;
+  }
+}
+
+// Add hover effects, but only for links
+a.label {
+  &:hover,
+  &:focus {
+    color: #ddd;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+// Colors
+// Contextual variations (linked labels get darker on :hover)
+
+.label-default {
+  @include label-variant(#cccccc);
+}
+
+.label-primary {
+  @include label-variant(#eee);
+}
+
+.label-success {
+  @include label-variant(#eee);
+}
+
+.label-info {
+  @include label-variant(#eee);
+}
+
+.label-warning {
+  @include label-variant(#eee);
+}
+
+.label-danger {
+  @include label-variant(#eee);
+}

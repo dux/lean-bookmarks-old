@@ -122,7 +122,7 @@ class LuxApi
     if @@actions[action] && @@actions[action][:params]
       for key, values in @@actions[action][:params]
         next if @error
-        value = Lux.params[key]
+        value = @@params[key]
         eval "@_#{key} = value" if value.present?
         for type in values
           case type

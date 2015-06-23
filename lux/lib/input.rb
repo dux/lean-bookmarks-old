@@ -116,9 +116,9 @@ class Input
 
   def as_tag
     id = Crypt.uid
-    @opts[:value] = @opts[:value].or([]).join(', ')
-
+    @opts[:value] = @opts[:value].or([]).join(', ') if @opts[:value].kind_of?(Array)
     @opts[:id] = "#{id}_s"
+    @opts[:type] = :text
     @opts[:onkeyup] = %[draw_tag('#{id}')]
     ret = %[
     <script>
@@ -133,47 +133,6 @@ class Input
     ret += %[<div id="#{id}" style="margin-top:5px;"></div>]
     ret += %[<script>draw_tag('#{id}')</script>]
     ret
-  end
-
-  ### site custom
-
-  def as_city
-    ret = []
-    for country in Country.all.sort
-      ret.push City.for(country).as_select.wrap(:optgroup, :label=>country.name)
-    end   
-    vals = ret.join("\n").sub(/value="#{@opts[:value]}"/, %[value="#{@opts[:value]}" selected=""])
-    @opts.tag(:select, vals)
-  end
-
-  def as_tags
-    tags = @opts.delete(:collection) || []
-
-
-    ret = []
-    ret.push %[<script>function update_tag_collection(el, name) {
-      el.hasClass('btn-primary') ? el.removeClass('btn-primary') : el.addClass('btn-primary')
-      data = []
-      $('.'+name+'_btn.btn-primary').each(function(){
-        data.push($(this).data('value'))
-      })
-      $('#'+name+'_input').val(data.join(','))
-    }</script><div>]
-
-    name = @opts[:name].gsub(/[^\w]/,'_')
-
-    for el in prepare_collection(tags)
-      ret.push %[<span class="btn btn-default btn-sm #{name}_btn #{@opts[:value].to_s.index(el[0].to_s) ? 'btn-primary' : ''}" onclick="update_tag_collection($(this), '#{name}')" data-value="#{el[0]}">#{el[1]}</span> ]
-    end
-
-    ret.push '</div>'
-
-    @opts[:id] = "#{name}_input"
-    @opts[:type] = 'hidden'
-    @opts[:value] = @opts[:value].join(',')
-    ret.push [@opts.tag(:input)]
-
-    ret.join('')
   end
 
   def as_date

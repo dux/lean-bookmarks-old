@@ -1,0 +1,28 @@
+// buckets
+.bucket {
+  border:1px solid #ddd; background-color: #fff; border-radius: 4px;
+  width:250px;
+  height: 308px;
+  float:left; margin-right:20px; margin-bottom:20px; 
+  h4 {
+    font-size: 12pt; 
+  }
+
+  border-top:2px solid #8767A6; 
+
+  small {
+    font-size:90%; 
+    a { text-decoration:none; }
+  }
+  .wrap { padding:10px; height:100px; }
+
+  &:hover { box-shadow:0 3px 5px 1px #ddd; } 
+  &.link { 
+    border-top:2px solid #E98811;
+    img { width:100%; border-top:1px solid #ddd; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; }
+  }
+  &.note {
+    border-top:2px solid #F7CA0F;
+    background-color: #FCF8EC;
+  }
+}

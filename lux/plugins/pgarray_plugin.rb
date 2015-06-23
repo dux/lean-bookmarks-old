@@ -11,6 +11,8 @@ module PgarrayPlugin
             end
             if data.kind_of?(String)
               self[:#{field}] = data.split(/\s*,\s*/)
+            elsif data.kind_of?(Array)
+              self[:#{field}] = data
             else
               self[:#{field}] = []
               for k,v in data

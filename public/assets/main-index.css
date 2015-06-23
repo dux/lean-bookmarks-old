@@ -1,10 +1,12 @@
 /* Compiled and copied assets files in use: 
- - main/css/index.scss
+ - main/base/index.scss
+ - main/app_css/buckets.scss
+ - main/app_css/popup.scss
  - components/toastr/toastr.min.css
  - main/index.scss
 */
 
-/* Asset file: main/css/index.scss */
+/* Asset file: main/base/index.scss */
 /* http://meyerweb.com/eric/tools/css/reset/  v2.0 | 20110126 License: none (public domain)
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
@@ -156,7 +158,7 @@ caption { padding-top: 8px; padding-bottom: 8px; color: #888; text-align: left; 
 
 th { text-align: left; }
 
-td .btn { margin-bottom: 0; }
+td .btn { margin-bottom: 0 !important; }
 
 .table { width: 100%; max-width: 100%; margin-bottom: 17pt; }
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td { padding: 8px; line-height: 1.42857; vertical-align: top; border-top: 1px solid #ddd; }
@@ -190,7 +192,61 @@ table td[class*="col-"], table th[class*="col-"] { position: static; float: none
 .paginate > div a { color: #444; }
 .paginate > div a:hover { background-color: #f7f7f7; }
 
-/*# sourceMappingURL=main-css-index.css.map */
+.label { display: inline; padding: .2em .6em .3em; font-size: 75%; font-weight: 400; line-height: 1; color: #fff; text-align: center; white-space: nowrap; vertical-align: baseline; border-radius: .25em; }
+.label:empty { display: none; }
+.btn .label { position: relative; top: -1px; }
+
+a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: pointer; }
+
+.label-default { background-color: #cccccc; border: 1px solid #b3b3b3; color: #4d4d4d; }
+.label-default[href]:hover, .label-default[href]:focus { background-color: #b3b3b3; }
+
+.label-primary { background-color: #eee; border: 1px solid #d4d4d4; color: #6e6e6e; }
+.label-primary[href]:hover, .label-primary[href]:focus { background-color: #d4d4d4; }
+
+.label-success { background-color: #eee; border: 1px solid #d4d4d4; color: #6e6e6e; }
+.label-success[href]:hover, .label-success[href]:focus { background-color: #d4d4d4; }
+
+.label-info { background-color: #eee; border: 1px solid #d4d4d4; color: #6e6e6e; }
+.label-info[href]:hover, .label-info[href]:focus { background-color: #d4d4d4; }
+
+.label-warning { background-color: #eee; border: 1px solid #d4d4d4; color: #6e6e6e; }
+.label-warning[href]:hover, .label-warning[href]:focus { background-color: #d4d4d4; }
+
+.label-danger { background-color: #eee; border: 1px solid #d4d4d4; color: #6e6e6e; }
+.label-danger[href]:hover, .label-danger[href]:focus { background-color: #d4d4d4; }
+
+.tip { margin: 20px 0; padding: 20px; background-color: #fff; border: 1px solid #eee; }
+
+/*# sourceMappingURL=main-base-index.css.map */
+
+
+/* Asset file: main/app_css/buckets.scss */
+.bucket { border: 1px solid #ddd; background-color: #fff; border-radius: 4px; width: 250px; height: 308px; float: left; margin-right: 20px; margin-bottom: 20px; border-top: 2px solid #8767A6; }
+.bucket h4 { font-size: 12pt; }
+.bucket small { font-size: 90%; }
+.bucket small a { text-decoration: none; }
+.bucket .wrap { padding: 10px; height: 100px; }
+.bucket:hover { box-shadow: 0 3px 5px 1px #ddd; }
+.bucket.link { border-top: 2px solid #E98811; }
+.bucket.link img { width: 100%; border-top: 1px solid #ddd; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; }
+.bucket.note { border-top: 2px solid #F7CA0F; background-color: #FCF8EC; }
+
+/*# sourceMappingURL=main-app_css-buckets.css.map */
+
+
+/* Asset file: main/app_css/popup.scss */
+#popup { display: inline-block; font-size: 14px; z-index: 100000; border: 1px solid #b9b9b9; border-radius: 3px; min-width: 250px; padding: 8px; background-color: #fff; position: absolute; margin-top: 3px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); }
+#popup #popup_title { font-weight: bold; color: #777; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 7px; padding-bottom: 5px; }
+#popup #popup_body input[type=text], #popup #popup_body textarea { border-radius: 3px; margin-bottom: 10px; background-color: #eee; display: block; margin-bottom: 10px; }
+#popup #popup_body input[type=checkbox] { width: auto; }
+#popup #popup_body input[type=text]:focus, #popup #popup_body textarea:focus { background-color: #fff; }
+#popup #popup_body textarea { height: 72px; }
+#popup #popup_body hr { margin: 10px 0; }
+#popup #popup_body label { margin-top: 10px; clear: both; display: block; }
+#popup #popup_body .stick { margin: -8px 0 -10px -10px; }
+
+/*# sourceMappingURL=main-app_css-popup.css.map */
 
 
 /* Asset file: components/toastr/toastr.min.css */
@@ -203,6 +259,11 @@ body { background-color: #f7f7f7; }
 .fr { float: right; }
 
 .r { text-align: right; }
+
+small { font-size: 10pt; }
+small a { text-decoration: none; }
+
+p { line-height: 16pt; }
 
 .colorize { display: flex; }
 .colorize > div { flex: 1; height: 3px; }
@@ -224,21 +285,7 @@ h1 .btn:active, h2 .btn:active, h3 .btn:active { top: -4px; }
 
 h1:hover .show-on-hover, h2:hover .show-on-hover, h3:hover .show-on-hover { opacity: 1; }
 
-.bucket { padding: 10px; border: 1px solid #ddd; background-color: #fff; border-radius: 4px; width: 232px; height: 250px; float: left; margin-right: 20px; margin-bottom: 20px; }
-.bucket h4 { font-size: 12pt; }
-.bucket:hover { border-color: #ccc; }
-
-.top-menu { margin: 10px 0 10px 0; }
-
-#popup { display: inline-block; font-size: 14px; z-index: 100000; border: 1px solid #b9b9b9; border-radius: 3px; min-width: 250px; padding: 8px; background-color: #fff; position: absolute; margin-top: 3px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); }
-#popup #popup_title { font-weight: bold; color: #777; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 7px; padding-bottom: 5px; }
-#popup #popup_body input[type=text], #popup #popup_body textarea { border-radius: 3px; margin-bottom: 10px; background-color: #eee; display: block; margin-bottom: 10px; }
-#popup #popup_body input[type=checkbox] { width: auto; }
-#popup #popup_body input[type=text]:focus, #popup #popup_body textarea:focus { background-color: #fff; }
-#popup #popup_body textarea { height: 72px; }
-#popup #popup_body hr { margin: 10px 0; }
-#popup #popup_body label { margin-top: 10px; clear: both; display: block; }
-#popup #popup_body .stick { margin: -8px 0 -10px -10px; }
+.top-menu { margin: 10px 0 20px 0; }
 
 /*# sourceMappingURL=main-index.css.map */
 

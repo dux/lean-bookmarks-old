@@ -31,13 +31,14 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.string   "url",                      null: false
     t.string   "domain",                   null: false
     t.string   "tags",        default: [],              array: true
+    t.string   "kind"
     t.string   "description"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active",     default: true
-    t.boolean  "is_article"
+    t.boolean  "is_article", default: false
     t.integer  "bucket_id",  null: false
   end
 

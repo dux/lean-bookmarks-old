@@ -11,7 +11,7 @@
       func(ret) if func && ! ret['error']
 
   send: (method, opts, func) ->
-    if typeof(opts) == 'object'
+    if (opts.getAttribute)
       opts = $(opts).serializeHash()
 
     if typeof(opts) == 'function'
@@ -19,7 +19,7 @@
       opts = {}
     
     method = "/api/#{method}" unless /^\/api/.test(method)
-    
+
     $.post method, opts, (ret) ->
       Info.auto(ret)
       func(ret) if func && ! ret['error']

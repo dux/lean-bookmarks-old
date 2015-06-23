@@ -1,0 +1,4 @@
+class NoteApi < LuxApi
+
+
+end

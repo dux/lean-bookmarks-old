@@ -1,0 +1,22 @@
+= render :_menu
+
+= narrow 800 do
+
+  %h3 Archived links
+
+  %table.table.table-hover.well
+    %tr
+      %th Link name and url
+      %th{ :style=>"width:120px;" } archived
+      %th.r{ :style=>"width:100px;" } restore?
+    - for el in @links
+      %tr
+        %td
+          %a{ :href=>el.path }
+            %b= el.name
+          %br
+          %small= link_to el.url.trim(30), el.url
+        %td
+          %small= Time.ago el.updated_at
+        %td
+          %button.btn.btn-sm.fr{ :onclick=>"restore_object('links', #{el.id})" } Restore

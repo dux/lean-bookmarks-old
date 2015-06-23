@@ -1,0 +1,7 @@
+.top-menu
+  %a.btn.btn-sm.btn-empty{ :onclick=>"Popup.go.form(this, 'Add new link', '/api/links/create', 'url', '')" } + Add link
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=i' } Images
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=v' } Videos
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=v' } Documents
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=v' } Domains
+  %a.btn.btn-sm.btn-empty{ :href=>'/links/archive' } Archived

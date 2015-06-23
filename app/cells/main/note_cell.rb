@@ -1,11 +1,11 @@
 class Main::NoteCell < LuxCell
 
   def index
-    @notes = Note.all
+    @notes = Note.my.paginate(20)
   end
 
-  def show
-    @note = Note.find(params[:id]).can
+  def show(id)
+    @note = Note.get(id)
   end
 
 end

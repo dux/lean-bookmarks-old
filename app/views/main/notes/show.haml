@@ -1,1 +1,22 @@
-asdasd
+= render :_menu
+
+= narrow 600 do
+
+  - if @note.active
+    %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('links', #{@note.id})" } Delete
+  - else
+    %button.btn.btn-sm.fr{ :onclick=>"restore_object('links', #{@note.id})" } Restore from archive
+
+  %h2 Edit note
+
+  .well
+    = form @note, :ver do
+      = input :name
+      = input :data, :as=>:memo, :style=>"height:200px;"
+      = submit 'Save'
+    
+
+  .tip
+    %h6 Pro tip
+
+    %p It is encuraged to use hackpad.com, google.com or similar service for keeping bigger douments. Notes are just for small documents.

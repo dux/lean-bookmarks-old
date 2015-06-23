@@ -1,1 +1,6 @@
-adas
+= render :_menu
+
+- for @note in @notes
+  = render :_note
+
+= paginate @notes
