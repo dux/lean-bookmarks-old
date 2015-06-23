@@ -1,0 +1,16 @@
+= narrow 600 do
+
+  - if @bucket.active
+    %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('buckets', #{@bucket.id})" } Delete
+  - else
+    %button.btn.btn-sm.fr{ :onclick=>"restore_object('buckets', #{@bucket.id})" } Restore from archive
+
+
+  %h2= link_to 'Edit bucket', @bucket.path
+
+  .well
+    = form @bucket, :ver do
+      = input :name
+      = input :description, :as=>:memo, :style=>"height:200px;"
+      = submit 'Save'
+    

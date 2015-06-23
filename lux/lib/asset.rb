@@ -1,3 +1,5 @@
+require 'open3'
+
 class Asset
 
   attr_accessor :public_file
@@ -41,6 +43,14 @@ class Asset
     fill_source_files
     compile_source_files
     join_source_files_to_public_file
+  end
+
+  def run!(what, cache=nil)
+    stdin, stdout, stderr, wait_thread = Open3.popen3(what)
+    if err = stderr.gets
+      File.unlink(cache) if File.exists?(cache)
+      raise "Asset compile error\n\n#{what}\n\n#{err}"
+    end
   end
 
   def fill_source_files
@@ -104,7 +114,7 @@ class Asset
 
         if do_compile
           measure file do
-            `scss -t compact '#{file}' --cache-location '.assets_cache' '#{cache}'`
+            run! "scss -t compact '#{file}' --cache-location '.assets_cache' '#{cache}'", cache
           end
         end
 
@@ -114,11 +124,11 @@ class Asset
           measure file do
             case ext
               when :less
-                  `lessc '#{file}' > '#{cache}'`
+                run! "lessc '#{file}' > '#{cache}'", cache
               when :haml
-                `haml '#{file}' > '#{cache}'`
+                run! "haml '#{file}' > '#{cache}'", cache
               when :coffee
-                `coffee -p -c '#{file}' > '#{cache}'`;
+                run! "/usr/local/bin/coffee -p -c '#{file}' > '#{cache}'", cache
             end
           end
         end

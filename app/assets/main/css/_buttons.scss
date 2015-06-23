@@ -19,6 +19,8 @@ $color-diff:        #151515;
 $border-radius:     3px;
 $transition-time:   0.25s;
 
+a.btn { cursor:pointer; }
+
 button, input[type="submit"], input[type="button"]{
   font-weight: 600;
   font-size: 1em;
@@ -34,6 +36,7 @@ button, input[type="submit"], input[type="button"]{
   &:hover{
     background-color: $background - $color-diff;
     color: $active-color;
+    text-decoration: none !important; 
   }
   &:active{
     background-color: $background - $color-diff*2;
@@ -62,7 +65,6 @@ button, input[type="submit"], input[type="button"]{
 
 .btn{
   display: inline-block;
-  min-width: 120px;
   padding: 8px 20px;
   margin-bottom: 1em;
   border: none;
@@ -120,9 +122,9 @@ button, input[type="submit"], input[type="button"]{
   // EMPTY BUTTONS
   &.btn-empty{
     background: transparent;
-    border: 2px solid $main-color;
+    border: 1px solid $main-color;
     border-radius: $border-radius;
-    padding: 8px 25px;
+    padding: 4px 15px;
 
     @include generate-empty-btn($main-color, $main-color);
 

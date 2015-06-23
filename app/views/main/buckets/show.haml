@@ -1,3 +1,5 @@
 .nudge
 
-%h1= @bucket.name
+%h2
+  = @bucket.name
+  %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit

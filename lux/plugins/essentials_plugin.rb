@@ -101,14 +101,6 @@ module EssentialsPlugin
         self.where(filter).first || self.create(filter)
       end
 
-      def find_first(hash)
-        where(hash).first
-      end
-
-      def last_record(orderby=:updated_at)
-        self.unscoped.order("#{orderby} desc").first
-      end
-
       def ids
         connection.select_values(to_sql).map(&:to_i)
       end
@@ -117,9 +109,8 @@ module EssentialsPlugin
         MasterModel.connection.select_all(sql).map{ |el| Hashie::Mash.new(el) }
       end
 
-      def my
-        raise 'Not loged in for my' unless User.current
-        where('created_by=?', User.current.id)
+      def get(id)
+        unscoped.find(id.to_i).can
       end
 
       def for(obj)
@@ -221,6 +212,11 @@ module EssentialsPlugin
         return false unless User.current
         return true if User.current.id == created_by
         return false
+      end
+
+      def my
+        raise 'Not loged in for my' unless User.current
+        where('created_by=?', User.current.id)
       end
 
       def for(obj)

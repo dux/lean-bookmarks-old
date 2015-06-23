@@ -1,0 +1,17 @@
+= narrow 800 do
+
+  %h3 Archived buckets
+
+  %table.table.table-hover.well
+    %tr
+      %th Bucket name
+      %th archived ago
+      %th.r restore?
+    - for el in @buckets
+      %tr
+        %td
+          %a{ :href=>el.path }= el.name
+        %td
+          = Time.ago el.updated_at
+        %td
+          %button.btn.btn-sm.fr{ :onclick=>"restore_object('buckets', #{el.id})" } Restore

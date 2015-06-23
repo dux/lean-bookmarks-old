@@ -12,15 +12,18 @@
        text-align:center; 
        text-decoration:none;
        color: #888;
+
+       svg { fill:#aaa; position:relative; top:-3px; margin-bottom:-6px;}
       }
       &.active { 
         background-color: #eee; 
         a { color:#000; font-weight:600; }
+        svg { fill: #333; }
       }
       &:hover { background-color: #f7f7f7; }
     }
   }
-  ul.main li { width:80px; text-align: center; }
+  ul.main li { width:110px; text-align: center; }
 
   ul.pull-right { float:right; }
 }

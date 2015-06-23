@@ -11,6 +11,9 @@
       func(ret) if func && ! ret['error']
 
   send: (method, opts, func) ->
+    if typeof(opts) == 'object'
+      opts = $(opts).serializeHash()
+
     if typeof(opts) == 'function'
       func = opts
       opts = {}

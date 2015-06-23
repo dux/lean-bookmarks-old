@@ -4,7 +4,6 @@
     %title StashBuckets
     = Asset.jquery 
     = Asset.css 'main/index.scss'
-    = # Asset.css 'http://fonts.googleapis.com/css?family=Lato:300,400,700,900,400italic'
     = Asset.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300,600'
     = Asset.js  'main/index.coffee'
   %body{ :class=>@class  }
@@ -20,16 +19,11 @@
       .navbar
         .container
           %ul.main= main_menu
+          %ul.pull-right= sub_menu
 
-          %ul.pull-right
-            - if User.current
-              %li
-                %a{ :href=>'/users/bye' } Log off
-              %li
-                %a{ :href=>'/users/profile' }= User.current.email
-            - else
-              %li
-                %a{ :href=>'/login' } Login or signup
+      - if @top_info
+        .top-info{ :style=>"background-color:#FBB; padding:10px 0; margin-top:-20px; color:#555;" }
+          .container= @top_info
 
       .container#content
         = yield

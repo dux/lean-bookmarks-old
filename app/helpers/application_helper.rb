@@ -3,6 +3,7 @@ module ApplicationHelper
   include MasterHelper
   include FormHelper
   include TableHelper
+  include SvgIcoModule
 
   def base_js
     ret = ['<script>']
@@ -20,15 +21,29 @@ module ApplicationHelper
   end
 
   def main_menu
+    menu = Menu.new( :default=>!Lux.request.path.index('/users')  )
+
+    if User.current
+      # menu.add '/', 'Home'
+      menu.add '/buckets', "#{svg_ico(:bucket)} Buckets", '/bucket'
+      menu.add '/links',   "#{svg_ico(:link)} Links", '/link'
+      menu.add '/notes',   "#{svg_ico(:note)} Notes", '/note'
+    else
+      menu.add '/', 'Home'
+    end
+
+    menu.active_by_path
+    menu.render_li
+  end
+
+  def sub_menu
     menu = Menu.new
 
     if User.current
-      menu.add '/', 'Home'
-      menu.add '/buckets', 'Buckets', '/bucket'
-      menu.add '/links', 'Links', '/link'
-      menu.add '/notes', 'Notes', '/note'
+      menu.add '/users/bye', 'Log off'
+      menu.add '/users/profile', "#{User.current.email.split('@')[0].trim(15)}@ #{svg_ico(:gear)}"
     else
-      menu.add '/', 'Home'
+      menu.add '/login', 'Login or signup'
     end
 
     menu.active_by_path

@@ -38,8 +38,12 @@ class Template
     Thread.current[:last_template_path] = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
 
     helper = LuxHelper.new
-    eval %[helper.extend ApplicationHelper] rescue false
-    eval %[helper.extend #{base_class.capitalize}Helper] rescue false
+    # if base class is defined, use it, othervise use application global class
+    if ("#{base_class.capitalize}Helper".constantize rescue false)
+      eval %[helper.extend #{base_class.capitalize}Helper]
+    else
+      eval %[helper.extend ApplicationHelper] rescue false
+    end
     
     for k, v in opts
       helper.instance_variable_set(k, v)

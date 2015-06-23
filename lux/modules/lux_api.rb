@@ -114,7 +114,10 @@ class LuxApi
     res = nil
 
     # load default object
-    eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:_id].to_i)" if @@params[:_id]
+    if @@params[:_id]
+      eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:_id].to_i)" 
+      @response[:path] = @object.path
+    end
 
     if @@actions[action] && @@actions[action][:params]
       for key, values in @@actions[action][:params]
@@ -238,12 +241,12 @@ class LuxApi
 
     if @object.respond_to?(:active)
       @object.update_attributes :active=>false
-      @message = 'Object deleted (exists in trashcan)'
+      return @message = 'Object deleted (exists in trashcan)'
     end
 
     @object.destroy
     report_errros_if_any @object
-    @message = "#{@response[:class]} deleted"
+    @message = "#{@object.class.name} deleted"
     @object.attributes
   end
 

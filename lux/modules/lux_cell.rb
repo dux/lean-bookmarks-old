@@ -46,15 +46,20 @@ class LuxCell
   end
 
   def self.part(*args)
+    _part(*args)[0]
+  end
+
+  def self._part(*args)
     copy = args.dup
     method_name = copy.shift
     obj = new
     obj.send(method_name, *copy)
     @local_path = obj.class.name.index('::') ? obj.class.name.sub(/Cell$/,'').tableize : obj.class.name.sub(/Cell$/,'').downcase
     @local_path += "/#{method_name}"
-    Lux.try 'Temmplate error' do
+    data = Lux.try 'Temmplate error' do
       Template.new(@local_path).part( obj.instance_variables_hash )
     end
+    [data, obj.instance_variables_hash]
   end
 
   def self.render(*args)
@@ -66,9 +71,9 @@ class LuxCell
       end
     end
 
-    @part_data = part(*args)
+    @part_data, hash = *_part(*args)
     layout_path = get_layout_path
-    Template.new(layout_path).part do
+    Template.new(layout_path).part(hash) do
       @part_data
     end
   end

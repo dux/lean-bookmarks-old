@@ -7,7 +7,8 @@
 
 class Menu
 
-  def initialize
+  def initialize(opts={})
+    @opts = opts
     @menu = []
   end
 
@@ -34,7 +35,9 @@ class Menu
   end
 
   def render_li
-    @menu[0][:active] = true unless @we_have_active
+    if @opts[:default] && ! @we_have_active
+      @menu[0][:active] = true
+    end
     
     ret = []
 

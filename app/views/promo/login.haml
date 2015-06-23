@@ -1,7 +1,7 @@
 .row.nudge
   .col-3
   .col-3
-    %h1 Login
+    %h2 Login
     
     .well
       = form '/api/users/login', :template=>:ver, :done=>"Pjax.load('/')" do
@@ -11,7 +11,7 @@
 
     %hr
 
-    %h3 signup or lost password
+    %h4 signup or lost password
 
     .well
       = form '/api/users/signup', :template=>:ver do

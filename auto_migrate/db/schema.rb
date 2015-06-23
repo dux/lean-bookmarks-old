@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20150417181923) do
 
   create_table "buckets", force: true do |t|
     t.string   "name",       null: false
+    t.text     "description"
     t.datetime "created_at", null: false
     t.integer  "created_by", null: false
     t.datetime "updated_at", null: false

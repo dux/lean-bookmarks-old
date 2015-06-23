@@ -1,8 +1,13 @@
-= narrow do
- 
-  %h2 Edit profile data
+.row.nudge
+  .col-1
+  .col-500
+    %h2 Edit profile data
 
-  .well
-    = form User.current, :ver do
-      = input :name
-      = submit 'Save'
+    .well
+      = form User.current, :ver do
+        = input :name
+        = submit 'Save'
+  .col-1
+
+    %ul.vertical-links
+      %li= link_to 'sd', 'asd'

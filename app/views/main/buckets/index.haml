@@ -1,17 +1,11 @@
-.row.nudge
-  .col-2
+.top-menu
+  %a.btn.btn-sm.btn-empty{ :onclick=>"Popup.go.form(this, 'Add new bucket', '/api/buckets/create', 'name', '')" } Create new bucket
+  %a.btn.btn-sm.btn-empty{ :href=>'/buckets/archive' } Archive
 
-    - for bucket in @buckets
-      .well{ :style=>"width:40%; float:left; margin-bottom:20px; margin-left:20px; " }
-        %h4= bucket.as_link
+- for bucket in @buckets
+  .bucket
+    %h4= bucket.as_link
+    
 
+= paginate @buckets
 
-
-    = paginate @buckets
-
-
-  .col-1
-    .well
-      = form Bucket.new, :ver do
-        = input :name
-        = submit 'Create new bucket'
