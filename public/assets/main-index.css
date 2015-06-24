@@ -216,7 +216,7 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 .label-danger { background-color: #eee; border: 1px solid #d4d4d4; color: #6e6e6e; }
 .label-danger[href]:hover, .label-danger[href]:focus { background-color: #d4d4d4; }
 
-.tip { margin: 20px 0; padding: 20px; background-color: #fff; border: 1px solid #eee; }
+.tip { margin: 20px 0; padding: 20px; background-color: #fff; border: 1px solid #eee; border-left: 3px solid #F7CA0F; }
 
 /*# sourceMappingURL=main-base-index.css.map */
 

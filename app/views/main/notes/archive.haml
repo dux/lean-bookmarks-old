@@ -1,0 +1,19 @@
+= render :_menu
+
+= narrow 800 do
+
+  %h3 Archived notes
+
+  %table.table.table-hover.well
+    %tr
+      %th Link name and url
+      %th{ :style=>"width:120px;" } archived
+      %th.r{ :style=>"width:100px;" } restore?
+    - for el in @notes
+      %tr
+        %td
+          %a{ :href=>el.path }= el.name
+        %td
+          %small= Time.ago el.updated_at
+        %td
+          %button.btn.btn-sm.fr{ :onclick=>"restore_object('notes', #{el.id})" } Restore

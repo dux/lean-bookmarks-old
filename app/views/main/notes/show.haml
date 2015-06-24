@@ -3,9 +3,9 @@
 = narrow 600 do
 
   - if @note.active
-    %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('links', #{@note.id})" } Delete
+    %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('notes', #{@note.id})" } Delete
   - else
-    %button.btn.btn-sm.fr{ :onclick=>"restore_object('links', #{@note.id})" } Restore from archive
+    %button.btn.btn-sm.fr{ :onclick=>"restore_object('notes', #{@note.id})" } Restore from archive
 
   %h2 Edit note
 
@@ -19,4 +19,4 @@
   .tip
     %h6 Pro tip
 
-    %p It is encuraged to use hackpad.com, google.com or similar service for keeping bigger douments. Notes are just for small documents.
+    %p It is encuraged to use hackpad.com, docs.google.com or similar service for keeping bigger douments. Notes are just for small documents.
