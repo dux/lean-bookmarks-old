@@ -13,7 +13,7 @@ $grid-spacing: 20px;
   .col-#{$i} { flex: $i; }
 }
 
-@each $size in 200, 250, 300, 350, 400, 450, 500 {
+@each $size in 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700 {
   .col-#{$size} { flex:0 0 #{$size}px; }
 }
 

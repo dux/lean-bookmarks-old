@@ -5,3 +5,17 @@
 %h2
   = @bucket.name
   %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
+
+%hr
+
+%h4 Notes
+
+- for @note in @bucket.notes
+  = render @note
+
+%hr
+
+%h4 Links
+
+- for @link in @bucket.links
+  = render @link

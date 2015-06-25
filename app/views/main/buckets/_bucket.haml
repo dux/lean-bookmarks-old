@@ -1,0 +1,7 @@
+.bucket.default{ :href=>@bucket.path }
+  %h4= @bucket.name
+
+  - if (cnt = Link.for(@bucket).count) > 0
+    .label.label-default #{cnt} links
+  - if (cnt = Note.for(@bucket).count) > 0
+    .label.label-default #{cnt} notes

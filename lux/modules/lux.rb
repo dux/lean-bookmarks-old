@@ -39,11 +39,11 @@ class Lux
 
   def self.dev?
     # Lux.sinatra.request.ip == '127.0.0.1' ? true : false
-    ENV['SINATRA_ENV'][0,4] == 'prod' ? false : true
+    !prod?
   end
 
   def self.prod?
-    !dev?
+    ENV['RAKE_ENV'].to_s[0,4] == 'prod' ? true : false
   end
 
   def self.irregular(sing, plur)

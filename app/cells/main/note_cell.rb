@@ -8,6 +8,10 @@ class Main::NoteCell < LuxCell
     @note = Note.get(id)
   end
 
+  def edit(id)
+    @note = Note.get(id)
+  end
+
   def archive
     @notes = Note.unscoped.order('updated_at desc').my.where('active=?', false).paginate(30)
   end

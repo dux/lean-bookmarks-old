@@ -1,3 +1,7 @@
-.bucket.note
+.bucket.note{ :href=>@note.path }
   .wrap
-    %h4= @note.as_link
+    %h4= @note.name
+    - unless @bucket
+      %h5 in #{@note.bucket.as_link}
+
+    .widget.markdown.small= @note.data.to_s.trim(350)

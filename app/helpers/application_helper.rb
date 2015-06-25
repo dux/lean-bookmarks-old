@@ -40,7 +40,6 @@ module ApplicationHelper
     menu = Menu.new
 
     if User.current
-      menu.add '/users/bye', 'Log off'
       menu.add '/users/profile', "#{User.current.email.split('@')[0].trim(15)}@ #{svg_ico(:gear)}"
     else
       menu.add '/login', 'Login or signup'

@@ -1,5 +1,5 @@
-.bucket.link
+.bucket.link{ :href=>@link.path }
+  .img= image_tag @link.thumbnail
   .wrap
-    %h4= @link.as_link
+    %h4= @link.name
     %small= link_to @link.url.trim(30), @link.url, :target=>:new
-  = image_tag @link.thumbnail

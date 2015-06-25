@@ -6,7 +6,9 @@
     %button.btn.btn-sm.fr{ :onclick=>"restore_object('buckets', #{@bucket.id})" } Restore from archive
 
 
-  %h2= link_to 'Edit bucket', @bucket.path
+  %h2
+    Edit bucket
+    %small or <a href="#{@bucket.path}">go back</a>
 
   .well
     = form @bucket, :ver do

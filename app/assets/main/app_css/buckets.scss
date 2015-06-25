@@ -7,6 +7,11 @@
   h4 {
     font-size: 12pt; 
   }
+  h5 {
+    font-size:10pt;
+    font-weight: 400;
+    margin-top:-10px;
+  }
 
   border-top:2px solid #8767A6; 
 
@@ -19,10 +24,15 @@
   &:hover { box-shadow:0 3px 5px 1px #ddd; } 
   &.link { 
     border-top:2px solid #E98811;
-    img { width:100%; border-top:1px solid #ddd; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; }
+    .img { height: 187px; overflow:hidden; }
+    img { width:100%; border-bottom:1px solid #ddd; -max-height: 187px; }
+    small { display:block; margin-top:-5px; }
   }
   &.note {
     border-top:2px solid #F7CA0F;
     background-color: #FCF8EC;
+  }
+  &.default {
+    padding:10px;
   }
 }

@@ -48,9 +48,9 @@ hr { border: none; border-bottom: 1px solid #ccc; margin: 30px 0 20px 0; }
 
 input[type=text], input[type=password] { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius: 3px; width: 95%; }
 
-select { min-width: 200px; color: #555555; display: block; height: 37px; min-height: 15px; border: 1px solid #8ebade; font-size: 11pt; outline: #555555 none 0px; position: relative; top: -1px; }
+select { min-width: 200px; color: #555555; display: block; height: 37px; min-height: 15px; border: 1px solid #8ebade; font-size: 11pt; outline: #555555 none 0px; position: relative; top: -1px; background-color: #fff; }
 
-textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius: 3px; width: 95%; }
+textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius: 3px; width: 95%; line-height: 17pt; }
 
 *:focus { outline: 0; }
 
@@ -96,6 +96,14 @@ textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius:
 .col-450 { flex: 0 0 450px; }
 
 .col-500 { flex: 0 0 500px; }
+
+.col-550 { flex: 0 0 550px; }
+
+.col-600 { flex: 0 0 600px; }
+
+.col-650 { flex: 0 0 650px; }
+
+.col-700 { flex: 0 0 700px; }
 
 .navbar { background-color: #fff; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
 .navbar ul { display: inline; }
@@ -224,13 +232,17 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 /* Asset file: main/app_css/buckets.scss */
 .bucket { border: 1px solid #ddd; background-color: #fff; border-radius: 4px; width: 250px; height: 308px; float: left; margin-right: 20px; margin-bottom: 20px; border-top: 2px solid #8767A6; }
 .bucket h4 { font-size: 12pt; }
+.bucket h5 { font-size: 10pt; font-weight: 400; margin-top: -10px; }
 .bucket small { font-size: 90%; }
 .bucket small a { text-decoration: none; }
 .bucket .wrap { padding: 10px; height: 100px; }
 .bucket:hover { box-shadow: 0 3px 5px 1px #ddd; }
 .bucket.link { border-top: 2px solid #E98811; }
-.bucket.link img { width: 100%; border-top: 1px solid #ddd; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; }
+.bucket.link .img { height: 187px; overflow: hidden; }
+.bucket.link img { width: 100%; border-bottom: 1px solid #ddd; -max-height: 187px; }
+.bucket.link small { display: block; margin-top: -5px; }
 .bucket.note { border-top: 2px solid #F7CA0F; background-color: #FCF8EC; }
+.bucket.default { padding: 10px; }
 
 /*# sourceMappingURL=main-app_css-buckets.css.map */
 
@@ -265,6 +277,14 @@ small a { text-decoration: none; }
 
 p { line-height: 16pt; }
 
+b, strong { font-weight: 700; }
+
+*[onclick], *[href] { cursor: pointer; }
+
+div { box-sizing: border-box; }
+
+hr { clear: both; }
+
 .colorize { display: flex; }
 .colorize > div { flex: 1; height: 3px; }
 .colorize .buckets { background-color: #8767A6; }
@@ -281,11 +301,21 @@ h1 a:hover, h2 a:hover, h3 a:hover { text-decoration: underline; }
 h1 .btn, h2 .btn, h3 .btn { padding: 3px 10px; font-size: 10pt; font-weight: 400; position: relative; top: -5px; }
 h1 .btn:active, h2 .btn:active, h3 .btn:active { top: -4px; }
 
-.show-on-hover { opacity: 0.2; -webkit-transition: opacity 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-in-out; transition: opacity 0.2s ease-in-out; }
+.show-on-hover { opacity: 0.2; -webkit-transition: opacity 0.1s ease-in-out; -moz-transition: opacity 0.1s ease-in-out; transition: opacity 0.1s ease-in-out; }
 
-h1:hover .show-on-hover, h2:hover .show-on-hover, h3:hover .show-on-hover { opacity: 1; }
+*:hover > .show-on-hover { opacity: 1; }
 
 .top-menu { margin: 10px 0 20px 0; }
+
+.widget.markdown p { margin-bottom: 5px; }
+.widget.markdown ul { margin-top: 15px; }
+.widget.markdown.small { font-size: 9pt; }
+.widget.markdown.small p { height: 10pt; }
+.widget.markdown.small li { padding-bottom: 5px !important; }
+.widget.markdown.small ul ul { margin-top: 6px; }
+
+.select-bucket { border: 1px solid #ccc; width: 300px; background-color: #fff; border-top: 1px solid #8767A6; }
+.select-bucket .select-option { padding: 8px; border-top: 1px solid #ddd; }
 
 /*# sourceMappingURL=main-index.css.map */
 

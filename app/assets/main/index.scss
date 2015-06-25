@@ -13,6 +13,10 @@ small {
 }
 
 p { line-height: 16pt; }
+b, strong { font-weight:700; }
+*[onclick], *[href] { cursor:pointer; }
+div { box-sizing: border-box; }
+hr { clear:both; }
 
 // coolorized menu
 .colorize {
@@ -46,12 +50,28 @@ h1, h2, h3 {
 // show on hover
 .show-on-hover {
   opacity:0.2; 
-  -webkit-transition: opacity 0.2s ease-in-out;
-  -moz-transition: opacity 0.2s ease-in-out;
-  transition: opacity 0.2s ease-in-out;  
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -moz-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;  
 }
-h1:hover, h2:hover, h3:hover { .show-on-hover { opacity:1; } }
+*:hover > { .show-on-hover { opacity:1; } }
 
 // other
 .top-menu { margin:10px 0 20px 0; }
 
+.widget.markdown {
+  p { margin-bottom:5px; }
+  ul { margin-top:15px; }
+  &.small {
+    font-size:9pt;
+    p {height: 10pt; }
+    li { padding-bottom:5px !important; }
+    ul ul { margin-top:6px; }
+  }
+}
+  
+.select-bucket {
+  border:1px solid #ccc; width: 300px; background-color: #fff;
+  border-top:1px solid #8767A6;
+  .select-option { padding:8px; border-top:1px solid #ddd; }
+}

@@ -52,3 +52,5 @@
 
 # inform about enviroment
   puts "* #{Lux.dev? ? 'development'.green : 'production'.red } mode"
+
+# Haml::Template.options[:ugly] = true

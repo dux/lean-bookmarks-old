@@ -1,3 +1,5 @@
+# Haml::Template.options[:ugly] = true
+
 class Template
   @@template_cache = {}
 
@@ -16,7 +18,7 @@ class Template
     raise "Template [#{template}] not found" unless @template
 
     @@template_cache = {} if Lux.dev?
-    @@template_cache[template] ||= Tilt.new(@template)
+    @@template_cache[template] ||= Tilt.new(@template, :ugly=>true)
     @engine = @@template_cache[template]
   end  
 

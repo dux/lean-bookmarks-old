@@ -1,4 +1,5 @@
 #= req js/*
+#= req widgets/*
 #= req ../components/toastr/toastr.coffee
 
 $ ->
@@ -7,8 +8,10 @@ $ ->
   Pjax.on_get ->
     $('a[href]').click -> Pjax.load(this)
     Popup.close()
+    Widgets.load()
 
   Pjax.on_get()
+
 
 
 window.delete_object = (object, id) ->

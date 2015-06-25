@@ -261,5 +261,9 @@ class LuxApi
     end
 
   end
+
+  def index
+    @error = 'No index method defiend'
+  end
 end
 

@@ -23,6 +23,7 @@ class Link < MasterModel
   end
 
   def thumbnail
+    return url if url =~ /\.jpg/i;
     # url = domain.split('.').count > 2 ? domain : "www.#{domain}"
     if domain == 'youtube.com'
       "http://img.youtube.com/vi/#{Url.new(url).qs(:v)}/0.jpg"

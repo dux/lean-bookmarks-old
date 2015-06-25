@@ -17,6 +17,7 @@ select {
     outline: rgb(85, 85, 85) none 0px;
     position:relative;
     top:-1px;
+    background-color: #fff;
 }
 
 textarea {
@@ -24,7 +25,8 @@ textarea {
   font-size:12pt;
   border:1px solid #ccc;
   border-radius: 3px;
-  width:95%; 
+  width:95%;
+  line-height:17pt;
  }
 
 *:focus { outline: 0; }

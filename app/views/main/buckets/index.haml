@@ -1,9 +1,7 @@
 = render :_menu
 
-- for bucket in @buckets
-  .bucket
-    %h4= bucket.as_link
-    
+- for @bucket in @buckets
+  = render :_bucket
 
 = paginate @buckets
 

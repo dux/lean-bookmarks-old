@@ -1,22 +1,22 @@
 = render :_menu
 
-= narrow 600 do
+.row.nudge
+  .col-1
+  .col-5
+    / .widget.bucketSelect{ :value=>2 }= Bucket.can.json
 
-  - if @note.active
-    %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('notes', #{@note.id})" } Delete
-  - else
-    %button.btn.btn-sm.fr{ :onclick=>"restore_object('notes', #{@note.id})" } Restore from archive
+    = input :asda, :collection=>Bucket.can, :value=>@note.bucket_id, :onchange=>"Api.send('notes/#{@note.id}/update', { bucket_id:this.value })"
 
-  %h2 Edit note
+    %br
 
-  .well
-    = form @note, :ver do
-      = input :name
-      = input :data, :as=>:memo, :style=>"height:200px;"
-      = submit 'Save'
-    
+    %div{ :style=>"position:relative;" }
+      .bucket.note{ :style=>"width:100%; min-height:600px; padding:30px;" }
+        %h3= @note.name
 
-  .tip
-    %h6 Pro tip
+        %br
 
-    %p It is encuraged to use hackpad.com, docs.google.com or similar service for keeping bigger douments. Notes are just for small documents.
+        .widget.markdown= @note.data
+
+  .col-1{ :style=>"padding-top:53px;" }
+    %a.btn.btn-sm{ :href=>@note.path(:edit) } Edit note
+  
