@@ -9,6 +9,10 @@ use BetterErrors::Middleware; BetterErrors.application_root = __dir__
 before do
   Lux.init(self)
 
+  if Lux.dev? && params[:usrid]
+    session[:u_id] = params[:usrid].to_i
+  end
+
   path = request.path.split(':', 2)
   if path[1]
     @path_suffix = path[1]

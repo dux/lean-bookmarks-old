@@ -7,7 +7,7 @@
       = form User.current, :ver do
         = input :name
         = submit 'Save'
-  .col-1
 
+  .col-1{ :style=>"padding-top:50px;" }
     %ul.vertical-links
       %li= link_to 'Log off', '/users/bye'

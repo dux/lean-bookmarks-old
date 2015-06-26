@@ -17,7 +17,7 @@ class Template
 
     raise "Template [#{template}] not found" unless @template
 
-    @@template_cache = {} if Lux.dev?
+    # @@template_cache = {} if Lux.dev?
     @@template_cache[template] ||= Tilt.new(@template, :ugly=>true)
     @engine = @@template_cache[template]
   end  
