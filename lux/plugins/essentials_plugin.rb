@@ -81,16 +81,6 @@ module EssentialsPlugin
         where('created_by=?', User.current.id)
       end
 
-    # taggable
-      def tagged_with?(*what)
-        return self if what.to_s == ''
-        self.tagged_with(what)
-      end
-
-      def all_tags
-        self.can_tags
-      end
-
     # automatic api calls
       def api(method, params={})
         ret = "#{self.name}Api".constantize.new(params).exec method
@@ -148,6 +138,10 @@ module EssentialsPlugin
       class_attribute :base_route
     end
 
+    def token
+      Crypt.encrypt("#{self.class.name}:#{id}")
+    end
+
     def api(method, params={})
       ret = "#{self.class.name}Api".constantize.new(params, id).exec method
       ret[:data]
@@ -161,7 +155,6 @@ module EssentialsPlugin
       base = self.class.name.underscore.downcase.singularize
       return "/admin/#{base}/#{self.id}" if url == :admin
       base = self.base_route? ? self.base_route : base
-      puts "#{self.class.name}: #{base}"
       locale = I18n.available_locales.length > 1 ? "/#{I18n.locale}" : ''
       return "#{locale}/#{base}/#{StringBase.encode(self.id)}/#{url}" if url
       return '/'+self[:route] if self[:route].present?

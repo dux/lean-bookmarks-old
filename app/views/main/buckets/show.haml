@@ -6,6 +6,8 @@
   = @bucket.name
   %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
 
+%div{ :style=>"clear:both; margin-top:10px; min-height:20px;" }= render 'main/_tags', :object=>@bucket
+
 %hr
 
 %h4 Notes

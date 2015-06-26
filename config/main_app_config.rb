@@ -7,12 +7,17 @@ use Rack::Session::Cookie, :key => 'lux.session', :path => '/', :expire_after =>
 use BetterErrors::Middleware; BetterErrors.application_root = __dir__
 
 before do
-  @path = request.path.split('/')
+  Lux.init(self)
+
+  path = request.path.split(':', 2)
+  if path[1]
+    @path_suffix = path[1]
+    Lux.params[:suffix] = @path_suffix
+  end
+  @path = path[0].split('/')
   @path.shift
   @root_part = @path[0] ? @path.shift.gsub('-','_').singularize.to_sym : nil
   @first_part = @path[0]
-
-  Lux.init(self)
 
   # load user if there is session string
   if session[:u_id]

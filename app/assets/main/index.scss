@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
   a { text-decoration: none; color:#444; }
 }
 h4, h5, h6 {
-  font-weight: 600;
+  font-weight: 600; 
 }
 
 h1, h2, h3 {
@@ -75,3 +75,7 @@ h1, h2, h3 {
   border-top:1px solid #8767A6;
   .select-option { padding:8px; border-top:1px solid #ddd; }
 }
+
+.zoom { font-size:14pt; }
+.widget, .on, .off { display:inline; }
+.off { display:none; }

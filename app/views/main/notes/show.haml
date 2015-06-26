@@ -5,11 +5,12 @@
   .col-5
     / .widget.bucketSelect{ :value=>2 }= Bucket.can.json
 
-    = input :asda, :collection=>Bucket.can, :value=>@note.bucket_id, :onchange=>"Api.send('notes/#{@note.id}/update', { bucket_id:this.value })"
+    %div{ :style=>"float:left;" }= input :asda, :collection=>Bucket.can, :value=>@note.bucket_id, :onchange=>"Api.send('notes/#{@note.id}/update', { bucket_id:this.value })"
+    %a.btn.btn-sm{ :href=>@note.path(:edit), :style=>'margin:5px 0 0 20px;' } Edit note
 
-    %br
-
-    %div{ :style=>"position:relative;" }
+    %div{ :style=>"clear:both; margin-top:30px; min-height:50px;" }= render 'main/_tags', :object=>@note
+   
+    %div
       .bucket.note{ :style=>"width:100%; min-height:600px; padding:30px;" }
         %h3= @note.name
 
@@ -17,6 +18,6 @@
 
         .widget.markdown= @note.data
 
-  .col-1{ :style=>"padding-top:53px;" }
-    %a.btn.btn-sm{ :href=>@note.path(:edit) } Edit note
+  .col-1
+    
   

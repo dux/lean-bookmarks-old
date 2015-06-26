@@ -1,6 +1,8 @@
 = render :_menu
 
+= render 'main/_tag_list', klass:Link
+
 - for @link in @links
-  = render :_link
+  = render @link
 
 = paginate @links

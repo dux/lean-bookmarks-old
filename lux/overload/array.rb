@@ -41,6 +41,10 @@ class Array
     map{ |el| %[<#{tag}>#{el}</#{tag}>] } 
   end
 
+  def last=(val)
+    self[-1] = val
+  end
+
 end
 
 # class WillPaginate::Collection 

@@ -21,7 +21,7 @@ class Asset
   end
 
   def self.jquery
-    js 'https://code.jquery.com/jquery-2.1.1.min.js'
+    %[<script src="#{Lux.dev? ? '/jquery.js' : 'https://code.jquery.com/jquery-2.1.1.min.js'}"></script>]
   end
 
   def initialize(file, opts={})

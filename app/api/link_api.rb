@@ -1,4 +1,4 @@
-class LinkApi < LuxApi
+class LinkApi < AppApi
 
   def create
     raise 'Not a link' unless params[:url] =~ /https?:\/\//
@@ -20,18 +20,6 @@ class LinkApi < LuxApi
     bm.save!
     @message = 'Bookmark added'
     bm
-  end
-
-  def toggle_tag
-    tag = params[:tag].to_s.downcase
-    if @bookmark.tags.index(tag)
-      @bookmark.tags -= [tag]
-      @message = 'Tag removed from collection'
-    else
-      @bookmark.tags += [tag]
-      @message = 'Tag added to collection'
-    end
-    @bookmark.save
   end
 
   def get_title

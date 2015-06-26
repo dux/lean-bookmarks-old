@@ -1,5 +1,5 @@
 #!/bin/bash
 
 nginx -s stop
-nginx -c ~/dev/ruby/sinatra/sinatra_lux/nginx.conf
+nginx -c /Users/dux/dev/ruby/sinatra/stash_buckets_lux/nginx.conf
 echo 'http://localhost:3001'

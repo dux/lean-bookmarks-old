@@ -1,0 +1,12 @@
+#tags_list.zoom{ 'data-url'=>"/part/main/tags:#{@object.token}" }
+  - for tag in @object.class.name.constantize.my.all_tags
+    %button.label{ :onclick=>"Tag.toggle(this, '#{@object.class.name.tableize}/#{@object.id}', '#{tag.name}')", :class=>@object.tags.index(tag.name) ? 'label-primary' : 'label-default' }= tag.name
+
+  .widget.toggle{ :style=>"position:absolute; margin-left:4px;" }
+    .on
+      %button.label.label-default.show-on-hover{ :onclick=>"$w(this).toggle(); $('#add_tag').focus()" } +
+    .off
+      %input{ :style=>"padding:2px; position:relative; top:1px; font-size:9pt; width:100px;", :id=>'add_tag' }
+      %button.label.label-default{ :onclick=>"Tag.add('#{@object.class.name.tableize}/#{@object.id}')" } add
+      %span{ :style=>"font-size:11pt; color:#aaa;" }
+        or <a onclick="$w(this).toggle()">x</a>

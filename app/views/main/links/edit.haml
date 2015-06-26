@@ -1,0 +1,21 @@
+= render :_menu
+
+= narrow 600 do
+
+  - if @link.active
+    %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('links', #{@link.id})" } Delete
+  - else
+    %button.btn.btn-sm.fr{ :onclick=>"restore_object('links', #{@link.id})" } Restore from archive
+
+  %h2
+    Edit link 
+    %small or <a href="#{@link.path}">go back</a>
+
+  .well
+    = form @link, :ver do
+      = input :name
+      = input :url
+      = input :tags, :as=>:tag, :label=>"Tags (labels)"
+      = input :description, :as=>:memo, :style=>"height:200px;"
+      = submit 'Save'
+    

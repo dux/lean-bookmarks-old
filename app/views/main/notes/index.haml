@@ -1,6 +1,7 @@
 = render :_menu
 
-- for @note in @notes
-  = render :_note
+= render 'main/_tag_list', klass:Note
 
+- for @note in @notes
+  = render @note
 = paginate @notes

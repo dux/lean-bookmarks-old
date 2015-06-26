@@ -6,7 +6,6 @@ $ ->
   Pjax.init('#full-page')
   
   Pjax.on_get ->
-    $('a[href]').click -> Pjax.load(this)
     Popup.close()
     Widgets.load()
 
@@ -47,3 +46,29 @@ Popup.go =
     init_html_editor() if opts['as'] == 'editor'
 
 
+@Tag =
+  toggle: (node, url, tag_name) ->
+    Api.send "#{url}/toggle_tag", { tag:tag_name }, (res) ->
+      if res.present
+        $(node).attr('class', 'label label-primary')
+      else
+        $(node).attr('class', 'label label-default')
+
+  add: (url) ->
+    tag_name = $('#add_tag').val()
+    unless tag_name
+      alert 'Label is requred' 
+      $('#add_tag').focus()
+      return
+
+    Api.send "#{url}/toggle_tag", { tag:tag_name }, ->
+      App.reload_container '#tags_list'
+
+App =
+  reload_container: (id) ->
+    el = $(id)
+    url = el.attr('data-url')
+    return alert 'data-url not defined' unless url
+    $.get url, (data) ->
+      el.html data
+      Widgets.load()

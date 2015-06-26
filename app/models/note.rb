@@ -1,4 +1,8 @@
 class Note < MasterModel
+  include PgarrayPlugin::Model
+
+  array_on :tags
+
   validates :name, presence:{ message:'Name is required' }
 
   # def self.can(what=:read)

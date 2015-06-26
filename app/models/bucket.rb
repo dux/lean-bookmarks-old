@@ -1,6 +1,9 @@
 class Bucket < MasterModel
+  include PgarrayPlugin::Model
 
   validates :name, :presence=>{ :message=>'Bucket name is required' }
+
+  array_on :tags
 
   default_scope -> { order('updated_at desc').where('active=?', true) }
 

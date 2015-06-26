@@ -17,8 +17,10 @@ module RailsHelper
     options.tag("img")
   end
 
-  def link_to(name, where, opts={})
+  def link_to(name, where=nil, opts={})
+    where ||= name
     opts[:href] = where
+    opts[:target] ||= 'new_window' if where =~ /https?:\/\//
     opts.tag :a, name
   end
 end

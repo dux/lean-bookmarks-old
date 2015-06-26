@@ -1,7 +1,7 @@
 class Main::LinkCell < LuxCell
 
   def index
-    @links = Link.paginate(50)
+    @links = Link.tagged_with(Lux.params[:suffix]).paginate(50)
   end
 
   def archive
@@ -9,6 +9,10 @@ class Main::LinkCell < LuxCell
   end
 
   def show(id)
+    @link = Link.get(id)
+  end
+
+  def edit(id)
     @link = Link.get(id)
   end
 

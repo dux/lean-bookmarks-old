@@ -1,0 +1,10 @@
+- @tags = @klass.can.all_tags
+
+- if @tags.empty?
+  There are not defiend labels for #{@klass.to_s.downcase.pluralize}
+- else
+  %div{ :style=>"zoom:110%;" }
+    - for tag in @tags
+      %a.label{ :class=>(Lux.params.suffix == tag.name ? 'label-primary' : 'label-default'), :href=>"/#{@klass.name.tableize}:#{tag.name}" } #{tag.name} (#{tag.cnt})
+
+%hr

@@ -18,7 +18,9 @@
 
       .navbar
         .container
-          %ul.main= main_menu
+          %ul.main
+            = main_menu
+            %li
           %ul.pull-right= sub_menu
 
       - if @top_info

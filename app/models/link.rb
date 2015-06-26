@@ -68,4 +68,8 @@ class Link < MasterModel
     return path =~ /[\-\d\?=]/ ? true : false
   end
 
+  def figure_out_kind
+    
+  end
+
 end

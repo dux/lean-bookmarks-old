@@ -161,8 +161,9 @@ class LuxApi
       res = instance_eval(&res) if res.kind_of?(Proc)
       res = res.all.map{ |el| el.attributes } if res.class.name == 'ActiveRecord::Relation'
   
+      res = res.attributes.reject{ |f| ['updated_by', 'updated_at', 'created_by', 'created_at'].index(f) } if res.respond_to?(:attributes)
       @response[:data] = res
-      @response[:message] = @message if @message
+      @response[:message] = @message unless @message.nil?
       # @response[:message] = res if !@message && res.kind_of?(String)
       @error ||= "Wrong type for @error" if @error && !@error.kind_of?(String)
       @error ||= "Wrong type for @message" if @message && !@message.kind_of?(String)

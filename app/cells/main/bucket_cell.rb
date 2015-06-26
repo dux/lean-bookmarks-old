@@ -1,7 +1,7 @@
 class Main::BucketCell < LuxCell
 
   def index
-    @buckets = Bucket.all.paginate(20)
+    @buckets = Bucket.tagged_with(Lux.params[:suffix]).paginate(20)
   end
 
   def _load(id)

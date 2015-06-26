@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.datetime "updated_at", null: false
     t.integer  "updated_by", null: false
     t.boolean  "active",     default: true
+    t.string   "tags",        default: [],              array: true
   end
 
   create_table "links", force: true do |t|
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.integer  "updated_by", null: false
     t.integer  "bucket_id",  null: false
     t.boolean  "active",     default: true
+    t.string   "tags",        default: [],              array: true
   end
 
   create_table "comments", force: true do |t|

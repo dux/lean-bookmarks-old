@@ -63,11 +63,13 @@ class LuxCell
   end
 
   def self.render(*args)
-    # look for before methods
-    if @@before[self.name]
-      for el in @@before[self.name]
-        before_data = el.call
-        return before_data if before_data.kind_of?(String)
+    # look for before methods in ancestors and self
+    for name in self.ancestors.reverse.map{ |el| el.name }
+      if @@before[name]
+        for el in @@before[name]
+          before_data = el.call
+          return before_data if before_data.kind_of?(String)
+        end
       end
     end
 

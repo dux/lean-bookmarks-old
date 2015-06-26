@@ -1,5 +1,7 @@
 # database
-db_config = YAML.load_file('./auto_migrate/config/database.yml')[Lux.dev? ? 'development' : 'production']
+env = Lux.dev? ? 'development' : 'production'
+# env = 'development'
+db_config = YAML.load_file('./auto_migrate/config/database.yml')[env]
 ActiveRecord::Base.establish_connection(db_config)
 
 # mail

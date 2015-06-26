@@ -1,7 +1,9 @@
 = render :_menu
 
+= render 'main/_tag_list', klass:Bucket
+
 - for @bucket in @buckets
-  = render :_bucket
+  = render @bucket
 
 = paginate @buckets
 
