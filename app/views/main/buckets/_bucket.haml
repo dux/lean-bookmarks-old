@@ -1,7 +1,10 @@
 .bucket.default{ :href=>@bucket.path }
   %h4= @bucket.name
 
-  - if (cnt = Link.for(@bucket).count) > 0
-    .label.label-default #{cnt} links
-  - if (cnt = Note.for(@bucket).count) > 0
-    .label.label-default #{cnt} notes
+  %small= @bucket.desc
+
+  %br
+  %br
+
+  - for el in @bucket.tags
+    %a.label.label-default{ :href=>"/buckets:#{el}" }= el

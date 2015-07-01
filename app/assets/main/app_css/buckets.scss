@@ -17,7 +17,9 @@
 
   small {
     font-size:90%; 
+    color:#888;
     a { text-decoration:none; }
+    svg { fill:#888; position:relative; top:2px; margin-left:-2px; margin-right:5px; }
   }
   .wrap { padding:10px; height:100px; }
 

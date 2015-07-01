@@ -1,23 +1,18 @@
-.top-menu
-  %a.btn.btn-sm.btn-empty{ :onclick=>"Popup.go.form(this, 'Add new bucket', '/api/buckets/create', 'name', '')" } Add new link
-  %a.btn.btn-sm.btn-empty{ :href=>'/buckets/archive' } Archived
+= render :_menu
 
-%h2
-  = @bucket.name
-  %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
+.row.nudge
+  .col-1
+    %h2
+      = @bucket.name
+      %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
 
-%div{ :style=>"clear:both; margin-top:10px; min-height:20px;" }= render 'main/_tags', :object=>@bucket
+    %p{ :style=>"margin-top:-20px;" }
+      Template: 
+      = input :template, :collection=>['automatic', 'description'], :onchange=>%[Api.send('buckets/#{@bucket.id}/update', { template:this.value }, Pjax.refresh)], :value=>@bucket[:template]
 
-%hr
+  .col-1
+    = render 'main/_tags', :object=>@bucket
 
-%h4 Notes
+%br.c
 
-- for @note in @bucket.notes
-  = render @note
-
-%hr
-
-%h4 Links
-
-- for @link in @bucket.links
-  = render @link
+= render "main/buckets/_show_#{@bucket.template}"

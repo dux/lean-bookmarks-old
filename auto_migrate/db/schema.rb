@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.integer  "updated_by", null: false
     t.boolean  "active",     default: true
     t.string   "tags",        default: [],              array: true
+    t.integer  "bucket_id",  null: true
+    t.string   "template"
   end
 
   create_table "links", force: true do |t|

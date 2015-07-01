@@ -17,10 +17,30 @@ class Template
 
     raise "Template [#{template}] not found" unless @template
 
-    # @@template_cache = {} if Lux.dev?
+    @@template_cache = {} if Lux.dev?
     @@template_cache[template] ||= Tilt.new(@template, :ugly=>true)
     @engine = @@template_cache[template]
   end  
+
+  def self.helper(base_class, opts={})
+    base_class = base_class.to_s
+    helper = LuxHelper.new
+    # if base class is defined, use it, othervise use application global class
+    if ("#{base_class.capitalize}Helper".constantize rescue false)
+      eval %[helper.extend #{base_class.capitalize}Helper]
+    else
+      eval %[helper.extend ApplicationHelper] rescue false
+    end
+
+    for k, v in opts
+      helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
+    end
+
+    for k, v in Lux.locals
+      helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
+    end
+    helper
+  end
 
   def self.part(path, opts={})
     Template.new(path).part(opts)
@@ -39,21 +59,7 @@ class Template
 
     Thread.current[:last_template_path] = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
 
-    helper = LuxHelper.new
-    # if base class is defined, use it, othervise use application global class
-    if ("#{base_class.capitalize}Helper".constantize rescue false)
-      eval %[helper.extend #{base_class.capitalize}Helper]
-    else
-      eval %[helper.extend ApplicationHelper] rescue false
-    end
-
-    for k, v in opts
-      helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
-    end
-
-    for k, v in Lux.locals
-      helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
-    end
+    helper = Template.helper(base_class, opts)
 
     Lux.try "Template [#{@template}] render error" do
       @engine.render(helper) do

@@ -1,7 +1,8 @@
 .top-menu
-  %a.btn.btn-sm.btn-empty{ :onclick=>"Popup.go.form(this, 'Add new link', '/api/links/create', 'url', '')" } + add link
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=i' } images
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=v' } videos
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=v' } documents
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?type=v' } domains
+  %a.btn.btn-sm{ :onclick=>"Popup.go.form(this, 'Add new link', '/api/links/create', 'url', '')" } + add link
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=art' } articles
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=img' } images
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=vid' } videos
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=doc' } documents
+  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=dom' } domains
   %a.btn.btn-sm.btn-empty{ :href=>'/links/archive' } archived

@@ -20,9 +20,11 @@
         .container
           %ul.main
             = main_menu
-            %li
+          %form{ :action=>'/search' }
+            %input{ :name=>:q, :placeholder=>'search...', :value=>params[:q] }
           %ul.pull-right= sub_menu
 
+    
       - if @top_info
         .top-info{ :style=>"background-color:#FBB; padding:10px 0; margin-top:-20px; color:#555; margin-bottom:30px;" }
           .container= @top_info

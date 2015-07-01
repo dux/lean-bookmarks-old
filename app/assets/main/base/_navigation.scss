@@ -26,4 +26,10 @@
   ul.main li { width:110px; text-align: center; }
 
   ul.pull-right { float:right; }
+
+  input {
+    font-size:11pt; padding:5px 7px; border-radius:3px; border:1px solid #ccc; color:#555; margin-left:5px; width:130px;
+    @include transition(all .2s ease);
+    &:focus { width:200px; }
+  }
 }

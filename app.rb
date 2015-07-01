@@ -35,6 +35,9 @@ get '*' do
     return "Main::#{@root_part.to_s.classify}Cell".constantize.resolve(*@path)
   end
 
+  # main base routes
+  return Template.render("main/#{@root_part}") if [:search].index(@root_part)
+
   Lux.status :not_found, "Page not found not route /#{@root_part}"
 end
 

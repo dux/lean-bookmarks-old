@@ -3,10 +3,11 @@
   %h3 Archived buckets
 
   %table.table.table-hover.well
-    %tr
-      %th Bucket name
-      %th archived
-      %th.r restore?
+    %thead
+      %tr
+        %th Bucket name
+        %th archived
+        %th.r restore?
     - for el in @buckets
       %tr
         %td

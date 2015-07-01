@@ -118,6 +118,8 @@ textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius:
 .navbar ul > li:hover { background-color: #f7f7f7; }
 .navbar ul.main li { width: 110px; text-align: center; }
 .navbar ul.pull-right { float: right; }
+.navbar input { font-size: 11pt; padding: 5px 7px; border-radius: 3px; border: 1px solid #ccc; color: #555; margin-left: 5px; width: 130px; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; }
+.navbar input:focus { width: 200px; }
 
 a.btn { cursor: pointer; }
 
@@ -235,8 +237,9 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 .bucket { border: 1px solid #ddd; background-color: #fff; border-radius: 4px; width: 250px; height: 308px; float: left; margin-right: 20px; margin-bottom: 20px; border-top: 2px solid #8767A6; }
 .bucket h4 { font-size: 12pt; }
 .bucket h5 { font-size: 10pt; font-weight: 400; margin-top: -10px; }
-.bucket small { font-size: 90%; }
+.bucket small { font-size: 90%; color: #888; }
 .bucket small a { text-decoration: none; }
+.bucket small svg { fill: #888; position: relative; top: 2px; margin-left: -2px; margin-right: 5px; }
 .bucket .wrap { padding: 10px; height: 100px; }
 .bucket:hover { box-shadow: 0 3px 5px 1px #ddd; }
 .bucket.link { border-top: 2px solid #E98811; }
@@ -285,7 +288,7 @@ b, strong { font-weight: 700; }
 
 div { box-sizing: border-box; }
 
-hr { clear: both; }
+hr, br.c { clear: both; }
 
 .colorize { display: flex; }
 .colorize > div { flex: 1; height: 3px; }

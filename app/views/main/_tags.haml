@@ -1,3 +1,6 @@
+%p
+  %small Click on the label to label the #{@object.class.name.downcase}
+
 #tags_list.zoom{ 'data-url'=>"/part/main/tags:#{@object.token}" }
   - for tag in @object.class.name.constantize.my.all_tags
     %button.label{ :onclick=>"Tag.toggle(this, '#{@object.class.name.tableize}/#{@object.id}', '#{tag.name}')", :class=>@object.tags.index(tag.name) ? 'label-primary' : 'label-default' }= tag.name

@@ -16,7 +16,8 @@ p { line-height: 16pt; }
 b, strong { font-weight:700; }
 *[onclick], *[href] { cursor:pointer; }
 div { box-sizing: border-box; }
-hr { clear:both; }
+hr, br.c { clear:both; }
+
 
 // coolorized menu
 .colorize {

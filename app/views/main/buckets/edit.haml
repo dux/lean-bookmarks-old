@@ -13,6 +13,7 @@
   .well
     = form @bucket, :ver do
       = input :name
+      = input :tags, :as=>:tag
       = input :description, :as=>:memo, :style=>"height:200px;"
       = submit 'Save'
     

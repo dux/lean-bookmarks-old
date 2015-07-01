@@ -4,6 +4,18 @@ class String
   end
 end
 
+class Fixnum
+  def pluralize(desc)
+    if self == 0
+      "no #{desc.to_s.pluralize}"
+    elsif self == 1
+      "#{self} #{desc}"
+    else
+      "#{self} #{desc.to_s.pluralize}"
+    end
+  end
+end
+
 Lux.irregular 'bonus', 'bonuses'
 Lux.irregular 'clothing', 'clothes'
 

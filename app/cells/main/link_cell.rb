@@ -10,10 +10,11 @@ class Main::LinkCell < LuxCell
 
   def show(id)
     @link = Link.get(id)
+    @top_info = 'Link is archived and is not active' unless @link.active
   end
 
   def edit(id)
-    @link = Link.get(id)
+    show(id)
   end
 
 end

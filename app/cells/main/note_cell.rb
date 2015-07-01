@@ -6,10 +6,11 @@ class Main::NoteCell < Main::RootCell
 
   def show(id)
     @note = Note.get(id)
+    @top_info = 'Note is archived and is not active' unless @note.active
   end
 
   def edit(id)
-    @note = Note.get(id)
+    show(id)
   end
 
   def archive
