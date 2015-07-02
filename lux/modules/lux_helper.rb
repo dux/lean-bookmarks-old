@@ -20,6 +20,7 @@ class LuxHelper
     # render @link
     if name.respond_to?(:created_by)
       path = Template.last_template_path.split('/')[1]
+      eval "@#{name.class.name.tableize.singularize} = name"
       name = "#{path}/#{name.class.name.tableize}/_#{name.class.name.downcase}"
     else
       name = name.to_s

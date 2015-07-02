@@ -1,1 +1,10 @@
-ada
+.nudge
+
+%h3 Searching for: #{params[:q]}
+
+%h6 Found #{@links.count.pluralize(:link)}, #{@notes.count.pluralize(:note)} and #{@buckets.count.pluralize(:bucket)}
+
+.nudge
+
+- for el in @all_links
+  = render el

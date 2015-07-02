@@ -1,4 +1,4 @@
-class Main::NoteCell < Main::RootCell
+class Main::NoteCell < LuxCell
 
   def index
     @notes = Note.my.tagged_with(Lux.params[:suffix]).paginate(20)

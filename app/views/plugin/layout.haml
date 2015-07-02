@@ -1,0 +1,8 @@
+%div{ :style=>"margin-top:5px; background-color:#ddd; margin:0 -9px; padding:5px; border-bottom:1px solid #aaa; margin-bottom:15px; z-index:1; position:fixed; width:100%; margin-top:-1px;" }
+  %a.btn.btn-sm{ href:Url.current.path('/plugin').local_url, :class=>@bookmark ? 'btn-info' : 'btn-default' } Bookmark
+  %a.btn.btn-sm{ href:Url.current.path('/plugin/domain').local_url, :class=>@domain ? 'btn-info' : 'btn-default' } Domain
+  %a.btn.btn-sm{ href:Url.current.path('/plugin/recent').local_url, :class=>request.path =~ /\/recent/ ? 'btn-info' : 'btn-default' } Recent
+
+%div{ :style=>"margin-top:55px;" }
+
+= yield

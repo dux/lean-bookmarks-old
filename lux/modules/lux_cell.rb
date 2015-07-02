@@ -56,6 +56,11 @@ class LuxCell
     obj.send(method_name, *copy)
     @local_path = obj.class.name.index('::') ? obj.class.name.sub(/Cell$/,'').tableize : obj.class.name.sub(/Cell$/,'').downcase
     @local_path += "/#{method_name}"
+    
+    # @template = 'main/search' defines main template
+    @template = obj.instance_variables_hash[:@template]
+    @local_path = @template if @template
+
     data = Lux.try 'Temmplate error' do
       Template.new(@local_path).part( obj.instance_variables_hash )
     end

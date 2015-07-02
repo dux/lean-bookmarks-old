@@ -1,0 +1,7 @@
+= render layout:'layout' do
+
+  = form @domain, :template=>:ver do
+    = input :name, :as=>:hidden
+    = input :description, :as=>:memo, :label=>@domain.name, :style=>"height:350px;"
+    = submit 'Save domain description'
+
