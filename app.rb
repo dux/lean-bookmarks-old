@@ -27,6 +27,10 @@ def resolve_promo_app
   end
 end
 
+def resolve_plugin_app
+  PluginCell.resolve(*@path)
+end
+
 def resolve_root
   User.current ? Template.render('main/index') : PromoCell.render(:index)
 end
@@ -50,6 +54,9 @@ get '*' do
 
   # main application routes
   return resolve_main_app if [:link, :note, :bucket, :user, :search, :part].index(@root_part)
+
+  # plugin routes
+  return resolve_plugin_app if [:plugin].index(@root_part)
 
   Lux.status :not_found, "Page not found not route /#{@root_part}"
 end

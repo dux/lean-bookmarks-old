@@ -34,8 +34,36 @@ module MasterHelper
     ret.join('').html_safe
   end
 
-  def cache(*opts, &block)
-    Cache.view *opts, &block
+  def base_js
+    ret = ['<script>']
+    ret.push "window.DEV = #{Lux.dev? ? 'true' : 'false' };"
+    ret.push "window.app = {}"
+
+    if flash = (Lux.session[:flash] || Thread.current[:lux][:flash])
+      ret.push "Info.#{flash[0]}(#{flash[1].to_json})"
+      Lux.session.delete(:flash)
+    end
+
+    ret.push ['</script>']
+
+    ret.join("\n").html_safe
+  end
+
+  def labels(list, base_path=nil)
+    return unless list
+
+    ret = list.map do |el|
+      tag = el.try(:name) || el
+      url = case base_path.class.name
+        when 'Proc'; base_path.call(tag)
+        when 'String'; "#{base_path}?tag=#{tag}"
+        else; App.url(tag:(tag))
+      end
+      name = el.kind_of?(String) ? el : el.name
+      %[<a class="label label-#{params[:tag] == name ? :primary : :default} tag" href="#{url}">#{el.kind_of?(String) ? el : "#{el.name} (#{el.cnt})"}</a>]
+    end.join(' ').html_safe
+
+    %[<p class="tags">#{ret}</p>].html_safe
   end
 
 end

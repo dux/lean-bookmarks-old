@@ -1,45 +1,37 @@
-= render layout:'layout' do
-  
-  - if @domain_
-    = raw @domain_.description.chomp.gsub(/\n/,'<br />')
-    %hr
+- if @domain_
+  = @domain_.description.chomp.gsub(/\n/,'<br />')
+  %hr
 
-  = form @bookmark, :template=>:hor, :done=>:refresh do
-    = input :name, :id=>'bm_name'
-    = input :is_article, :as=>:checkbox
-    = input :url
-    = input :tags, :as=>:tag
-    = input :description, :as=>:memo, :id=>'bm_desc', :style=>"height:95px;"
-    = submit @bookmark.id ? 'Update existing' : 'Create bookmark'
+= form @link, :template=>:ver, :done=>:refresh do
+  = input :name, :id=>'bm_name'
+  = input :is_article, :as=>:checkbox
+  = input :url
+  = input :tags, :as=>:tag
+  = input :description, :as=>:memo, :id=>'bm_desc', :style=>"height:95px;"
+  = submit @link.id ? 'Update existing' : 'Create link'
 
-  - unless @bookmark.id
-    :coffee
-      Api.silent '/api/bookmarks/get_title', { url:'#{params[:url]}' }, (res) ->
-        $('#bm_name').val(res.data.name)
-        $('#bm_desc').val(res.data.description)
+- unless @link.id
+  :coffee
+    Api.silent '/api/bookmarks/get_title', { url:'#{params[:url]}' }, (res) ->
+      $('#bm_name').val(res.data.name)
+      $('#bm_desc').val(res.data.description)
 
-  / %hr
-  / - if @bookmark.id
-  /   %button.btn.btn-default{ :onclick=>"window.open('#{App.host}#{@bookmark.path}')" } Edit bookmark (present)
-  / - else
-  /   %button.btn.btn-default{ :onclick=>"Api.send('bookmarks/create', { url:'#{params[:url]}' }, function(){ Pjax.refresh() })" } Create bookmark on this page &rarr;
+%hr
+
+- unless @link.id
+  %h5 create by tag
+
+  = labels Link.my.all_tags, lambda { |el| "javascript:Api.send('links/create', { name:$('#bm_name').val(), url:'#{params[:url]}', tag:'#{el}' }, function(){ Pjax.refresh() })" }
 
   %hr
 
-  - unless @bookmark.id
-    %h5 create by tag
-
-    = labels Bookmark.my.active.can_tags, lambda { |el| "javascript:Api.send('bookmarks/create', { name:$('#bm_name').val(), url:'#{params[:url]}', tag:'#{el}' }, function(){ Pjax.refresh() })" }
-
-    %hr
-
-  - if @bookmarks.empty?
-    %p no bookmarks on domain
-  - else
-    %ul.list
-      - for el in @bookmarks
-        %li
-          = link_to el.name.trim(100), el.path
-          - if el.description
-            %br
-            %small= el.description
+- if @links.empty?
+  %p no bookmarks on domain
+- else
+  %ul.list
+    - for el in @links
+      %li
+        = link_to el.name.trim(100), el.path
+        - if el.description
+          %br
+          %small= el.description

@@ -1,8 +1,15 @@
-%div{ :style=>"margin-top:5px; background-color:#ddd; margin:0 -9px; padding:5px; border-bottom:1px solid #aaa; margin-bottom:15px; z-index:1; position:fixed; width:100%; margin-top:-1px;" }
-  %a.btn.btn-sm{ href:Url.current.path('/plugin').local_url, :class=>@bookmark ? 'btn-info' : 'btn-default' } Bookmark
-  %a.btn.btn-sm{ href:Url.current.path('/plugin/domain').local_url, :class=>@domain ? 'btn-info' : 'btn-default' } Domain
-  %a.btn.btn-sm{ href:Url.current.path('/plugin/recent').local_url, :class=>request.path =~ /\/recent/ ? 'btn-info' : 'btn-default' } Recent
+%html{:lang => "en"}
+  %head
+    %title StashBuckets
+    = Asset.jquery 
+    = Asset.css 'main/index.scss'
+    = Asset.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300,600'
+    = Asset.js  'main/index.coffee'
+  %body
+    #full-page
+      .navbar
+        %ul.main
+          = plugin_menu
 
-%div{ :style=>"margin-top:55px;" }
-
-= yield
+      %div{ :style=>"margin-top:35px; max-width:400px; padding:10px;" }
+        = yield

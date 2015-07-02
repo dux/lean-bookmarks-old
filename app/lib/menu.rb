@@ -38,7 +38,7 @@ class Menu
     if @opts[:default] && ! @we_have_active
       @menu[0][:active] = true
     end
-    
+
     ret = []
 
     for el in @menu

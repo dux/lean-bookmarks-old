@@ -75,5 +75,9 @@ class LuxHelper
     ret.push '</div></div>'
     ret.join('')
   end
+
+  def cache(*opts, &block)
+    Cache.view *opts, &block
+  end
 end
 

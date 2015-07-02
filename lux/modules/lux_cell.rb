@@ -141,5 +141,9 @@ class LuxCell
     self.class.render(name, *args)
   end
 
+  def params
+    Lux.params
+  end
+
 end
 
