@@ -22,10 +22,10 @@ class Time
 
     return 'Few sec ago' if time_diff < 10
     return 'Less than min ago' if time_diff < 60
-    return "#{d_minutes} minutes ago" if d_hours == 0
-    return "#{d_days} minutes ago" if d_days == 0
-    return "#{d_hours} minutes ago" if d_months == 0
-    return "#{d_months} ago"
+    return "#{d_months} months ago" if d_months > 0
+    return "#{d_days} days ago" if d_days > 0
+    return "#{d_hours} hours ago" if d_hours > 0
+    return "Time.ago error" if d_hours > 0
   end
 end
 

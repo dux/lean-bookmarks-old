@@ -1,9 +1,9 @@
 - for link in (@links=Link.desc.my.paginate(20))
-  %a{ :href=>link.url, :style=>"display:block;" }
-    %div{ :style=>"color:#fff; position:absolute; margin:10px; text-shadow:0 0 4px #222;" }
-      %h4{ :style=>"color:#fff;" }= link.name
-      %h5{ :style=>"color:#fff;" }= link.created_at
-    = image_tag link.thumbnail, :style=>"width:100%; margin-bottom:20px; border:1px solid #aaa; border-radius:4px;"
+  %a{ :href=>link.url, :style=>"display:block; position:relative;" }
+    %div{ :style=>"padding:10px; text-shadow:0 0 4px #222; background:rgba(1, 1, 1, 0.5); position:absolute; width:100%;" }
+      %h5{ :style=>"color:#fff; " }= link.name
+      %h6{ :style=>"color:#fff;" }= Time.ago(link.created_at)
+    = image_tag link.thumbnail, :style=>"width:100%; margin-bottom:20px; border:1px solid #aaa;"
 
 
 = paginate @links

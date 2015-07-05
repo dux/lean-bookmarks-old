@@ -10,7 +10,7 @@ class LinkApi < AppApi
     end
 
     if b = Link.my.where( bucket_id:params[:bucket_id], url:params[:url] ).first
-      respond 'You allready added this bookmark' 
+      respond 'You allready added this link' 
       return b
     end
 
@@ -18,7 +18,7 @@ class LinkApi < AppApi
     bm.fetch_name unless bm.name?
     bm.tags = [params[:tag]] if params[:tag]
     bm.save!
-    @message = 'Bookmark added'
+    @message = 'Link added'
     bm
   end
 

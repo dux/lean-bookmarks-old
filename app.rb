@@ -53,7 +53,7 @@ get '*' do
   return resolve_promo_app if [:set_password, :login, :css].index(@root_part)
 
   # main application routes
-  return resolve_main_app if [:link, :note, :bucket, :user, :search, :part].index(@root_part)
+  return resolve_main_app if [:link, :note, :bucket, :user, :domain, :search, :part].index(@root_part)
 
   # plugin routes
   return resolve_plugin_app if [:plugin].index(@root_part)

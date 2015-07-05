@@ -1,6 +1,12 @@
 #content {
   ul, ol {
     padding-left:20px;
-    li { list-style-type: circle; padding-bottom: 10px; }
+    li {
+      list-style-type: circle; padding-bottom: 10px; line-height: 16pt;
+      a {
+        text-decoration: none; color:#333;
+        &:hover { text-decoration: underline; }
+      }
+    }
   }
 }

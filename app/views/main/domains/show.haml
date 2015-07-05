@@ -1,0 +1,29 @@
+%br
+
+%h2= @name
+
+%br
+%br
+%br
+
+.row
+  .col-350.mobile-hide
+    = image_tag @links[0].thumbnail, :style=>"width:100%; border:1px solid #ddd; background-color:#fff;"
+
+    %p No descrition
+
+
+  .col-1
+    %ul.list
+      - for el in @links
+        %li
+          %b.bigger= el.as_link
+          %br
+          = link_to el.url
+          %p.smaller= Time.ago(el.created_at)
+          - if el.description? 
+            %hr{ :style=>"margin:5px 0; width:70%; min-width:200px;" }
+            .widget.markdown= el.description
+
+          %br
+

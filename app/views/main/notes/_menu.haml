@@ -1,3 +1,6 @@
+%form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.send('notes/create', this, function(data){ Pjax.load(data.path+'/edit') }); return false;" }
+  %input{ :name=>:name }
+  %button.btn + add
+
 .top-menu
-  %a.btn.btn-sm{ :onclick=>"Popup.go.form(this, 'Add note', '/api/notes/create', 'name', '')" } + add note
   %a.btn.btn-sm.btn-empty{ :href=>'/notes/archive' } archive

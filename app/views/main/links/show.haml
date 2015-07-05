@@ -5,6 +5,9 @@
   %h3= @link.name
 
   %p= link_to @link.url
+  %p{ :style=>"margin-top:5px;" }
+    domain:
+    %a{ :href=>"/domain/#{@link.domain}" }= @link.domain
   
   %hr
   

@@ -56,3 +56,8 @@ textarea {
     small { font-size: 10pt; position:relative; top:5px; display:block; padding-bottom:10px; color:#888; }
   }
 }
+
+.form-inline {
+    input { padding:5px; font-size:10pt; }
+    button { padding:5px 10px; }
+}

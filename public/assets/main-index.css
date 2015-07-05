@@ -26,17 +26,17 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 body { font-family: 'Open Sans', sans-serif; font-size: 11pt; }
 
-h1 { font-size: 24pt; font-weight: 900; font-color: #444; margin-bottom: 20px; }
+h1 { font-size: 24pt; font-weight: 900; color: #444; margin-bottom: 20px; }
 
-h2 { font-size: 22pt; font-weight: 700; font-color: #444; margin-bottom: 20px; }
+h2 { font-size: 22pt; font-weight: 700; color: #444; margin-bottom: 20px; }
 
-h3 { font-size: 20pt; font-weight: 700; font-color: #444; margin-bottom: 20px; }
+h3 { font-size: 20pt; font-weight: 700; color: #444; margin-bottom: 20px; }
 
-h4 { font-size: 18pt; font-weight: 700; font-color: #444; margin-bottom: 20px; }
+h4 { font-size: 18pt; font-weight: 700; color: #444; margin-bottom: 20px; }
 
-h5 { font-size: 16pt; font-weight: 700; font-color: #444; margin-bottom: 20px; }
+h5 { font-size: 16pt; font-weight: 700; color: #444; margin-bottom: 20px; }
 
-h6 { font-size: 14pt; font-weight: 700; font-color: #444; margin-bottom: 20px; }
+h6 { font-size: 14pt; font-weight: 700; color: #444; margin-bottom: 20px; }
 
 .nudge { margin-top: 30px !important; }
 
@@ -67,6 +67,9 @@ textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius:
 .form-horizontal .type-checkbox label { position: relative; top: 16px; left: 150px; }
 .form-horizontal .form-group { padding-left: 200px; padding-bottom: 5px; }
 .form-horizontal .form-group small { font-size: 10pt; position: relative; top: 5px; display: block; padding-bottom: 10px; color: #888; }
+
+.form-inline input { padding: 5px; font-size: 10pt; }
+.form-inline button { padding: 5px 10px; }
 
 .container { min-width: 600px; max-width: 1100px; margin: 0 auto; }
 
@@ -195,7 +198,9 @@ table col[class*="col-"] { position: static; float: none; display: table-column;
 table td[class*="col-"], table th[class*="col-"] { position: static; float: none; display: table-cell; }
 
 #content ul, #content ol { padding-left: 20px; }
-#content ul li, #content ol li { list-style-type: circle; padding-bottom: 10px; }
+#content ul li, #content ol li { list-style-type: circle; padding-bottom: 10px; line-height: 16pt; }
+#content ul li a, #content ol li a { text-decoration: none; color: #333; }
+#content ul li a:hover, #content ol li a:hover { text-decoration: underline; }
 
 .paginate { clear: both; padding: 20px 0; text-align: center; }
 .paginate > div { border: 1px solid #ddd; display: inline-block; border-radius: 4px; margin: 0 auto; background-color: #fff; }
@@ -290,10 +295,14 @@ div { box-sizing: border-box; }
 
 hr, br.c { clear: both; }
 
+.bigger { font-size: 115%; }
+
+.smaller { font-size: 87%; color: #777; }
+
 .colorize { display: flex; }
 .colorize > div { flex: 1; height: 3px; }
 .colorize .buckets { background-color: #8767A6; }
-.colorize .links { background-color: #E98811; }
+.colorize .links, .colorize .domains { background-color: #E98811; }
 .colorize .notes { background-color: #F7CA0F; }
 .colorize .users { background-color: #ccc; }
 

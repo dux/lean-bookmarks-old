@@ -21,15 +21,13 @@ class Object
     return self.id? if respond_to?(:attributes) && respond_to?(:id) 
     return true if nil?
 
-    if self.class.name == 'Arel::SelectManager'
-      return false
-    end
+    # if ['Arel::Nodes::Equality', 'Arel::SelectManager'].index(self.class.name)
+    return false if self.class.name.index('Arel::')
+    return length == 0 if kind_of?(Array)
+    return keys.length == 0 if kind_of?(Hash)
+    return to_s.length == 0 if kind_of?(Time)
 
-    raise "Unknown type #{self.class.name} for empty? given" unless ['Array', 'Hash'].index(self.class.name)
-    return true if length == 0 and kind_of?(Array)
-    return true if keys.length == 0 and kind_of?(Hash)
-
-    false
+    raise "Unknown type #{self.class.name} for empty? given"
   end
 
 end

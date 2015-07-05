@@ -64,7 +64,7 @@ Popup.go =
     Api.send "#{url}/toggle_tag", { tag:tag_name }, ->
       App.reload_container '#tags_list'
 
-App =
+window.App =
   reload_container: (id) ->
     el = $(id)
     url = el.attr('data-url')
@@ -72,3 +72,8 @@ App =
     $.get url, (data) ->
       el.html data
       Widgets.load()
+
+  create_link:(form) ->
+    Api.send 'links/create', form, -> Pjax.load('/links')
+    return false
+

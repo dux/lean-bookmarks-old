@@ -17,14 +17,15 @@ b, strong { font-weight:700; }
 *[onclick], *[href] { cursor:pointer; }
 div { box-sizing: border-box; }
 hr, br.c { clear:both; }
-
+.bigger { font-size: 115%; }
+.smaller { font-size: 87%; color:#777; }
 
 // coolorized menu
 .colorize {
   display:flex;
   > div { flex: 1; height:3px; }
   .buckets { background-color:#8767A6; }
-  .links   { background-color:#E98811; }
+  .links, .domains { background-color:#E98811; }
   .notes   { background-color:#F7CA0F; }
   .users   { background-color:#ccc; }
 }
