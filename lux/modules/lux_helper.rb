@@ -76,8 +76,32 @@ class LuxHelper
     ret.join('')
   end
 
-  def cache(*opts, &block)
-    Cache.view *opts, &block
+  def cache(in_key, ttl=nil, &block)
+    key = nil
+
+    if in_key.kind_of?(Array)
+      # = cache ['buckets', User.current.id, @buckets.first] do
+      ret = []
+      for el in in_key
+        if el.respond_to? :updated_at
+          ret.push "#{el.class.name}-#{el.id}-#{el.updated_at.to_i}"
+        elsif el.kind_of? Symbol
+          ret.push el.to_s
+        elsif el.respond_to? :id
+          ret.push "#{el.class.name}:#{el.id}" rescue ''
+        else
+          ret.push el.to_s rescue 'nil'
+        end
+      end
+      key = ret.join('-')
+    else
+      # = cache 'buckets' do
+      key = in_key
+    end
+
+    Cache.fetch key, ttl do
+      capture(&block)
+    end
   end
 end
 

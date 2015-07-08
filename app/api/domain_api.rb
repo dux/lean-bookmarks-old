@@ -1,4 +1,4 @@
-class DomainApi < MasterApi
+class DomainApi < LuxApi
 
   def toggle_article
     @domain = Domain.search_or_new( created_by:User.current.id, name:params[:domain] )

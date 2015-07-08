@@ -107,5 +107,9 @@ class Lux
     Thread.current[:lux][:sinatra].request.session
   end
 
+  def self.no_cache
+    Lux.sinatra.request.env['HTTP_CACHE_CONTROL'] == 'no-cache' ? true : false
+  end
+
 end
 

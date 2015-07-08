@@ -3,8 +3,8 @@ set :show_exceptions, true
 set :raise_errors, true
 set :protection, true
 
-use Rack::Session::Cookie, :key => 'lux.session', :path => '/', :expire_after => 1.month, :secret => 'b1e4f4cf45ffe47efb0c70ac64397e36'
-use BetterErrors::Middleware; BetterErrors.application_root = __dir__
+use Rack::Session::Cookie, :key => 'lux.session', :path => '/', :expire_after => 1.month, :secret=>Digest::MD5.hexdigest(__FILE__)
+use BetterErrors::Middleware; BetterErrors.application_root = __dir__.sub('/config','')
 
 before do
   Lux.init(self)

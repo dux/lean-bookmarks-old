@@ -26,42 +26,41 @@
 #   concat(data)
 # end
 
-
 class Cache
-  @ns = 'app:'
+  @@client = Dalli::Client.new('localhost:11211', { :namespace=>Digest::MD5.hexdigest(__FILE__)[0,4], :compress => true,  :expires_in => 1.hour })
 
-  def self.exec
-    # Thread.current[:_memcached]
-    # @conn ||= ActiveSupport::Cache::MemCacheStore.new("localhost")
-    # @conn
-    Rails.cache
-  end
+  class << self
 
-  def self.get(key)
-    exec.read "#{@ns}#{key}"
-  end
-
-  def self.read(key)
-    exec.read "#{@ns}#{key}"
-  end
-
-  def self.set(key, data=nil)
-    exec.write "#{@ns}#{key}", data
-  end
-
-  def self.write(key, data=nil)
-    exec.write "#{@ns}#{key}", data
-  end
-
-  def self.delete(key, data=nil)
-    exec.delete "#{@ns}#{key}"
-  end
-
-  def self.fetch(key)
-    cache_key = "#{@ns}#{key}"
-    exec.delete cache_key if App.no_cache
-    exec.fetch cache_key do
-      yield
+    def exec
+      @@client
     end
+
+    def get(key)
+      exec.get(key)
+    end
+
+    def read(key)
+      exec.get(key)
+    end
+
+    def set(key, data, ttl=nil)
+      exec.set(key, data, ttl)
+    end
+
+    def write(key, data, ttl=nil)
+      exec.set(key, data, ttl)
+    end
+
+    def delete(key, data=nil)
+      exec.delete(key)
+    end
+
+    def fetch(key, ttl=nil)
+      exec.delete key if Lux.no_cache
+      exec.fetch key, ttl do
+        yield
+      end
+    end
+
   end
 end
