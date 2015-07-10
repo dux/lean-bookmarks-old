@@ -42,4 +42,8 @@ class User < MasterModel
     false
   end
 
+  def is_admin
+    true
+  end
+
 end

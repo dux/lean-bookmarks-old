@@ -1,0 +1,69 @@
+!!! haml
+%html
+  %head
+    %title Admin
+    = Asset.jquery 
+    = Asset.css 'admin/index.less'
+    = Asset.js  'admin/index.coffee'
+%body
+  #full_page
+    %nav.navbar.navbar-default{role: "navigation"}
+      .container
+        / Brand and toggle get grouped for better mobile display
+        / Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+          - if false
+            %form.navbar-form.navbar-left{role: "search"}
+              .form-group
+                %input.form-control{placeholder: "Search", type: "text"}/
+              %button.btn.btn-default{type: "submit"} Submit
+          %ul.nav.navbar-nav.navbar-right
+            %li
+              %a{ href: '/' } Back to site
+            - if current_user
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+                  = current_user.name.trim(25)
+                  %b.caret
+                %ul.dropdown-menu{ role: "menu" }
+                  %li
+                    %a{href: "/admin/users/#{current_user.id}"} My user profile
+                  %li.divider
+                  %li
+                    %a{href: '/bye'} Log off
+
+
+    .container
+      .row
+        - if current_user
+          .col-sm-2.sidebar
+            %h5 Admin objects
+
+            %ul.nav.nav-pills.nav-stacked
+              - for el in AdminCell.admin_on
+                - if el.kind_of?(String)
+                  %li
+                    %h5= el
+                - else
+                  %li{ :class=>el.to_s == params[:model] ? :active : nil }
+                    %a{ href: "/admin/#{el}" }
+                      = el.to_s.humanize
+                      %span.badge.pull-right= el.to_s.classify.constantize.count
+
+        .col-sm-10
+          #navbar-brand
+            %a.title{href: '/admin' } #{App.name} admin
+            - if current_user
+              = # input 'lang', :as=>:select, :collection=>App.langs, :onchange=>"Pjax.load('?lang='+this.value)", :class=>'form-control', :value=>session[:lang]
+              = I18n.available_locales.map{ |el| %[<a class="btn btn-xs btn-#{Lux.session[:locale].to_s == el.to_s ? 'info' : 'default'}" href="?locale=#{el}">#{el}</a>] }.join(' ').html_safe
+
+          %div{ :style=>'padding-left:20px; min-height:500px;' }
+            = yield
+
+            %br{ :clear=>:both }
+
+            %hr
+
+          %footer
+            Gemini CMS &bull; #{DateTime.now.year}

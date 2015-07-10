@@ -4,7 +4,7 @@ require 'bundler'
 
 Bundler.require
 
-require './app'
+require './router'
 
 set :root, Pathname(__FILE__).dirname
 # set :environment, :production

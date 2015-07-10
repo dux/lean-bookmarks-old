@@ -1,0 +1,9 @@
+= render '_wrap' do
+
+  .form
+    = bs_form @link, :horizontal=>true, :done=>'refresh' do
+      = bs_input :name
+      = bs_input :url
+      = bs_input :description, :as=>:memo
+      = bs_submit 'Save', '/admin/bookmarks', 'go back to list'
+    

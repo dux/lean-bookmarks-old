@@ -48,7 +48,7 @@
             if done == 'refresh'
               Pjax.load location.href.replace(/https?:\/\/[^\/]+/,'')
             else if done == 'redirect' || done == 'admin'
-              Pjax.load '/admin'+response.path
+              Pjax.load "/admin/#{response.class_path}/#{response.data.id}"
             else
               eval done
       else

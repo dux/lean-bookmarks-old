@@ -1,18 +1,24 @@
 require './lux/init'
 
+def resolve_admin_app
+  return 'Only for admins' unless User.current.is_admin
+
+  return AdminCell.resolve(*@path)  
+end
+
+def resolve_part
+  if @path_suffix
+    klass, id = Crypt.decrypt(@path_suffix).split(':')
+    @path.last = "_#{@path.last}"
+    return Template.part(@path.join('/'), :object=>klass.constantize.get(id))
+  end
+end
+
 def resolve_main_app
   return Lux.status :forbiden, 'Only for registred users' unless User.current
 
   Lux.locals[:class] = @root_part.to_s.pluralize
   
-  if @root_part == :part
-    if @path_suffix
-      klass, id = Crypt.decrypt(@path_suffix).split(':')
-      @path.last = "_#{@path.last}"
-      return Template.part(@path.join('/'), :object=>klass.constantize.get(id))
-    end
-  end
-
   return Main::StaticCell.resolve(@root_part) if [:search].index(@root_part)
 
   return "Main::#{@root_part.to_s.classify}Cell".constantize.resolve(*@path)
@@ -49,14 +55,20 @@ get '*' do
   # root
   return resolve_root unless @root_part
 
+  # main application routes
+  return resolve_part if [:part].index(@root_part)
+
   # guest routes
   return resolve_promo_app if [:set_password, :login, :css].index(@root_part)
 
   # main application routes
-  return resolve_main_app if [:link, :note, :bucket, :user, :domain, :search, :part].index(@root_part)
+  return resolve_main_app if [:link, :note, :bucket, :user, :domain, :search].index(@root_part)
 
   # plugin routes
   return resolve_plugin_app if [:plugin].index(@root_part)
+
+  # admin routes
+  return resolve_admin_app if [:admin].index(@root_part)
 
   Lux.status :not_found, "Page not found not route /#{@root_part}"
 end

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'therubyracer', :platforms => :ruby
 gem 'pg'
 gem 'sinatra'
 gem "sinatra-contrib"
@@ -13,6 +14,7 @@ gem 'rake'
 gem 'hashie'
 gem 'better_errors'
 gem 'sass'
+gem 'less'
 gem 'coffee-script'
 gem 'rest-client'
 gem 'dalli'

@@ -1,5 +1,9 @@
 module AdminHelper
-
+  include FormHelper
+  include RailsHelper
+  include MasterHelper
+  include TableHelper
+  
   # = bs_form @user, :inline=>true, :horizontal=>false
 
   def short(date=nil)
@@ -29,9 +33,8 @@ module AdminHelper
       opts['api-action'] += location.id ? "#{location.id}/update" : 'create'
     end
 
-    content_tag :form, opts do
-      yield
-    end
+    data = capture(&block)
+    opts.tag(:form, data)
   end
 
   def bs_input(name, opts={})
@@ -186,6 +189,10 @@ module AdminHelper
         </div>]
     m.items vals
     m.render params[var]
+  end
+
+  def current_user
+    User.current
   end
 
 end
