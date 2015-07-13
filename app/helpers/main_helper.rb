@@ -38,4 +38,19 @@ module MainHelper
     data = capture do; yield; end
     %[<div class="row nudge"><div class="col-1"></div><div class="col-1" style="min-width:#{width}px;">#{data}</div><div class="col-1"></div></div>]
   end
+
+  # def export(data)
+  #   ret = []
+  #   # id = Lux.uid
+  #   # ret.push %[<script type="template/json" id="#{id}">#{data.to_json.sub(/^\s+/,'')}</script>]
+  #   # ret.push %[<script>if (window.data === undefined) { window.data = {}; }
+  #   #    window.data.#{name} = JSON.parse(document.getElementById('#{id}').innerHTML);
+  #   #  </script>]
+    
+  #   for el in data
+  #     ret.push %[<div class="w view-#{el.class.name.tableize.singularize}" style="display:none;">#{el.to_json.gsub(/\s+/,' ')}</div>] 
+  #   end
+
+  #   ret.join("\n")
+  # end
 end

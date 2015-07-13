@@ -1,4 +1,8 @@
-class window.MarkdownWidget extends Widget
+Widget.register 'markdown', 
   init: ->
-    @root.html marked @root.html()
+    return alert 'Marked markdown parser is not loaded' unless marked?
+
+    return '' unless /\w/.test(@root.innerHTML)
+
+    @root.innerHTML = marked @root.innerHTML
 

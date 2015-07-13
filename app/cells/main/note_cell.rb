@@ -2,6 +2,10 @@ class Main::NoteCell < LuxCell
 
   def index
     @notes = Note.my.tagged_with(Lux.params[:suffix]).paginate(20)
+    # @w_notes = []
+    # @notes.each do |el|
+    #   @w_notes.push( path: el.path, name: el.name, data: el.data.to_s )
+    # end
   end
 
   def show(id)

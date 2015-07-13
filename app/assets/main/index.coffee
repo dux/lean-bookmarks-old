@@ -7,7 +7,7 @@ $ ->
   
   Pjax.on_get ->
     Popup.close()
-    Widgets.load()
+    Widget.load_all()
 
   Pjax.on_get()
 
