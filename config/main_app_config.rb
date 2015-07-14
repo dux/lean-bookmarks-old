@@ -13,10 +13,6 @@ end
 before do
   Lux.init(self)
 
-  if Lux.dev? && params[:usrid]
-    session[:u_id] = params[:usrid].to_i
-  end
-
   path = request.path.split(':', 2)
   if path[1]
     @path_suffix = path[1]
@@ -26,15 +22,6 @@ before do
   @path.shift
   @root_part = @path[0] ? @path.shift.gsub('-','_').singularize.to_sym : nil
   @first_part = @path[0]
-
-  # load user if there is session string
-  if session[:u_id]
-    begin
-      User.current = User.find(session[:u_id])
-    rescue
-      session.delete(:u_id)
-    end
-  end
 
   @path[0] = StringBase.decode(@path[0]) rescue @path[0] if @path[0]
 end

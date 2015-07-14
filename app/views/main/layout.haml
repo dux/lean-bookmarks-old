@@ -6,23 +6,24 @@
     = Asset.css 'main/index.scss'
     = Asset.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300,600'
     = Asset.js  'main/index.coffee'
-  %body{ :class=>@class  }
+  %body
     #full-page
-      .colorize
-        - if @class
-          %div{ :class=>@class }
-        - else
-          .buckets
-          .links
-          .notes
+      .main-menu{ :class=>@class  }
+        .colorize
+          - if @class
+            %div{ :class=>@class }
+          - else
+            .buckets
+            .links
+            .notes
 
-      .navbar
-        .container
-          %ul.main
-            = main_menu
-          %form{ :action=>'/search' }
-            %input{ :name=>:q, :placeholder=>'search...', :value=>params[:q] }
-          %ul.pull-right= sub_menu
+        .navbar
+          .container
+            %ul.main
+              = main_menu
+            %form{ :action=>'/search' }
+              %input{ :name=>:q, :placeholder=>'search...', :value=>params[:q] }
+            %ul.pull-right= sub_menu
 
     
       - if @top_info

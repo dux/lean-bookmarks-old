@@ -1,5 +1,5 @@
-//= req base/index.scss
-//= req app_css/*
+//= req css_base/index.scss
+//= req css_app/*
 //= req ../components/toastr/toastr.min.css
 
 body { background-color: #f7f7f7; }
@@ -31,6 +31,21 @@ hr, br.c { clear:both; }
   .users   { background-color:#ccc; }
 }
 
+.main-menu.buckets .navbar li.active {
+  background-color:#8767A6; 
+  a, svg { color:#eee; fill:#fff; }
+}
+
+.main-menu.links .navbar li.active {
+  background-color:#E98811; 
+  a, svg { color:#eee; fill:#fff; }
+}
+
+.main-menu.notes .navbar li.active {
+  background-color:#F7CA0F; 
+  a, svg { color:#555; fill:#777; }
+}
+
 // buttons and links in header tags
 h1, h2, h3, h4, h5, h6 {
   a { text-decoration: none; color:#444; }
@@ -52,7 +67,7 @@ h1, h2, h3 {
 
 // show on hover
 .show-on-hover {
-  opacity:0.2; 
+  opacity:0.5; 
   -webkit-transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   transition: opacity 0.1s ease-in-out;  

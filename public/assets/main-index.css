@@ -1,12 +1,12 @@
 /* Compiled and copied assets files in use: 
- - main/base/index.scss
- - main/app_css/buckets.scss
- - main/app_css/popup.scss
+ - main/css_base/index.scss
+ - main/css_app/buckets.scss
+ - main/css_app/popup.scss
  - components/toastr/toastr.min.css
  - main/index.scss
 */
 
-/* Asset file: main/base/index.scss */
+/* Asset file: main/css_base/index.scss */
 /* http://meyerweb.com/eric/tools/css/reset/  v2.0 | 20110126 License: none (public domain)
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
@@ -235,10 +235,10 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 
 .tip { margin: 20px 0; padding: 20px; background-color: #fff; border: 1px solid #eee; border-left: 3px solid #F7CA0F; }
 
-/*# sourceMappingURL=main-base-index.css.map */
+/*# sourceMappingURL=main-css_base-index.css.map */
 
 
-/* Asset file: main/app_css/buckets.scss */
+/* Asset file: main/css_app/buckets.scss */
 .bucket { border: 1px solid #ddd; background-color: #fff; border-radius: 4px; width: 250px; height: 308px; float: left; margin-right: 20px; margin-bottom: 20px; border-top: 2px solid #8767A6; }
 .bucket h4 { font-size: 12pt; }
 .bucket h5 { font-size: 10pt; font-weight: 400; margin-top: -10px; }
@@ -254,10 +254,10 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 .bucket.note { border-top: 2px solid #F7CA0F; background-color: #FCF8EC; }
 .bucket.default { padding: 10px; }
 
-/*# sourceMappingURL=main-app_css-buckets.css.map */
+/*# sourceMappingURL=main-css_app-buckets.css.map */
 
 
-/* Asset file: main/app_css/popup.scss */
+/* Asset file: main/css_app/popup.scss */
 #popup { display: inline-block; font-size: 14px; z-index: 100000; border: 1px solid #b9b9b9; border-radius: 3px; min-width: 250px; padding: 8px; background-color: #fff; position: absolute; margin-top: 3px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); }
 #popup #popup_title { font-weight: bold; color: #777; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 7px; padding-bottom: 5px; }
 #popup #popup_body input[type=text], #popup #popup_body textarea { border-radius: 3px; margin-bottom: 10px; background-color: #eee; display: block; margin-bottom: 10px; }
@@ -268,7 +268,7 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 #popup #popup_body label { margin-top: 10px; clear: both; display: block; }
 #popup #popup_body .stick { margin: -8px 0 -10px -10px; }
 
-/*# sourceMappingURL=main-app_css-popup.css.map */
+/*# sourceMappingURL=main-css_app-popup.css.map */
 
 
 /* Asset file: components/toastr/toastr.min.css */
@@ -308,6 +308,15 @@ hr, br.c { clear: both; }
 .colorize .notes { background-color: #F7CA0F; }
 .colorize .users { background-color: #ccc; }
 
+.main-menu.buckets .navbar li.active { background-color: #8767A6; }
+.main-menu.buckets .navbar li.active a, .main-menu.buckets .navbar li.active svg { color: #eee; fill: #fff; }
+
+.main-menu.links .navbar li.active { background-color: #E98811; }
+.main-menu.links .navbar li.active a, .main-menu.links .navbar li.active svg { color: #eee; fill: #fff; }
+
+.main-menu.notes .navbar li.active { background-color: #F7CA0F; }
+.main-menu.notes .navbar li.active a, .main-menu.notes .navbar li.active svg { color: #555; fill: #777; }
+
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { text-decoration: none; color: #444; }
 
 h4, h5, h6 { font-weight: 600; }
@@ -317,7 +326,7 @@ h1 a:hover, h2 a:hover, h3 a:hover { text-decoration: underline; }
 h1 .btn, h2 .btn, h3 .btn { padding: 3px 10px; font-size: 10pt; font-weight: 400; position: relative; top: -5px; }
 h1 .btn:active, h2 .btn:active, h3 .btn:active { top: -4px; }
 
-.show-on-hover { opacity: 0.2; -webkit-transition: opacity 0.1s ease-in-out; -moz-transition: opacity 0.1s ease-in-out; transition: opacity 0.1s ease-in-out; }
+.show-on-hover { opacity: 0.5; -webkit-transition: opacity 0.1s ease-in-out; -moz-transition: opacity 0.1s ease-in-out; transition: opacity 0.1s ease-in-out; }
 
 *:hover > .show-on-hover { opacity: 1; }
 

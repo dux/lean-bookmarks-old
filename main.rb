@@ -2,6 +2,20 @@ require './lux/init'
 
 ### GET abd POST
 
+before do
+  # for testing
+  session[:u_id] = params[:usrid].to_i if Lux.dev? && params[:usrid]
+
+  # load user if there is session string
+  if session[:u_id]
+    begin
+      User.current = User.find(session[:u_id])
+    rescue
+      session.delete(:u_id)
+    end
+  end
+end
+
 def get
   # debug development routes
   if Lux.dev?

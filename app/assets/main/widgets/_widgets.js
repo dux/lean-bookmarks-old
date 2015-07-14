@@ -100,7 +100,7 @@
         delete Widget.widgets[this.get('id')];
         this.root.parentNode.removeChild(this.root);
       };
-      widget.html = function(data) {
+      widget.inner_html = function(data) {
         this.root.innerHTML = data;
         Widget.load_all(this.root);
       };
