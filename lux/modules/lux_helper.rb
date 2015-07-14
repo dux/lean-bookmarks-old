@@ -47,7 +47,7 @@ class LuxHelper
     return if list.empty?
 
     unless list.respond_to?(:paginate_page)
-      return Lux.error('Paginate recieved list but it is not paginated in model scope. ')
+      return Error.server('Paginate recieved list but it is not paginated in model scope. ')
     end
 
     return if list.paginate_per_page > list.length && list.paginate_page == 0

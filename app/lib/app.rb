@@ -16,10 +16,4 @@ class App
     end
   end
 
-  # def self.init_for_users
-  #   return Lux.status :forbiden, 'Only for registred users' unless User.current
-
-  #   false
-  # end
-
 end

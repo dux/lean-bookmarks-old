@@ -27,7 +27,7 @@ class LuxRenderCell < LuxCell
       end
 
       # return Mailer.send(method_name).body if Mailer.respond_to?(method_name)
-      return Lux.error "There is no class method >><b>#{method_name}</b><< in Mailer class.\n\nMailer.#{method_name}() failed"
+      return Error.server("There is no class method >><b>#{method_name}</b><< in Mailer class.\n\nMailer.#{method_name}() failed")
     end
 
     # if Lux.params[:preview] && Lux.params[:send]
@@ -58,7 +58,7 @@ class LuxRenderCell < LuxCell
   end
 
   def self.get_api(*path)
-      return Lux.error 'API error: action not defined' unless path[1]
+      return Error.server('API error: action not defined') unless path[1]
       return LuxApi.run path[0], path[1]
   end
 

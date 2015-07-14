@@ -36,13 +36,13 @@ class LuxCell
     local_args[0] = "#{local_args[0]}!"
     return obj.send(*local_args) if obj.respond_to?(local_args[0])
 
+    return Error.not_found('Page not found') unless Lux.dev?
 
     list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part]
-
-    err = ["No instance method <b>#{local_args[0].sub('!','')}</b> nor <b>#{local_args[0]}</b> found in class <b>#{self.name}</b>"]
+    err = [%[No instance method "#{local_args[0].sub('!','')}" nor "#{local_args[0]}" found in class "#{self.name}"]]
     err.push ["Expected so see def show(id) ..."] if local_args[0] == 'show!'
     err.push %[You have defined \n- #{(list).join("\n- ")}]
-    return Lux.error(err)
+    return Error.server(err.join("\n\n"))
   end
 
   def self.part(*args)
@@ -113,27 +113,6 @@ class LuxCell
     @@before[self.name] = []
     @@before[self.name].push(block)
   end
-
-  # def _find_template_path(path)
-  #   return path if path.to_s.index('/')
-  #   "#{self.class.name.tableize.split('_cell')[0].pluralize}/#{path}"
-  # end
-
-  # # inside instance method when you want to render specific template
-  # def template(template=nil)
-  #   # template is second part part unless defined.
-  #   # for path /action/confirm_email -> template is "confirm_email"
-  #   template ||= Lux.sinatra.request.path.split('/')[2]
-    
-  #   path = _find_template_path(template)
-  #   Template.new(path).render( instance_variables_hash )
-  # end
-
-  # # inside instance method when you want to render specific template part
-  # def template_part(template)
-  #   path = _find_template_path(template)
-  #   Template.new(path).part( instance_variables_hash )
-  # end
 
   # # inside instance method when you want to class render method
   # render(:show, id)

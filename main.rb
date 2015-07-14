@@ -1,50 +1,8 @@
 require './lux/init'
 
-def resolve_admin_app
-  return 'Only for admins' unless User.current.is_admin
+### GET abd POST
 
-  return AdminCell.resolve(*@path)  
-end
-
-def resolve_part
-  if @path_suffix
-    klass, id = Crypt.decrypt(@path_suffix).split(':')
-    @path.last = "_#{@path.last}"
-    return Template.part(@path.join('/'), :object=>klass.constantize.get(id))
-  end
-end
-
-def resolve_main_app
-  return Lux.status :forbiden, 'Only for registred users' unless User.current
-
-  Lux.locals[:class] = @root_part.to_s.pluralize
-  
-  return Main::StaticCell.resolve(@root_part) if [:search].index(@root_part)
-
-  return "Main::#{@root_part.to_s.classify}Cell".constantize.resolve(*@path)
-end
-
-def resolve_promo_app
-  if User.current
-    Lux.flash :info, 'Only for guests'
-    return redirect '/buckets'
-  else
-    return PromoCell.resolve(@root_part)
-  end
-end
-
-def resolve_plugin_app
-  PluginCell.resolve(*@path)
-end
-
-def resolve_root
-  User.current ? Template.render('main/index') : PromoCell.render(:index)
-end
-
-get '*' do
-  # @body can be defined in before filter
-  return @body if @body
-
+def get
   # debug development routes
   if Lux.dev?
     for el in [ [:lux, LuxRenderCell], [:api, LuxApi] ]
@@ -73,10 +31,52 @@ get '*' do
   Lux.status :not_found, "Page not found not route /#{@root_part}"
 end
 
-post '/api/*' do
-  return LuxApi.resolve(*@path)
+def post
+  return LuxApi.resolve(*@path) if @root_part == :api
+
+  Lux.forbiden('POST request is not allowed in this route')
 end
 
-post '*' do
-  Lux.status :forbiden, 'Request not allowed'
+### Resolvers
+
+def resolve_admin_app
+  return 'Only for admins' unless User.current.is_admin
+
+  return AdminCell.resolve(*@path)  
+end
+
+def resolve_main_app
+  # return Lux.status :forbiden, 'Only for registred users' unless User.current
+  return Error.unauthorized unless User.current
+
+  Lux.locals[:class] = @root_part.to_s.pluralize
+  
+  return Main::StaticCell.resolve(@root_part) if [:search].index(@root_part)
+
+  return "Main::#{@root_part.to_s.classify}Cell".constantize.resolve(*@path)
+end
+
+def resolve_promo_app
+  if User.current
+    Lux.flash :info, 'Only for guests'
+    return redirect '/buckets'
+  else
+    return PromoCell.resolve(@root_part)
+  end
+end
+
+def resolve_plugin_app
+  PluginCell.resolve(*@path)
+end
+
+def resolve_root
+  User.current ? Template.render('main/index') : PromoCell.render(:index)
+end
+
+def resolve_part
+  if @path_suffix
+    klass, id = Crypt.decrypt(@path_suffix).split(':')
+    @path.last = "_#{@path.last}"
+  end
+  Template.part(@path.join('/'), :object=>klass.constantize.get(id))
 end

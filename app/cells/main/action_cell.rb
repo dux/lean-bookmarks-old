@@ -7,7 +7,8 @@
 class Main::ActionCell < LuxCell
 
   def self.resolve(action_name)
-    return Lux.status :error, "Action <b>#{action_name}</b> not found" unless new.respond_to?(action_name)
+    return Error.not_found "Action <b>#{action_name}</b> not found" unless new.respond_to?(action_name)
+
     begin
       new.send(action_name)
     rescue
