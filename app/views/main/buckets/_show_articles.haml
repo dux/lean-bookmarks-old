@@ -1,0 +1,15 @@
+- if @bucket.description?
+  .widget.markdown= @bucket.description
+  %hr{ :style=>"margin-top:5px;" }
+
+%h4 Notes
+
+- for @note in @bucket.notes
+  = render @note
+
+%hr
+
+%h4 Links
+
+- for @link in @bucket.links
+  = render @link

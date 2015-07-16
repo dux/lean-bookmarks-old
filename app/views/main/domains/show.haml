@@ -20,7 +20,7 @@
           %b.bigger= el.as_link
           %br
           = link_to el.url
-          %p.smaller= Time.ago(el.created_at)
+          %p.smaller #{Time.ago(el.created_at)} in #{el.bucket.as_link}
           - if el.description? 
             %hr{ :style=>"margin:5px 0; width:70%; min-width:200px;" }
             .widget.markdown= el.description

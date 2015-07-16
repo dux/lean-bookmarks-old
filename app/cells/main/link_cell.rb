@@ -1,7 +1,15 @@
 class Main::LinkCell < LuxCell
 
   def index
-    @links = Link.tagged_with(Lux.params[:suffix]).paginate(50)
+    @links = Link.tagged_with(Lux.params[:suffix])
+    @links = @links.where(is_article:true) if params[:art]
+    @links = @links.where(is_article:false) if params[:root]
+    @links = @links.where(kind:params[:t]) if params[:t] =~ /^\w{3}$/
+    @links = @links.paginate(50)
+    for el in @links
+      el.figure_out_kind
+      el.article?
+    end
   end
 
   def archive

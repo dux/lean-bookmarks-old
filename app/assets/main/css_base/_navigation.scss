@@ -32,4 +32,8 @@
     @include transition(all .2s ease);
     &:focus { width:200px; }
   }
+
+  &.smaller {
+    a { padding:10px 15px; }   
+  }
 }

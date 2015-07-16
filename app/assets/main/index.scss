@@ -7,6 +7,7 @@ html { overflow-y:scroll; }
 
 .fr { float:right; }
 .r { text-align: right; }
+.gray { color:#888; }
 
 small {
   font-size:10pt; 
@@ -20,6 +21,8 @@ div { box-sizing: border-box; }
 hr, br.c { clear:both; }
 .bigger { font-size: 115%; }
 .smaller { font-size: 87%; color:#777; }
+.text-align-right { text-align: right; }
+.text-align-left { text-align: left; }
 
 // coolorized menu
 .colorize {
@@ -97,3 +100,12 @@ h1, h2, h3 {
 .zoom { font-size:14pt; }
 .widget, .on, .off { display:inline; }
 .off { display:none; }
+
+ul.articles {
+  list-style-type: none;
+  li { 
+    padding-bottom:30px !important;
+    img { position:absolute; margin-left:-22px; margin-top:3px; }
+    p.desc { border-top:1px solid #ddd; margin-top: 5px; padding-top: 5px; }
+  }
+}

@@ -3,12 +3,15 @@ class Link < MasterModel
 
   validates :name, :presence=>{ :message=>'Link name is required' }
 
+  belongs_to :bucket
+
   array_on :tags
 
-  default_scope -> { order('links.updated_at desc').where('active=?', true) }
+  default_scope -> { order('links.updated_at desc').where(active:true) }
 
   scope :is_article, -> { where('is_article=?', true) }
   scope :not_article, -> { where('coalesce(is_article, false)=?', false) }
+
 
   validate do
     errors.add(:url, 'URL is not link') if self[:url].present? && self[:url] !~ /^https?:\/\//
@@ -65,11 +68,17 @@ class Link < MasterModel
     path = url.split('/')
     path.shift(3)
     path = path.join('')
-    return path =~ /[\-\d\?=]/ ? true : false
+    data = path =~ /[\-\d\?=]/ ? true : false
+    update :is_article=>data unless data == is_article
+    data
   end
 
   def figure_out_kind
-    
+    kind = ''
+    kind = 'vid' if url.index('youtube.com/watch') || url.index('vimeo.com/')
+    kind = 'img' if url =~ /\.(jpg|jpeg|gif|png)$/i
+    kind = 'doc' if url.index('hackpad.com/') || url.index('https://docs.google.com') || url.index('https://office.live.com/')
+    update(:kind=>kind) if kind != self[:kind]
   end
 
 end

@@ -1,17 +1,43 @@
-%hr{ :style=>"margin-top:10px;" }
 - if @bucket.description?
-  .widget.markdown= @bucket.description
+  .w.markdown= @bucket.description
   %hr{ :style=>"margin-top:5px;" }
 
+- if @notes.present?
+  %h4 Note#{@notes.length > 1 ? :s : ''}
+  - for @note in @notes
+    = render @note
+  %hr
 
-%h4 Notes
+- if @links.present?
+  %h4 Link#{@links.length > 1 ? :s : ''}
+  - for @link in @links
+    = render @link
+  %hr
 
-- for @note in @bucket.notes
-  = render @note
+- if @images.present?
+  %h4 Image#{@images.length > 1 ? :s : ''}
+  - for @image in @images
+    = render @image
+  %hr
 
-%hr
+- if @videos.present?
+  %h4 Video#{@videos.length > 1 ? :s : ''}
+  - for @video in @videos
+    = render @video
+  %hr
 
-%h4 Links
+- if @articles.present?
+  %h4 Article#{@articles.length > 1 ? :s : ''}
+  %ul.articles
+    - for el in @articles
+      %li
+        = image_tag el.ico
+        %b= el.as_link
+        %br
+        %p
+          %small= link_to el.url
+        %small.gray #{Time.ago(el.created_at)} at #{link_to el.domain, "/domain/#{el.domain}"}
+        - if el.description?
+          %p.desc= el.description
+  %hr
 
-- for @link in @bucket.links
-  = render @link

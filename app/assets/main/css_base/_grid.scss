@@ -6,15 +6,22 @@ $grid-spacing: 20px;
 .row {
   display: flex;
   margin: 0 -$grid-spacing 0 0;
-  > div { margin-right:$grid-spacing; }
-}
 
-@for $i from 1 through 6 {
-  .col-#{$i} { flex: $i; }
-}
+  @for $i from 1 through 6 {
+    .col-#{$i} { 
+      flex: $i;
+      margin-right: $grid-spacing;
+      &:last-child { margin-right:0; }
+    }
+  }
 
-@each $size in 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700 {
-  .col-#{$size} { flex:0 0 #{$size}px; }
+  @each $size in 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700 {
+    .col-#{$size} {
+      flex:0 0 #{$size}px;
+      margin-right: $grid-spacing;
+      &:last-child { margin-right:0; }
+    }
+  }
 }
 
 

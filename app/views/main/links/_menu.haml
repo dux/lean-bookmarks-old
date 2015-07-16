@@ -3,9 +3,10 @@
   %button.btn + add link
 
 .top-menu
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=art' } articles
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=img' } images
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=vid' } videos
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=doc' } documents
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=dom' } domains
-  %a.btn.btn-sm.btn-empty{ :href=>'/links/archive' } archived
+  %a.btn.btn-sm{ :class=>params[:art] ? 'btn-primary' : 'btn-empty', :href=>'/links?art=true' } articles
+  %a.btn.btn-sm{ :class=>params[:root] ? 'btn-primary' : 'btn-empty', :href=>'/links?root=true' } root domains
+  %a.btn.btn-sm{ :class=>params[:t]=='img' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=img' } images
+  %a.btn.btn-sm{ :class=>params[:t]=='vid' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=vid' } videos
+  %a.btn.btn-sm{ :class=>params[:t]=='doc' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=doc' } documents
+  %a.btn.btn-sm{ :class=>request.path.index('/links/domain')=='' ? 'btn-primary' : 'btn-empty', :href=>'/links/domains' } domains
+  %a.btn.btn-sm{ :class=>request.path.index('/links/archive') ? 'btn-primary' : 'btn-empty', :href=>'/links/archive' } archived

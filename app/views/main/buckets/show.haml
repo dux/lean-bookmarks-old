@@ -1,18 +1,22 @@
 = render :_menu
 
-.row.nudge
-  .col-1
-    %h2
-      = @bucket.name
-      %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
+%div{ :style=>"background-color:#fff; padding-top:10px; border:1px solid #ddd; border-radius:4px;" }
+  .row{ :style=>"margin:15px 15px 5px 15px;" }
+    .col-1
+      %h2
+        = @bucket.name
+        %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
 
-    %p{ :style=>"margin-top:-20px;" }
-      Template: 
-      = input :template, :collection=>['automatic', 'description'], :onchange=>%[Api.send('buckets/#{@bucket.id}/update', { template:this.value }, Pjax.refresh)], :value=>@bucket[:template]
+      %p{ :style=>"margin-top:-20px;" }
+        = render 'main/_tags', :object=>@bucket
 
-  .col-1
-    = render 'main/_tags', :object=>@bucket
+    .col-200.text-align-right
+      .text-align-left
+        Template focus: 
+        = input :template, :collection=>['automatic', 'link_details', 'description', 'articles'], :onchange=>%[Api.send('buckets/#{@bucket.id}/update', { template:this.value }, Pjax.refresh)], :value=>@bucket[:template], :style=>"margin-top:5px;"
 
-%br.c
+  %br.c
 
-= render "main/buckets/_show_#{@bucket.template}"
+%hr
+
+= render "main/buckets/_show_#{@bucket.template}" rescue "Template <b>#{@bucket.template}</b> not found"
