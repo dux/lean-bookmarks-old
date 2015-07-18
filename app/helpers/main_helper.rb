@@ -10,6 +10,7 @@ module MainHelper
 
     if User.current
       # menu.add '/', 'Home'
+      menu.add '/', svg_ico(:home), Proc.new { |path| path == '/' }
       menu.add '/buckets', "#{svg_ico(:bucket)} Buckets", '/bucket'
       menu.add '/links',   "#{svg_ico(:link)} Links", '/link'
       menu.add '/notes',   "#{svg_ico(:note)} Notes", '/note'
@@ -18,7 +19,7 @@ module MainHelper
     end
 
     menu.active_by_path
-    menu.render_li
+    menu.render_li.sub('>',' style="width:50px;">')
   end
 
   def sub_menu

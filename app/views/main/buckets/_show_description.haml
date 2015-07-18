@@ -1,18 +1,32 @@
-.row
+.row{ :style=>"margin-top:7px;" }
   .col-1
-    %br
-    %br
-    - for @note in @bucket.notes
-      = render @note
-
+    - if @notes.present?
+      %h4 Note#{@notes.length > 1 ? :s : ''}
+      - for @note in @notes
+        = render @note
   .col-1
-    %div{ :style=>"margin-top:-55px;" }
-      %hr
-      .widget.markdown= @bucket.description.or('no bucket description present')
+    - if @bucket.description?
+      .w.markdown= @bucket.description
 
 %hr
 
-%h4 Links
+- if @links.present?
+  %h4 Link#{@links.length > 1 ? :s : ''}
+  - for @link in @links
+    = render @link
+  %hr
 
-- for @link in @bucket.links
-  = render @link
+- if @images.present?
+  %h4 Image#{@images.length > 1 ? :s : ''}
+  - for @image in @images
+    = render @image
+  %hr
+
+- if @videos.present?
+  %h4 Video#{@videos.length > 1 ? :s : ''}
+  - for @video in @videos
+    = render @video
+  %hr
+
+- if @articles.present?
+  = render 'main/links/_articles'

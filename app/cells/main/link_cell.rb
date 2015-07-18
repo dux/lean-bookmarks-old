@@ -25,4 +25,12 @@ class Main::LinkCell < LuxCell
     show(id)
   end
 
+  def articles
+    @articles = Link.can.is_article.paginate(50)
+  end
+
+  def domains
+    @domains = Domain.can.paginate(50)
+  end
+
 end

@@ -8,13 +8,16 @@ class Main::BucketCell < LuxCell
     @bucket = Bucket.get(id)
     @top_info = 'Bucket is archived and is not active' unless @bucket.active
 
-    @notes = @bucket.notes.to_a
+    @notes = params[:page].to_i < 2 ? @bucket.notes.limit(50).to_a : []
     @roots = []
     @articles = []
     @images = []
     @videos = []
     @links  = []
-    for el in @bucket.links
+    
+    @all_links = @bucket.links.paginate(50)
+
+    for el in @all_links
       if el.kind == 'vid'
         @videos.push el
       elsif el.kind == 'img'
@@ -27,6 +30,9 @@ class Main::BucketCell < LuxCell
         @links.push el
       end
     end
+
+    @b_template = 'default'
+    @b_template = 'description' if @notes.length < 5 && @bucket.description? 
   end
 
   def edit(id)

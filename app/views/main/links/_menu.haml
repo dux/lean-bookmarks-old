@@ -3,7 +3,7 @@
   %button.btn + add link
 
 .top-menu
-  %a.btn.btn-sm{ :class=>params[:art] ? 'btn-primary' : 'btn-empty', :href=>'/links?art=true' } articles
+  %a.btn.btn-sm{ :class=>request.path.index('/links/articles') ? 'btn-primary' : 'btn-empty', :href=>'/links/articles' } articles
   %a.btn.btn-sm{ :class=>params[:root] ? 'btn-primary' : 'btn-empty', :href=>'/links?root=true' } root domains
   %a.btn.btn-sm{ :class=>params[:t]=='img' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=img' } images
   %a.btn.btn-sm{ :class=>params[:t]=='vid' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=vid' } videos

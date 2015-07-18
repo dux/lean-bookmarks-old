@@ -120,7 +120,7 @@ class Url
   end
 
   def relative
-    [path, qs_val, @hash].join('')
+    [path, qs_val, @hash].join('').sub('//','/')
   end
 
   def to_s

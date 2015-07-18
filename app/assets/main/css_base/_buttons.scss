@@ -47,6 +47,7 @@ button, input[type="submit"], input[type="button"]{
 }
 
 @mixin generate-empty-btn($border, $color){
+  padding:3px 13px;
   border: 2px solid $border;
   color: $color;
   background: none;

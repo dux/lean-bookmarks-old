@@ -1,15 +1,8 @@
-.text-center
-  %h1 Bootstrap starter template
-  %p.lead
-    Use this document as a way to quickly start any new project.
-    %br/
-    All you get is this text and a mostly barebones HTML document.
+:ruby
+  @articles = Link.can.paginate(30)
 
+%br
 
-.row
-  .col-1
-    .well
-      asdada
+%h3 Latest links
 
-  .col-2
-    xxx
+= render 'main/links/_articles'

@@ -30,7 +30,12 @@
         .top-info{ :style=>"background-color:#FBB; padding:10px 0; margin-top:-20px; color:#555; margin-bottom:30px;" }
           .container= @top_info
 
-      .container#content
+      .container#content{ :style=>"min-height:900px;" }
         = yield
 
         = base_js
+
+
+    #footer
+      .container
+        StashBuckets.com &bull; @dux &bull; #{DateTime.now.year}

@@ -27,17 +27,6 @@
   %hr
 
 - if @articles.present?
-  %h4 Article#{@articles.length > 1 ? :s : ''}
-  %ul.articles
-    - for el in @articles
-      %li
-        = image_tag el.ico
-        %b= el.as_link
-        %br
-        %p
-          %small= link_to el.url
-        %small.gray #{Time.ago(el.created_at)} at #{link_to el.domain, "/domain/#{el.domain}"}
-        - if el.description?
-          %p.desc= el.description
+  = render 'main/links/_articles'
   %hr
 

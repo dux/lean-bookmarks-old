@@ -10,13 +10,15 @@
       %p{ :style=>"margin-top:-20px;" }
         = render 'main/_tags', :object=>@bucket
 
-    .col-200.text-align-right
-      .text-align-left
-        Template focus: 
-        = input :template, :collection=>['automatic', 'link_details', 'description', 'articles'], :onchange=>%[Api.send('buckets/#{@bucket.id}/update', { template:this.value }, Pjax.refresh)], :value=>@bucket[:template], :style=>"margin-top:5px;"
+    / .col-200.text-align-right
+    /   .text-align-left
+    /     Template focus: 
+    /     = input :template, :collection=>['automatic', 'default', 'description', 'articles'], :onchange=>%[Api.send('buckets/#{@bucket.id}/update', { template:this.value }, Pjax.refresh)], :value=>@bucket[:template], :style=>"margin-top:5px;"
 
   %br.c
 
+= paginate @all_links
+
 %hr
 
-= render "main/buckets/_show_#{@bucket.template}" rescue "Template <b>#{@bucket.template}</b> not found"
+= render "main/buckets/_show_#{@b_template}" rescue "Template <b>#{@b_template}</b> not found"

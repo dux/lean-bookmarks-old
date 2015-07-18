@@ -1,0 +1,18 @@
+%table.table
+  %tbody
+    - for el in @articles
+      %tr
+        %td
+          = image_tag el.ico
+        %td
+          %a{ :href=>el.url, :target=>:_new }= image_tag el.thumbnail, :style=>"width:150px; height:112px; border:1px solid #ccc;"
+        %td
+          %b= el.as_link
+          %br
+          %p
+            %small= link_to el.url
+          %small.gray #{Time.ago(el.created_at)} at #{link_to el.domain, "/domain/#{el.domain}"}
+          - if el.description?
+            %p.desc= el.description
+
+= paginate @articles if @articles.respond_to?(:paginate_page)

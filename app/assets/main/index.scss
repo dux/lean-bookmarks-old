@@ -10,7 +10,7 @@ html { overflow-y:scroll; }
 .gray { color:#888; }
 
 small {
-  font-size:10pt; 
+  font-size:85%; 
   a { text-decoration:none; }
 }
 
@@ -107,5 +107,15 @@ ul.articles {
     padding-bottom:30px !important;
     img { position:absolute; margin-left:-22px; margin-top:3px; }
     p.desc { border-top:1px solid #ddd; margin-top: 5px; padding-top: 5px; }
+  }
+}
+
+#footer { 
+  border-top: 1px solid #ddd;
+  background-color: #eee;
+  .container {
+    padding:60px 0;
+    color: #888;
+    a { color: #888; }
   }
 }
