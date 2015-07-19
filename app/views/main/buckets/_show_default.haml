@@ -3,30 +3,31 @@
   %hr{ :style=>"margin-top:5px;" }
 
 - if @notes.present?
-  %h4 Note#{@notes.length > 1 ? :s : ''}
+  %h4= @notes.length > 1 ? "#{@notes.length} Notes" : 'Note'
   - for @note in @notes
     = render @note
   %hr
 
 - if @links.present?
-  %h4 Link#{@links.length > 1 ? :s : ''}
+  %h4= @links.length > 1 ? "#{@links.length} Links" : 'Link'
   - for @link in @links
     = render @link
   %hr
 
 - if @images.present?
-  %h4 Image#{@images.length > 1 ? :s : ''}
+  %h4= @images.length > 1 ? "#{@images.length} Images" : 'Image'
   - for @image in @images
     = render @image
   %hr
 
 - if @videos.present?
-  %h4 Video#{@videos.length > 1 ? :s : ''}
+  %h4= @videos.length > 1 ? "#{@videos.length} Videos" : 'Video'
   - for @video in @videos
     = render @video
   %hr
 
 - if @articles.present?
+  %h4= @articles.length > 1 ? "#{@articles.length} Articles" : 'Article'
   = render 'main/links/_articles'
   %hr
 

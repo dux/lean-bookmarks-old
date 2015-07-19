@@ -1,5 +1,6 @@
-= form @domain, :template=>:ver do
-  = input :name, :as=>:hidden
-  = input :description, :as=>:memo, :label=>@domain.name, :style=>"height:350px;"
-  = submit 'Save domain description'
+%h5= @domain.name
 
+= form '/api/domains/set_domain_data', :ver do
+  = input :d, :value=>@domain.name, :as=>:hidden
+  = input :description, :value=>@domain.description, :as=>:memo, :label=>'Domain description', :style=>"height:300px;"
+  = submit 'Set domain description'

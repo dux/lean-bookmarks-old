@@ -98,7 +98,11 @@ class LuxApi
     @@params.delete_if{ |el| [:captures, :splat].index(el.to_sym) }
 
     if @@params[@@class_name.underscore]
-      @@params.merge! @@params.delete(@@class_name.underscore)
+      begin
+        @@params.merge! @@params.delete(@@class_name.underscore)
+      rescue
+        raise "#{$!.message}. Domain value is probably, not hash, invalid parameter #{@@class_name.underscore}"
+      end
     end
 
     klass = (klass.singularize.camelize+'Api').constantize

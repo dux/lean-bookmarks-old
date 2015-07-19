@@ -1,5 +1,5 @@
-- if @domain_
-  = @domain_.description.chomp.gsub(/\n/,'<br />')
+- if @domain.description?
+  = @domain.description.chomp.gsub(/\n/,'<br />')
   %hr
 
 = form @link, :template=>:ver, :done=>:refresh do

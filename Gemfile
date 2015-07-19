@@ -18,4 +18,5 @@ gem 'less'
 gem 'coffee-script'
 gem 'rest-client'
 gem 'dalli'
+gem 'nokogiri'
 

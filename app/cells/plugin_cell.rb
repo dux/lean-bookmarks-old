@@ -9,7 +9,7 @@ class PluginCell < LuxCell
 
   def index
     @link = Link.new :url=>params[:url]
-    @domain = Domain.my.where(:name=>@link.domain).first || Domain.new
+    @domain = Domain.get(@link.domain)
   end
 
   def domain

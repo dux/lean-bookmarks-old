@@ -1,0 +1,16 @@
+= render '_menu'
+
+%h3 Domains
+
+%table.table
+  %tr
+    %th{ :style=>"width:300px;" } Domain name
+    %th Description
+  - for el in @domains
+    %tr
+      %td
+        = el.as_link
+      %td
+        .w.markdown= el.description
+
+= paginate @domains

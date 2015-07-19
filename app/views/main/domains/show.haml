@@ -1,16 +1,23 @@
-%br
+= render '_menu'
 
 %h2= @name
 
+= image_tag @domain.ico, :style=>"width:16px; heght:16px;"
 %br
 %br
 %br
 
 .row
-  .col-350.mobile-hide
+  .col-350
     = image_tag @links[0].thumbnail, :style=>"width:100%; border:1px solid #ddd; background-color:#fff;"
 
-    %p No descrition
+    %br
+    %br
+
+    = form '/api/domains/set_domain_data', :ver do
+      = input :d, :value=>@name, :as=>:hidden
+      = input :description, :value=>@domain.description, :as=>:memo, :label=>'Domain description', :style=>"height:100px;"
+      = submit 'Set domain description'
 
 
   .col-1
