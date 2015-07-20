@@ -15,6 +15,10 @@ class Bucket < MasterModel
     unscoped.order('id asc').my.first || create!(name:'General')
   end
 
+  def self.can(what=:read)
+    where(:created_by=>User.current.id)
+  end
+
   def desc
     ret = []
     lcount = links.count

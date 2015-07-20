@@ -1,7 +1,11 @@
 class Main::BucketCell < LuxCell
 
   def index
-    @buckets = Bucket.tagged_with(Lux.params[:suffix]).paginate(20)
+    @buckets = Bucket.can.tagged_with(Lux.params[:suffix]).paginate(20)
+
+    unless @buckets[0]
+      @buckets.push Bucket.create :name=>'Various'
+    end
   end
 
   def show(id)
@@ -40,7 +44,7 @@ class Main::BucketCell < LuxCell
   end
 
   def archive
-    @buckets = Bucket.unscoped.where('active=?', false).paginate(20)
+    @buckets = Bucket.unscoped.my.where('active=?', false).paginate(20)
   end
 
 end

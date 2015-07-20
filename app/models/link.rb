@@ -12,12 +12,15 @@ class Link < MasterModel
   scope :is_article, -> { where('is_article=?', true) }
   scope :not_article, -> { where('coalesce(is_article, false)=?', false) }
 
-
   validate do
     errors.add(:url, 'URL is not link') if self[:url].present? && self[:url] !~ /^https?:\/\//
     for el in [:name, :description]
       self[el] = self[el][0, 255] if self[el]
     end
+  end
+
+  def self.can(what=:read)
+    where(:created_by=>User.current.id)
   end
 
   def domain

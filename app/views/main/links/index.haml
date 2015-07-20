@@ -2,6 +2,10 @@
 
 = render 'main/_tag_list', klass:Link
 
+- if @links.empty?
+  .tip
+    No links in list. To create your first link/bookmark, click on "+ add link" button in upper right corner.
+
 - for @link in @links
   = render @link
 

@@ -2,6 +2,10 @@
 
 = render 'main/_tag_list', klass:Note
 
+- if @notes.empty?
+  .tip
+    No notes in list. To create your first note, click on "+ add note" button in upper right corner.
+
 - for @note in @notes
   = render @note
 = paginate @notes

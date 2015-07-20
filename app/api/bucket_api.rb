@@ -1,4 +1,4 @@
-class BucketApi < LuxApi
+   class BucketApi < LuxApi
 
   def index
     Bucket.select('id,name').can.paginate(50).map(&:attributes)
@@ -10,6 +10,8 @@ class BucketApi < LuxApi
 
     if name =~ /https?:\/\//
       if params[:bucket_id]
+        raise 'Link is present in a bucket' if Link.where(:bucket_id=>params[:bucket_id]).first
+
         l = Link.new
         l.url = name
         l.bucket_id = params[:bucket_id]

@@ -2,7 +2,7 @@
 
 %h2= @name
 
-= image_tag @domain.ico, :style=>"width:16px; heght:16px;"
+%a{ :href=>"/domain/#{@domain.name}" }= image_tag @domain.ico, :style=>"width:16px; heght:16px;"
 %br
 %br
 %br
@@ -31,6 +31,7 @@
           - if el.description? 
             %hr{ :style=>"margin:5px 0; width:70%; min-width:200px;" }
             .widget.markdown= el.description
+            %br
 
           %br
 

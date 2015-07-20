@@ -5,4 +5,8 @@
 
 %h3 Latest links
 
+- if @articles.empty?
+  .tip
+    No links to show, create some links in buckets.
+
 = render 'main/links/_articles'

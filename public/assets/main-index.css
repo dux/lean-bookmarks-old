@@ -286,6 +286,8 @@ html { overflow-y: scroll; }
 
 .gray { color: #888; }
 
+.hidden { display: none; }
+
 small { font-size: 85%; }
 small a { text-decoration: none; }
 

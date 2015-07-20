@@ -2,6 +2,10 @@
 
 = render 'main/_tag_list', klass:Bucket
 
+- if @buckets.length < 2
+  .tip
+    To create your first bucket, click on "+ add bucket" button in upper right corner.
+
 - for @bucket in @buckets
   = render @bucket
 
