@@ -37,12 +37,8 @@ module PgarrayPlugin
             self[:#{field}] = self[:#{field}].map{ |el| el.gsub(/[^\\w]+/,'-').downcase }
           end
 
-          # def #{field}
-          #   self[:#{field}].join(', ')
-          # end
-
           after_initialize do
-            self[:#{field}] ||= []
+            (self[:#{field}] ||= []) rescue false
           end
         ]
         end

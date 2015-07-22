@@ -1,15 +1,19 @@
 class Bucket < MasterModel
   include PgarrayPlugin::Model
 
-  validates :name, :presence=>{ :message=>'Bucket name is required' }
-
   array_on :tags
 
-  default_scope -> { order('updated_at desc').where('active=?', true) }
+  validates :name, :presence=>{ :message=>'Bucket name is required' }
 
   has_many :links
   has_many :notes
   has_many :buckets
+
+  default_scope -> { order('updated_at desc').where('active=?', true) }
+
+  def self.can(what=:read)
+    my
+  end
 
   def self.unsorted_bucket
     unscoped.order('id asc').my.first || create!(name:'General')

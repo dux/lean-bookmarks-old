@@ -15,7 +15,7 @@
   .well
     = form @bucket, :ver do
       = input :name
-      = input :tags, :as=>:tag
+      = input :bucket_id, :as=>:select, :collection=>Bucket.select('id,name').where('id<>?', @bucket.id).limit(200), :null=>'-'
       = input :description, :as=>:memo, :style=>"height:200px;"
       = submit 'Save'
     

@@ -17,6 +17,11 @@
 
   %br.c
 
+- if @buckets.present?
+  %hr
+  - for el in @buckets
+    %a.bucket.default{ :style=>"height:15px; text-decoration:none;", :href=>el.path }= el.name.trim(30)
+
 = paginate @all_links
 
 %hr

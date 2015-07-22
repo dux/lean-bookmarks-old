@@ -37,6 +37,8 @@ class Main::BucketCell < LuxCell
 
     @b_template = 'default'
     @b_template = 'description' if @notes.length < 5 && @bucket.description? 
+
+    @buckets = Bucket.select('id,name').where('bucket_id=? or id=?', @bucket.id, @bucket.bucket_id.or(0))
   end
 
   def edit(id)

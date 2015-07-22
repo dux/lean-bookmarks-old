@@ -2,4 +2,7 @@
 
 %h3 Articles
 
+- if @articles.empty?
+  .tip No links classified as articles
+
 = render 'main/links/_articles'

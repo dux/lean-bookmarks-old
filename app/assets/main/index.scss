@@ -69,6 +69,11 @@ h1, h2, h3 {
   }
 }
 
+h1, h2, h3, h4, h5, h6 {
+  a { text-decoration: underline; }
+  small { font-size: 70%; }
+}
+
 // show on hover
 .show-on-hover {
   opacity:0.5; 
