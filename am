@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-cd auto_migrate && rake db:auto:migrate && cd ..

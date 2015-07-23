@@ -38,7 +38,9 @@ class Main::BucketCell < LuxCell
     @b_template = 'default'
     @b_template = 'description' if @notes.length < 5 && @bucket.description? 
 
-    @buckets = Bucket.select('id,name').where('bucket_id=? or id=?', @bucket.id, @bucket.bucket_id.or(0))
+    @buckets = Bucket.where('id in (?)', @bucket.child_buckets)
+    
+    @belongs_to = @bucket.c_buckets
   end
 
   def edit(id)
@@ -47,6 +49,11 @@ class Main::BucketCell < LuxCell
 
   def archive
     @buckets = Bucket.unscoped.my.where('active=?', false).paginate(20)
+  end
+
+  def select
+    @template = false
+    @buckets = Bucket.select('id,name').can.paginate(20)
   end
 
 end

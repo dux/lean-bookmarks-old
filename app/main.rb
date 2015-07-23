@@ -88,9 +88,11 @@ def resolve_root
 end
 
 def resolve_part
+  object = nil
   if @path_suffix
     klass, id = Crypt.decrypt(@path_suffix).split(':')
     @path.last = "_#{@path.last}"
+    object = klass.constantize.get(id)
   end
-  Template.part(@path.join('/'), :object=>klass.constantize.get(id))
+  Template.part(@path.join('/'), :object=>object)
 end

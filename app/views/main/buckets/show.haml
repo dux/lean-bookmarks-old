@@ -1,26 +1,30 @@
 = render :_menu
 
 %div{ :style=>"background-color:#fff; padding-top:10px; border:1px solid #ddd; border-radius:4px;" }
-  .row{ :style=>"margin:15px 15px 5px 15px;" }
-    .col-1
-      %h2
-        = @bucket.name
-        %a.btn.show-on-hover{ :href=>@bucket.path(:edit) } edit
+  %div{ :style=>"margin:10px 15px 5px 15px;" }
+    %h2
+      = @bucket.name
+      %a.btn.show-on-hover{ :href=>@bucket.path(:edit), :style=>"float:right;" } edit
 
-      %p{ :style=>"margin-top:-20px;" }
-        = render 'main/_tags', :object=>@bucket
+    
 
-    / .col-200.text-align-right
-    /   .text-align-left
-    /     Template focus: 
-    /     = input :template, :collection=>['automatic', 'default', 'description', 'articles'], :onchange=>%[Api.send('buckets/#{@bucket.id}/update', { template:this.value }, Pjax.refresh)], :value=>@bucket[:template], :style=>"margin-top:5px;"
+    %p{ :style=>"margin-top:-5px;" }
+      = render 'main/_tags', :object=>@bucket
 
   %br.c
 
-- if @buckets.present?
-  %hr
-  - for el in @buckets
-    %a.bucket.default{ :style=>"height:15px; text-decoration:none;", :href=>el.path }= el.name.trim(30)
+%hr
+
+- if @belongs_to.present?
+  Belongs to: 
+  = @belongs_to.map{ |o| o.as_link }.to_sentence
+  %br
+  %br
+
+%a.bucket.default{ :onclick=>"TopModal.app.select_bucket(#{@bucket.id})", :style=>"height:15px; text-decoration:none; font-weight:bold;" } + Add linked bucket
+
+- for el in @buckets
+  %a.bucket.default{ :style=>"height:15px; text-decoration:none;", :href=>el.path }= el.name.trim(30)
 
 = paginate @all_links
 

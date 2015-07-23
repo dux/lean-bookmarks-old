@@ -1,7 +1,7 @@
 class Bucket < MasterModel
   include PgarrayPlugin::Model
 
-  array_on :tags
+  array_on :tags, :bucket_ids
 
   validates :name, :presence=>{ :message=>'Bucket name is required' }
 
@@ -27,15 +27,12 @@ class Bucket < MasterModel
     ret = []
     lcount = links.count
     ncount = notes.count
-    bcount = buckets.count
+    bcount = self[:child_buckets].length
 
     h = Template.helper(:main)
     ret.push "#{lcount} #{h.svg_ico(:link, 12)}" if lcount > 0
     ret.push "#{ncount} #{h.svg_ico(:note, 12)}" if ncount > 0
-    ret.push "#{ncount} #{h.svg_ico(:bucket, 12)}" if bcount > 0
-    # ret.push lcount.pluralize('link') if lcount > 0
-    # ret.push ncount.pluralize('note') if ncount > 0
-    # ret.to_sentence
+    ret.push "#{bcount} #{h.svg_ico(:bucket, 12)}" if bcount > 0
     ret.join(' ')
   end
 
@@ -43,6 +40,10 @@ class Bucket < MasterModel
     tpl = self[:template].or('automatic')
     tpl = 'default' if tpl == 'automatic'
     tpl
+  end
+
+  def c_buckets
+    Bucket.tagged_with(id, 'child_buckets')
   end
 
 end

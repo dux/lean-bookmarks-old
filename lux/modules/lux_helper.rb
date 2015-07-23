@@ -44,13 +44,14 @@ class LuxHelper
   end
 
   def paginate(list)
-    return if list.empty?
-
     unless list.respond_to?(:paginate_page)
       return Error.server('Paginate recieved list but it is not paginated in model scope. ')
     end
 
-    return if list.paginate_per_page > list.length && list.paginate_page == 0
+    if list.paginate_page == 0
+      return if list.empty?
+      return if list.paginate_per_page > list.length
+    end
 
     ret = ['<div class="paginate"><div>']
 

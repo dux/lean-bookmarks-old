@@ -79,6 +79,8 @@ class LuxCell
     end
 
     @part_data, hash = *_part(*args)
+    return @part_data if @template.class.name == 'FalseClass'
+
     layout_path = get_layout_path
     Template.new(layout_path).part(hash) do
       @part_data

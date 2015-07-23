@@ -19,13 +19,13 @@ ActiveRecord::Schema.define(version: 20150417181923) do
   create_table "buckets", force: true do |t|
     t.string   "name",       null: false
     t.text     "description"
-    t.datetime "created_at", null: false
-    t.integer  "created_by", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "updated_by", null: false
-    t.boolean  "active",     default: true
-    t.string   "tags",        default: [],              array: true
-    t.integer  "bucket_id",  null: true
+    t.datetime "created_at",    null: false
+    t.integer  "created_by",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "updated_by",    null: false
+    t.boolean  "active",        default: true
+    t.string   "tags",          default: [],              array: true
+    t.integer  "child_buckets", default: [],              array: true
     t.string   "template"
   end
 

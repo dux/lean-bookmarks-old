@@ -1,0 +1,11 @@
+#bucket_select
+  - for el in @buckets
+    %button.btn{ :onclick=>"App.add_bucket_to_bucket(#{params[:id]}, #{el.id})" }= el.name
+
+  = paginate @buckets
+
+:coffee
+  $('#bucket_select .paginate a').click ->
+    href = this.getAttribute('href');
+    $('#bucket_select').load(href);
+    false

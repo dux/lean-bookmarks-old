@@ -1,25 +1,28 @@
 # we need this for development fast code restart
   $LIVE_REQUIRE = {}
-  
-  def smart_require(name)
+
+# if we have errors in module loading, try to load them one more time
+  @module_error = []
+      
+  def lux_smart_require(name)
     file = "#{name}.rb"
     $LIVE_REQUIRE[file] = File.mtime(file).to_i
     # puts file.red
-    require file
+    require(file) rescue @module_error.push(file)
   end
 
-  def load_lib(name)
+  def lux_load_lib(name)
     if name.index('*')
       files = `find #{name.split('/*')[0]} | grep .rb`.split("\n").sort
       puts "* modules in #{name} - #{files.length} files".white
       for klass in files
         next unless klass.index('.rb')
         # puts "  - module #{klass}".white
-        smart_require klass.split('.rb')[0]
+        lux_smart_require klass.split('.rb')[0]
       end
     else
       puts "* module #{name}".white
-      smart_require name
+      lux_smart_require name
     end
   end
 
@@ -29,12 +32,15 @@
   end
 
 # load all libs
-  load_lib './lux/lib/*'
-  load_lib './lux/plugins/*'
-  load_lib './lux/modules/*'
-  load_lib './lux/overload/*'
-  load_lib './app/*'
-  load_lib './config/*'
+  lux_load_lib './lux/lib/*'
+  lux_load_lib './lux/plugins/*'
+  lux_load_lib './lux/modules/*'
+  lux_load_lib './lux/overload/*'
+  lux_load_lib './app/*'
+  lux_load_lib './config/*'
+
+  @module_error.map { |lib| require lib } 
+  @module_error = nil
 
 # load Tilt parsers
   Tilt.register Tilt::ERBTemplate, 'erb'
@@ -53,4 +59,3 @@
 # inform about enviroment
   puts "* #{Lux.dev? ? 'development'.green : 'production'.red } mode"
 
-# Haml::Template.options[:ugly] = true

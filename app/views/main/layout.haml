@@ -19,10 +19,11 @@
 
         .navbar
           .container
-            %ul.main
+            %ul.main{ :style=>"border-left:1px solid #eee;" }
               = main_menu
-            %form{ :action=>'/search' }
-              %input{ :name=>:q, :placeholder=>'search...', :value=>params[:q] }
+            - if User.current
+              %form{ :action=>'/search' }
+                %input{ :name=>:q, :placeholder=>'search...', :value=>params[:q] }
             %ul.pull-right= sub_menu
 
     
@@ -34,7 +35,6 @@
         = yield
 
         = base_js
-
 
     #footer
       .container

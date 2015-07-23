@@ -8,14 +8,14 @@ module MainHelper
   def main_menu
     menu = Menu.new( :default=>!Lux.request.path.index('/users')  )
 
+    menu.add '/', svg_ico(:home), Proc.new { |path| path == '/' }
     if User.current
       # menu.add '/', 'Home'
-      menu.add '/', svg_ico(:home), Proc.new { |path| path == '/' }
       menu.add '/buckets', "#{svg_ico(:bucket)} Buckets", '/bucket'
       menu.add '/links',   "#{svg_ico(:link)} Links", '/link'
       menu.add '/notes',   "#{svg_ico(:note)} Notes", '/note'
     else
-      menu.add '/', 'Home'
+
     end
 
     menu.active_by_path

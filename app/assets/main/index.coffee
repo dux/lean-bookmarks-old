@@ -12,7 +12,6 @@ $ ->
   Pjax.on_get()
 
 
-
 window.delete_object = (object, id) ->
   return unless confirm 'Are you shure?'
   Api.send "#{object}/#{id}/destroy", {}, -> Pjax.load("/#{object}")
@@ -76,4 +75,15 @@ window.App =
   create_link:(form) ->
     Api.send 'links/create', form, -> Pjax.load('/links')
     return false
+
+
+  add_bucket_to_bucket: (parent_id, child_id) ->
+    TopModal.close()
+    Api.send "buckets/#{parent_id}/add_bucket?id=#{child_id}", Pjax.refresh
+
+
+
+$(window).keydown (e) ->
+  if e.which == 27
+    TopModal.close()
 

@@ -1,4 +1,4 @@
-   class BucketApi < LuxApi
+class BucketApi < LuxApi
 
   def index
     Bucket.select('id,name').can.paginate(50).map(&:attributes)
@@ -27,6 +27,23 @@
       b.save!
       return 'Bucket created'
     end
+  end
+
+  def add_bucket
+    bucket = Bucket.get params[:id]
+    return 'Bucket is allready in collection' if @bucket[:child_buckets].index(bucket.id)
+    raise 'Bucket is same as parent' if @bucket.id == bucket.id
+    @bucket[:child_buckets].push bucket.id
+    @bucket.save!
+    'Bucket added to bucket collection'
+  end
+
+  def remove_bucket
+    bucket = Bucket.get params[:id]
+    return 'Bucket is not in collection' unless @bucket[:child_buckets].index(bucket.id)
+    @bucket[:child_buckets] -= [bucket.id]
+    @bucket.save!
+    'Bucket removed from collection'
   end
 
 end

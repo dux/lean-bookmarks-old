@@ -11,7 +11,7 @@
       func(ret) if func && ! ret['error']
 
   send: (method, opts, func) ->
-    if (opts.getAttribute)
+    if (opts?.getAttribute)
       opts = $(opts).serializeHash()
 
     if typeof(opts) == 'function'

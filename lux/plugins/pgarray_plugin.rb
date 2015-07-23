@@ -4,7 +4,7 @@ module PgarrayPlugin
     included do
 
       # only postgree
-      # Bucket.can.can_tags -> can_tags mora biti zadnji
+      # Bucket.can.all_tags -> can_tags mora biti zadnji
       def self.all_tags(field=:tags, *args)
         sql = scoped.to_sql.split(' FROM ')[1]
         sql = "select lower(unnest(#{field})) as tag FROM " + sql

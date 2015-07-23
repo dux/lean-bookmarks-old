@@ -15,7 +15,37 @@
   .well
     = form @bucket, :ver do
       = input :name
-      = input :bucket_id, :as=>:select, :collection=>Bucket.select('id,name').where('id<>?', @bucket.id).limit(200), :null=>'-'
       = input :description, :as=>:memo, :style=>"height:200px;"
       = submit 'Save'
-    
+
+
+  %br
+  %br
+
+  .well
+    %h5 Linked buckets in colection
+
+    %ul
+      - for el in (@cb = Bucket.where('id in (?)', @bucket.child_buckets))
+        %li
+          %button.btn.btn-sm{ :style=>"margin-right:10px;", :onclick=>"Api.send('buckets/#{@bucket.id}/remove_bucket', { id:#{el.id} }, Pjax.refresh)" } x
+          = el.as_link
+
+    - if @cb.empty?
+      .tip
+        No linked buckets
+
+    %br
+    %br
+
+    %h5 Belongs to
+
+    %ul
+      - for el in @bucket.c_buckets
+        %li
+          %button.btn.btn-sm{ :style=>"margin-right:10px;", :onclick=>"Api.send('buckets/#{el.id}/remove_bucket', { id:#{@bucket.id} }, Pjax.refresh)" } x
+          = el.as_link
+
+    - if @bucket.c_buckets.empty?
+      .tip 
+        Bucket is not part of any collection
