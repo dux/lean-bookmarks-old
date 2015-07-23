@@ -128,7 +128,7 @@ class Asset
               when :haml
                 run! "haml '#{file}' > '#{cache}'", cache
               when :coffee
-                run! "/usr/local/bin/coffee -p -c '#{file}' > '#{cache}'", cache
+                run! "coffee -p -c '#{file}' > '#{cache}'", cache
             end
           end
         end
