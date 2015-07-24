@@ -42,7 +42,7 @@ def get
   # admin routes
   return resolve_admin_app if [:admin].index(@root_part)
 
-  Lux.status :not_found, "Page not found not route /#{@root_part}"
+  Error.not_found("Page not found not route /#{@root_part}")
 end
 
 def post

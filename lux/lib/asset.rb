@@ -1,15 +1,26 @@
 require 'open3'
 
 class Asset
+  @@cache = {}
 
-  attr_accessor :public_file
+  attr_reader :file_public
+  attr_reader :file_full
 
   def self.get_link(path)
     return path if path.index(/https?:/)
-    ext = path.split('.').last.to_sym
-    path = "#{Lux.root}/app/assets/#{path}".gsub('//','/')
-    ass = new(path, { :root=>Lux.root })
-    ass.public_file
+
+    asset = new(path, { :root=>Lux.root })
+
+    if Lux.prod?
+      if !@@cache[path] && File.exists?(asset.file_full)
+        @@cache[path] ||= asset.browser_file
+      end
+      return @@cache[path] if @@cache[path]
+    end
+
+    asset.render_asset_file
+
+    @@cache[path] = asset.browser_file
   end
 
   def self.css(href)
@@ -26,17 +37,29 @@ class Asset
 
   def initialize(file, opts={})
     ext = file.split('.').reverse[0].to_sym
+
     unless [:js, :css, :coffee, :less, :scss, :sass, :haml, :coffe].index(ext)
-      puts "Unsuported file type #{file}"
+      puts "Unsuported file type for Assets [#{file}]"
       exit
     end
 
-    @file = file
+    ext = [:js, :coffee].index(ext) ? :js : :css
 
-    @dir = Pathname.new(file).dirname
     @opts = opts
     @opts[:root] ||= './'
     @opts[:cache] ||= "#{@opts[:root]}/.assets_cache"
+
+    @file_in     =  file
+    @file_public = "/assets/"+file.gsub('/','-').sub(/\.\w+/,'')+".#{ext}"
+    @file_full   = "#{@opts[:root]}/public#{@file_public}"
+    @file_assets = "#{@opts[:root]}/app/assets/#{@file_in}"
+  end
+
+  def browser_file
+    "#{@file_public}?#{File.stat(@file_full).mtime.to_i}"
+  end
+
+  def render_asset_file
     Dir.mkdir(@opts[:cache]) unless Dir.exists?(@opts[:cache])
     Dir.mkdir("#{@opts[:root]}/public/assets") unless Dir.exists?("#{@opts[:root]}/public/assets")
 
@@ -56,18 +79,19 @@ class Asset
   def fill_source_files
     @req_files = []
 
-    raise "Asset.rb file does not exist!: #{@file}" unless File.exists?(@file)
+    raise "Asset.rb file does not exist!: #{@file_in}" unless File.exists?(@file_assets)
 
-    for line in File.read(@file).split("\n")
+    for line in File.read(@file_assets).split("\n")
       elms = line.split(/\s+/)
 
       next unless ['//=','#='].index(elms[0])
 
       directive, source = elms[1], elms[2]
-      to_load = (@dir + source).to_s
+      to_load = (Pathname.new(@file_assets).dirname + source).to_s
 
       if directive == 'require_tree' || source.index('*')
         to_load += '/*' unless to_load.index('*')
+
         files = Dir[to_load.sub(/\/+/,'/')].sort
         exit puts "No files in #{source}" unless files.length > 0
         for file in files.sort
@@ -83,7 +107,7 @@ class Asset
       raise "Asset.rb: File '#{file}' linked from '#{@file}' does not exist!" unless File.exists?(file)
     end
 
-    @req_files.push @file
+    @req_files.push @file_assets
   end
 
   def compile_source_files
@@ -152,9 +176,11 @@ class Asset
     public_data.unshift ''
     public_data.unshift %[/* Compiled and copied assets files in use: \n#{src_files.map{ |el| " - #{el}"}.join("\n")}\n*/]
 
-    @public_file = "/assets/"+local(@file).gsub('/','-').sub(/\.\w+/,'')+".#{cache_file(@file, :ext)}"
+    File.open(@file_full, 'w') { |f| f.write(public_data.join("\n")) } 
 
-    File.open("#{@opts[:root]}/public#{public_file}", 'w') { |f| f.write(public_data.join("\n")) } 
+    if Lux.prod?
+      run! "minify --no-comments -o '#{@file_full}' '#{@file_full}'", @file_full
+    end
   end
 
   def cache_file(original_file, get_only_ext=false)
