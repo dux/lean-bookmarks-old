@@ -22,7 +22,7 @@ class UserApi < LuxApi
     params :pass, :req
     lambda do
       usr = User.login(@_email, @_pass)
-      raise 'User not found, bad passord or email' unless usr
+      raise 'User not found, bad password or email' unless usr
       Lux.session[:u_id] = usr.id
       'Login ok'
     end

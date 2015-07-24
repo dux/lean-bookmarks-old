@@ -17,13 +17,15 @@ before do
 end
 
 def get
-  puts Lux.dev? ? 'DEV'.green : 'PROD'.red
-
   # debug development routes
   if Lux.dev?
     for el in [ [:lux, LuxRenderCell], [:api, LuxApi] ]
       return el[1].resolve(*@path) if @root_part == el[0]
     end
+  end
+
+  if @root_part == :env
+    return ENV.to_json
   end
 
   # root
