@@ -1,6 +1,6 @@
 # database
-env = Lux.dev? ? 'development' : 'production'
-# env = 'development'
+env = ENV['RAKE_ENV'].to_s.index('prod') ? 'production' : 'development'
+
 db_config = YAML.load_file('./scripts/auto_migrate/config/database.yml')[env]
 ActiveRecord::Base.establish_connection(db_config)
 
