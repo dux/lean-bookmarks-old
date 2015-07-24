@@ -10,7 +10,7 @@ class BucketApi < LuxApi
 
     if name =~ /https?:\/\//
       if params[:bucket_id]
-        raise 'Link is present in a bucket' if Link.where(:bucket_id=>params[:bucket_id]).first
+        raise 'Link is present in a bucket' if Link.where(:bucket_id=>params[:bucket_id], :url=>name).first
 
         l = Link.new
         l.url = name

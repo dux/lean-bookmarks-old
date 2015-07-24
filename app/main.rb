@@ -23,10 +23,8 @@ def get
       return el[1].resolve(*@path) if @root_part == el[0]
     end
   end
-
-  if @root_part == :env
-    return ENV.to_json
-  end
+  
+  # return ENV.to_json if @root_part == :env
 
   # root
   return resolve_root unless @root_part
