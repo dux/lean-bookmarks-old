@@ -1,5 +1,6 @@
 # we need this for development fast code restart
   $LIVE_REQUIRE = {}
+  $ENVIROMENT   = ENV['RAKE_ENV'].to_s[0,4] == 'prod' ? 'production' : 'development'
 
 # if we have errors in module loading, try to load them one more time
   @module_error = []

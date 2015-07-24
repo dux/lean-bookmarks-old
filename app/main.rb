@@ -17,6 +17,8 @@ before do
 end
 
 def get
+  puts Lux.dev? ? 'DEV'.green : 'PROD'.red
+
   # debug development routes
   if Lux.dev?
     for el in [ [:lux, LuxRenderCell], [:api, LuxApi] ]

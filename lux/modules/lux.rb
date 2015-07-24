@@ -25,7 +25,7 @@ class Lux
   end
 
   def self.prod?
-    ENV['RAKE_ENV'].to_s[0,4] == 'prod' ? true : false
+    $ENVIROMENT.to_s[0,4] == 'prod' ? true : false
   end
 
   def self.irregular(sing, plur)
