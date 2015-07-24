@@ -13,6 +13,5 @@ production:
   database: stash_buckets_new
   host: localhost
   pool: 10
-  username: dux
-  password: "!Netlife"
-  
+  username: sbprod
+  password: sbprod1337  
