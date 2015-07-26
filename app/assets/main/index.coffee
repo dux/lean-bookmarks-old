@@ -2,6 +2,12 @@
 #= req widgets/*
 #= req ../components/toastr/toastr.coffee
 
+$(window).keydown (e) ->
+  window.document.last_target = e.target
+  if e.which == 27
+    TopModal.close()
+
+
 $ ->
   Pjax.init('#full-page')
   
@@ -10,7 +16,6 @@ $ ->
     Widget.load_all()
 
   Pjax.on_get()
-
 
 window.delete_object = (object, id) ->
   return unless confirm 'Are you shure?'
@@ -82,8 +87,11 @@ window.App =
     Api.send "buckets/#{parent_id}/add_bucket?id=#{child_id}", Pjax.refresh
 
 
+  link_drag:(ev, id) ->
+    ev.dataTransfer.setData("link_id", id);
+    TopModal.app.select_bucket(0, 'no_overlay')
 
-$(window).keydown (e) ->
-  if e.which == 27
+  link_drop:(ev, id) ->
+    link_id = ev.dataTransfer.getData("link_id");
     TopModal.close()
-
+    Api.send "links/#{link_id}/move", bucket_id:id

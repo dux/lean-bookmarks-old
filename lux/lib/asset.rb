@@ -152,7 +152,8 @@ class Asset
               when :haml
                 run! "haml '#{file}' > '#{cache}'", cache
               when :coffee
-                run! "coffee -p -c '#{file}' > '#{cache}'", cache
+                coffe_path = ENV['COFFEE_PATH'] || 'coffee'
+                run! "#{coffe_path} -p -c '#{file}' > '#{cache}'", cache
             end
           end
         end
@@ -180,6 +181,7 @@ class Asset
 
     if Lux.prod?
       run! "minify --no-comments -o '#{@file_full}' '#{@file_full}'", @file_full
+      run! "gzip -f -c -1 '#{@file_full}' > '#{@file_full}.gz'"
     end
   end
 

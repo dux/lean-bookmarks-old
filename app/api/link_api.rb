@@ -29,4 +29,10 @@ class LinkApi < AppApi
     { name:bm.name, description:bm.description }
   end
 
+  def move
+    old_bucket_name = @link.bucket.name
+    @link.update bucket_id:params[:bucket_id]
+    %[Link moved from bucket "#{old_bucket_name}" to bucket "#{@link.bucket.name}"]
+  end
+
 end

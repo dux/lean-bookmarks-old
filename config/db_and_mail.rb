@@ -1,7 +1,13 @@
-# database
-env = Lux.dev? ? 'development' : 'production'
+db_config = YAML.load_file('./scripts/auto_migrate/config/database.yml')
 
-db_config = YAML.load_file('./scripts/auto_migrate/config/database.yml')[env]
+if Lux.dev?
+  ENV['COFFEE_PATH'] = '/usr/local/bin/coffee'
+  db_config = db_config['development']
+else
+  db_config = db_config['production']
+end
+
+# set up database connection
 ActiveRecord::Base.establish_connection(db_config)
 
 # mail

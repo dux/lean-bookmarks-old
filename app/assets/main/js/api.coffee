@@ -1,39 +1,41 @@
 # Api.bucket.destroy(this, 12)
 
 @Api = 
+  # Api.post('/users/list', { p:{city:'Zagreb'}, silent:true })
+  post: (method, opts={}) ->
+    if opts.done
+      opts.done = -> Pjax.refresh() if opts.done == 'r'
+      opts.done = -> Pjax.load(opts.done) if /^\//.test(opts.done)
+
+    opts.params = opts.p if opts.p
+    opts.params ||= {}
+    opts.params = $(opts.params).serializeHash() if opts.params?.getAttribute
+
+    opts.silent ||= false
+
+    if opts.disable
+      $(opts.disable).disable()
+
+    for key in Object.keys(opts)
+      alert "Unknown attribute [#{key}] in Api.post opts" if ['p','params','silent','done'].indexOf(key) == -1
+
+    method = "/api/#{method}" unless /^\/api/.test(method)
+
+    $.post method, opts.params, (ret) ->
+      Info.auto(ret) unless opts['silent']
+      opts['done'](ret) if opts['done'] && ! ret['error']
+
   silent: (method, opts, func) ->
     if typeof(opts) == 'function'
       func = opts
       opts = {}
 
-    method = "/api/#{method}" unless /^\/api/.test(method)
-    $.post method, opts, (ret) ->
-      func(ret) if func && ! ret['error']
+    Api.post(method, { p:opts, silent:true, done:func })
 
   send: (method, opts, func) ->
-    if (opts?.getAttribute)
-      opts = $(opts).serializeHash()
-
     if typeof(opts) == 'function'
       func = opts
       opts = {}
-    
-    method = "/api/#{method}" unless /^\/api/.test(method)
 
-    $.post method, opts, (ret) ->
-      Info.auto(ret)
-      func(ret) if func && ! ret['error']
-
-
-  # Api.rails_form(button inside form)
-  rails_form: (node, on_success) ->
-    node = $ node
-    node.find('button').each ->
-      $(this).disable('Saveing...', 2000)
-    form = node.closest('form')
-    for key, val of form.serializeHash()
-      if is_.o val
-        Api.send form.attr('action'), val, on_success
-    false
-
+    Api.post(method, { p:opts, done:func })
 

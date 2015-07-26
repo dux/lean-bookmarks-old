@@ -1,6 +1,6 @@
 #bucket_select
   - for el in @buckets
-    %button.btn{ :onclick=>"App.add_bucket_to_bucket(#{params[:id]}, #{el.id})" }= el.name
+    %button.btn{ :onclick=>"App.add_bucket_to_bucket(#{params[:id]}, #{el.id})", :ondragover=>"event.preventDefault();", :ondrop=>"App.link_drop(event, #{el.id})" }= el.name
 
   = paginate @buckets
 

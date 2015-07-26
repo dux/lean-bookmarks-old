@@ -8,7 +8,10 @@
     %b= link_to @link.url
   %p{ :style=>"margin-top:5px;" }
     = image_tag @link.ico, :style=>'width:16px; height:16px; margin-top:5px; position:relative; top:4px;'
-    %a{ :href=>"/domain/#{@link.domain}", :style=>"text-decoration:none; color:#222;" }= @link.domain
+
+    %a{ :href=>"/domain/#{@link.domain}" }= @link.domain
+    in
+    = @link.bucket.as_link
   
   %hr
 
@@ -19,6 +22,7 @@
     %a{ :href=>@link.url }= image_tag @link.thumbnail, :style=>"max-width:100%; border:1px solid #ccc;"
   .col-1
     = input :asda, :collection=>Bucket.can, :value=>@link.bucket_id, :onchange=>"Api.send('links/#{@link.id}/update', { bucket_id:this.value })", :style=>"display:inline;"
+    %a.btn.btn-empty.btn-sm{ :href=>@link.bucket.path } &rarr;
     %br
     %br
     = render 'main/_tags', :object=>@link

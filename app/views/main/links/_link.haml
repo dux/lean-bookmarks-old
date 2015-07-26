@@ -1,5 +1,5 @@
 .bucket.link{ :href=>@link.path }
-  .img= image_tag @link.thumbnail
+  .img= image_tag @link.thumbnail, :draggable=>"true", :ondragstart=>"App.link_drag(event, #{@link.id})"
   .wrap
     %h4= @link.name
     %small= link_to @link.url.trim(30), @link.url, :target=>:new
