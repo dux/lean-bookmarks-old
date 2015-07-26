@@ -4,8 +4,14 @@
   # Api.post('/users/list', { p:{city:'Zagreb'}, silent:true })
   post: (method, opts={}) ->
     if opts.done
-      opts.done = -> Pjax.refresh() if opts.done == 'r'
-      opts.done = -> Pjax.load(opts.done) if /^\//.test(opts.done)
+      if opts.done == 'refresh'
+        opts.done = -> Pjax.refresh() 
+
+      if opts.done == 'redirect'
+        opts.done = (data) -> Pjax.load(data.path)
+
+      if /^\//.test(opts.done)
+        opts.done = -> Pjax.load(opts.done) 
 
     opts.params = opts.p if opts.p
     opts.params ||= {}
@@ -25,12 +31,14 @@
       Info.auto(ret) unless opts['silent']
       opts['done'](ret) if opts['done'] && ! ret['error']
 
+
   silent: (method, opts, func) ->
     if typeof(opts) == 'function'
       func = opts
       opts = {}
 
     Api.post(method, { p:opts, silent:true, done:func })
+
 
   send: (method, opts, func) ->
     if typeof(opts) == 'function'

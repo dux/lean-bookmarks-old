@@ -24,16 +24,21 @@
         opts = {};
       }
       if (opts.done) {
-        opts.done = function() {
-          if (opts.done === 'r') {
+        if (opts.done === 'refresh') {
+          opts.done = function() {
             return Pjax.refresh();
-          }
-        };
-        opts.done = function() {
-          if (/^\//.test(opts.done)) {
+          };
+        }
+        if (opts.done === 'redirect') {
+          opts.done = function(data) {
+            return Pjax.load(data.path);
+          };
+        }
+        if (/^\//.test(opts.done)) {
+          opts.done = function() {
             return Pjax.load(opts.done);
-          }
-        };
+          };
+        }
       }
       if (opts.p) {
         opts.params = opts.p;
@@ -2170,7 +2175,7 @@ Widget.load_all();
       }
       return $.get(url, function(data) {
         el.html(data);
-        return Widgets.load();
+        return Widget.load_all(el[0]);
       });
     },
     create_link: function(form) {

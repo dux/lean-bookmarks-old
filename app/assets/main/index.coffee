@@ -75,7 +75,7 @@ window.App =
     return alert 'data-url not defined' unless url
     $.get url, (data) ->
       el.html data
-      Widgets.load()
+      Widget.load_all(el[0])
 
   create_link:(form) ->
     Api.send 'links/create', form, -> Pjax.load('/links')
