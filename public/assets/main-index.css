@@ -240,7 +240,7 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 
 
 /* Asset file: main/css_app/buckets.scss */
-.bucket { border: 1px solid #ddd; background-color: #fff; border-radius: 4px; width: 250px; height: 308px; float: left; margin-right: 20px; margin-bottom: 20px; border-top: 2px solid #8767A6; }
+.bucket { border: 1px solid #ddd; background-color: #fff; border-radius: 4px; position: relative; width: 250px; height: 308px; float: left; margin-right: 20px; margin-bottom: 20px; border-top: 2px solid #8767A6; }
 .bucket h4 { font-size: 12pt; }
 .bucket h5 { font-size: 10pt; font-weight: 400; margin-top: -10px; }
 .bucket small { font-size: 90%; color: #888; }
@@ -254,6 +254,8 @@ a.label:hover, a.label:focus { color: #ddd; text-decoration: none; cursor: point
 .bucket.link small { display: block; margin-top: -5px; }
 .bucket.note { border-top: 2px solid #F7CA0F; background-color: #FCF8EC; }
 .bucket.default { padding: 10px; }
+.bucket .bucket-label { float: right; position: absolute; top: 5px; right: 5px; font-weight: bold; }
+.bucket .tags { position: absolute; margin-top: -25px; margin-left: 5px; }
 
 /*# sourceMappingURL=main-css_app-buckets.css.map */
 

@@ -1,6 +1,7 @@
 // buckets
 .bucket {
   border:1px solid #ddd; background-color: #fff; border-radius: 4px;
+  position: relative;
   width:250px;
   height: 308px;
   float:left; margin-right:20px; margin-bottom:20px; 
@@ -36,5 +37,9 @@
   }
   &.default {
     padding:10px;
+  }
+  .bucket-label { float:right; position:absolute; top:5px; right:5px; font-weight: bold; }
+  .tags {
+    position: absolute; margin-top: -25px; margin-left:5px;
   }
 }

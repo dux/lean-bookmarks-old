@@ -53,7 +53,7 @@ class LuxCell
     copy = args.dup
     method_name = copy.shift
     obj = new
-    obj.send(method_name, *copy)
+    obj.send(method_name, *copy) if obj.respond_to?(method_name)
     @local_path = obj.class.name.index('::') ? obj.class.name.sub(/Cell$/,'').tableize : obj.class.name.sub(/Cell$/,'').downcase
     @local_path += "/#{method_name}"
     

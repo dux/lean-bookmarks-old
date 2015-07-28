@@ -1,11 +1,7 @@
 class PluginCell < LuxCell
 
-  template :recent, :guest
-
   def self.resolve(*path)
-    unless User.current
-      return render(:guest)
-    end
+    return render(:guest) unless User.current
 
     base = (path.shift || :index).to_sym;
     return render(base) if [:index, :domain, :recent].index(base)
