@@ -1,6 +1,12 @@
 class PluginCell < LuxCell
 
+  template :recent, :guest
+
   def self.resolve(*path)
+    unless User.current
+      return render(:guest)
+    end
+
     base = (path.shift || :index).to_sym;
     return render(base) if [:index, :domain, :recent].index(base)
     
@@ -14,10 +20,6 @@ class PluginCell < LuxCell
 
   def domain
     index
-  end
-
-  def recent
-    
   end
 
 end

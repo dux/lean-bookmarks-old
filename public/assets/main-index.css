@@ -57,9 +57,10 @@ textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius:
 *:focus { outline: 0; }
 
 .form-vertical .form-group { margin-bottom: 20px; }
-.form-vertical .form-group label { display: block; margin-bottom: 5px; font-size: 12pt; font-weight: bold; font-weight: 600; }
+.form-vertical .form-group button.btn { margin-bottom: 0; }
 .form-vertical .form-group.type-checkbox label { position: absolute; margin-top: 1px; margin-left: 20px; }
 .form-vertical .form-group small { font-size: 10pt; position: relative; top: 5px; display: block; padding-bottom: 10px; color: #888; }
+.form-vertical .form-group label { display: block; margin-bottom: 5px; font-size: 12pt; font-weight: bold; font-weight: 600; }
 
 .form-horizontal label { position: relative; margin-left: -200px; width: 180px; font-weight: 600; top: 23px; text-align: right; display: inline-block; }
 .form-horizontal h5 { color: #444; margin-left: 170px; padding-left: 30px; margin-bottom: 4px; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px; }

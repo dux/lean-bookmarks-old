@@ -6,6 +6,13 @@ before do
   # for testing
   session[:u_id] = params[:usrid].to_i if Lux.dev? && params[:usrid]
 
+  if hash = params[:user_hash]
+    usr_email = Crypt.decrypt(hash)
+    usr = User.quick_create(usr_email)
+    request.session[:u_id] = usr.id
+    return redirect request.path
+  end
+
   # load user if there is session string
   if session[:u_id]
     begin

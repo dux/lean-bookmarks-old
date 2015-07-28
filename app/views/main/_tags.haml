@@ -1,7 +1,7 @@
-%p
-  %small Click on the label to label the #{@object.class.name.downcase}
-
 #tags_list.zoom{ 'data-url'=>"/part/main/tags:#{@object.token}", :style=>"z-index:1; position:relative; margin-top:5px;" }
+  %p
+    %small Click on the label to label the #{@object.class.name.downcase}
+
   %span.w.toggle
     .on
       %button.label.label-primary.show-on-hover{ :onclick=>"$w(this).toggle(); $('#add_tag').focus()" } + add

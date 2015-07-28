@@ -8,6 +8,15 @@
         = input :name
         = submit 'Save'
 
+    %hr
+
+    %h4 Change password
+
+    .well
+      = form "/api/users/set_password", :ver do
+        = input :pass, :as=>:password
+        = input :pass_confirm, :as=>:password
+        = submit 'Save'
     
     %hr
     
