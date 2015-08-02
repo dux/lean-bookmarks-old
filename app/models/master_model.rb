@@ -8,4 +8,10 @@ class MasterModel < ActiveRecord::Base
   # include CacheingPlugin::Model
   # include PgarrayPlugin::Model
 
+  after_update do
+    if self[:bucket_id]
+      Bucket.find(self[:bucket_id]).touch rescue false
+    end
+  end
+
 end

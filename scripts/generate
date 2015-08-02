@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+
+# use {{@object}} as template
+
+require 'optparse'
+require 'colorize'
+require 'fileutils'
+require 'active_support/inflector'
+require 'pp'
+
+unless ARGV[0]
+  puts "./generate [object singular]".red
+  exit
+end
+
+template_dir = 'scripts/app'
+exit puts "Template dir #{template_dir} is not accessible" unless Dir.exists?(template_dir)
+
+@object  = ARGV[0]
+@objects = @object.pluralize
+@klass   = @object.classify
+
+puts "Singular  : #{@object.yellow}"
+puts "Plural    : #{@objects.yellow}"
+
+def parse_vars(data)
+  data.gsub(/\{\{([^\}]+)\}\}/) { eval $1 }
+end
+
+# get all files
+templates = {}
+for el in Dir["./#{template_dir}/*.*"].map{ |file| file.split('/').last }
+  data = parse_vars(File.read("#{template_dir}/#{el}"))
+  type = el[0,1]
+
+  path = el.split('|', 2)[1]
+  path = parse_vars(path).gsub('#','/')
+
+  templates[type] ||= []
+  templates[type].push [path, data]
+end
+
+puts  "Templates : #{templates.keys.map(&:yellow).join(',')}"
+print "Execute   : "
+
+parse_templates = STDIN.gets.chomp
+
+for type in templates.keys
+  next unless parse_templates.index(type)
+  for el in templates[type]
+    file, data = *el
+    if File.exists?(file)
+      print 'exists'.yellow.rjust(20)
+    else
+      FileUtils.mkdir_p(file.sub(/\/[^\/]+$/,'')) rescue false
+      File.open(file, 'w') { |f| f.write(data) }
+      print 'created'.green.rjust(20)
+    end
+    puts ": #{file}"
+  end
+end
+

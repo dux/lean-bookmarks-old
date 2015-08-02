@@ -44,6 +44,10 @@ class LuxMailer
   end
 
   def deliver
+    raise "From in mailer not defined" unless @from
+    raise "To in mailer not defined" unless @to
+    raise "Subject in mailer not defined" unless @subject
+
     m = Mail.new
     m[:from]         = @from
     m[:to]           = @to

@@ -1,12 +1,14 @@
 class Mailer < LuxMailer
 
   before do
-    @from = 'rejotl@gmail.com'
+    @from = 'no-reply@stashbuckets.com'
   end
 
   after do
-    @subject = "[For: #{@to}] #{@subject}"
-    @to = 'reic.dino@gmail.com'
+    if Lux.dev? && @to != 'rejotl@gmail.com'
+      @subject = "[For: #{@to}] #{@subject}"
+      @to = 'rejotl@gmail.com'
+    end
   end
 
   def confirm_email(email)

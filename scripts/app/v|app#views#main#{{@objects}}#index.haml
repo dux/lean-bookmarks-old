@@ -1,0 +1,10 @@
+= render :_menu
+
+- if @{{@object}}.empty?
+  .tip
+    No {{@objects}} in list.
+
+- for @{{@object}} in @{{@objects}}
+  = render @{{@object}}
+
+= paginate @{{@objects}}
