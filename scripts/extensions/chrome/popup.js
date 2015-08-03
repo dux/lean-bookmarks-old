@@ -1,5 +1,6 @@
 function plugin_iframe_set_src(tab, loc) {
-  loc = loc || 'lux.stashbuckets.com'
+  // loc = loc || 'lux.stashbuckets.com'
+  loc = loc || 'localhost:3000'
   tab[0].title = tab[0].title.replace(/[^\w\-_\s\.]/g,'')
   document.getElementById('plugin_iframe').setAttribute('src', 'http://'+loc+'/plugin?title='+escape(tab[0].title)+'&url='+escape(tab[0].url))
 }

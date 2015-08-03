@@ -37,3 +37,17 @@
     a { padding:10px 15px; }   
   }
 }
+
+.navbar_smaller {
+  background-color: #fff;
+  border-bottom:1px solid #ccc;
+  ul { display: flex; }
+  li { 
+    flex:1;
+    a { display:block; text-align: center; padding:7px; text-decoration: none; color:#888; }
+    &.active { 
+      background-color: #eee; 
+      a { color:#000; font-weight:600; }
+    }
+  }
+}

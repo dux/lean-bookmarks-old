@@ -125,6 +125,13 @@ textarea { padding: 7px; font-size: 12pt; border: 1px solid #ccc; border-radius:
 .navbar input:focus { width: 200px; }
 .navbar.smaller a { padding: 10px 15px; }
 
+.navbar_smaller { background-color: #fff; border-bottom: 1px solid #ccc; }
+.navbar_smaller ul { display: flex; }
+.navbar_smaller li { flex: 1; }
+.navbar_smaller li a { display: block; text-align: center; padding: 7px; text-decoration: none; color: #888; }
+.navbar_smaller li.active { background-color: #eee; }
+.navbar_smaller li.active a { color: #000; font-weight: 600; }
+
 a.btn { cursor: pointer; }
 
 button, input[type="submit"], input[type="button"] { font-weight: 600; font-size: 1em; -webkit-appearance: none; -webkit-font-smoothing: antialiased; cursor: pointer; }
