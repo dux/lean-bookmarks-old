@@ -10,7 +10,7 @@
           %br
           &nbsp;
           %br
-          %a{ :href=>Lux.host }= image_tag "#{Lux.host}/favicon.png", :width=>60, :height=>60
+          %a{ :href=>Lux.host }= image_tag "#{Lux.host}/favicon.ico", :width=>60, :height=>60
           %br
           %br
         %td
@@ -18,7 +18,7 @@
         %td
         %td
           #content{ :style=>"padding:20px 20px 20px; background-color:#fff; border:1px solid #ddd; border-radius:5px; min-height:500px; max-width:600px; font-size:11pt;"  }
-            %h2{ :style=>"text-align:center;" }= Lux.name
+            %h2{ :style=>"text-align:center;" }= App.name
             %br
             = yield.gsub(/\shref="\//,%[ href="#{Lux.host}/]).gsub(/\ssrc="\//,%[ src="#{Lux.host}/]).html_safe
         %td

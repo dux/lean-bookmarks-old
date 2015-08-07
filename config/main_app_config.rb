@@ -1,7 +1,7 @@
 set :static_cache_control, [:public, {:max_age => 30.days }]
+set :protection, true
 set :show_exceptions, true
 set :raise_errors, true
-set :protection, true
 
 use Rack::Session::Cookie, :key => 'lux.session', :path => '/', :expire_after => 1.month, :secret=>Digest::MD5.hexdigest(__FILE__)
 use BetterErrors::Middleware; BetterErrors.application_root = __dir__.sub('/config','')
@@ -15,13 +15,12 @@ before do
 
   path = request.path.split(':', 2)
   if path[1]
-    @path_suffix = path[1]
-    Lux.params[:suffix] = @path_suffix
+    @namespace = path[1]
+    Lux.params[:suffix] = @namespace
   end
   @path = path[0].split('/')
   @path.shift
-  @root_part = @path[0] ? @path.shift.gsub('-','_').singularize.to_sym : nil
-  @first_part = @path[0]
+  @root = @path[0] ? @path.shift.gsub('-','_').to_sym : nil
 
   @path[0] = StringBase.decode(@path[0]) rescue @path[0] if @path[0]
 end
@@ -46,3 +45,4 @@ after do
     body "#{ret}\n"
   end
 end
+
