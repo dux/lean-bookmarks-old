@@ -1,14 +1,15 @@
-#config.ru
 require 'rubygems'
 require 'bundler'
 
 Bundler.require
 
-set :root, Pathname(__FILE__).dirname
+require "sinatra/reloader" unless ENV['RACK_ENV'].to_s.index('prod')
+
+set :root, Dir.pwd
 set :run, false
 
-# ENV['RAKE_ENV'] = 'production'
-set :environment, ENV['RAKE_ENV'].to_s.index('prod') ? :production : :development
+# ENV['RACK_ENV'] = 'production'
+# set :environment, ENV['RACK_ENV'].to_s.index('prod') ? :production : :development
 
 require './app/main'
 

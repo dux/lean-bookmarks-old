@@ -35,13 +35,14 @@ post '*' do
 end
 
 after do
-  if Hash === response.body
+  test_body = response.body.kind_of?(Array) && !response.body[1] ? response.body[0] : response.body
+
+  if test_body.kind_of?(String)
+    content_type('text/plain') unless test_body[0,1] == '<'
+  elsif test_body.kind_of?(Hash)
     content_type :json
-    ret = JSON.generate(response.body)
+    ret = Lux.dev? ? JSON.pretty_generate(response.body) : JSON.generate(response.body)
     ret = "#{params[:callback]}(#{ret})" if params[:callback]
-    body ret
-  else
-    content_type('text/plain') unless response.body[0].to_s[0,1] == '<'
+    body "#{ret}\n"
   end
 end
-

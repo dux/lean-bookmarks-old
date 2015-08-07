@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+# bundle update rack
+gem 'rack'#, '1.6.4' 
+
+# used in all projects
 gem 'therubyracer', :platforms => :ruby
 gem 'pg'
 gem 'sinatra'
@@ -18,5 +22,7 @@ gem 'less'
 gem 'coffee-script'
 gem 'rest-client'
 gem 'dalli'
-gem 'nokogiri'
+gem 'awesome_print'
 
+# app specific
+gem 'nokogiri'
