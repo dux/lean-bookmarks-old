@@ -19,7 +19,7 @@
 (function() {
   this.Api = {
     post: function(method, opts) {
-      var key, _i, _len, _ref, _ref1;
+      var key, _disable_button, _i, _len, _ref, _ref1;
       if (opts == null) {
         opts = {};
       }
@@ -34,14 +34,23 @@
             return Pjax.load(data.path);
           };
         }
-        if (/^\//.test(opts.done)) {
+        if (typeof opts.done === 'string' && /\//.test(opts.done)) {
+          opts.load = opts.done;
+        }
+        if (opts.load) {
           opts.done = function() {
-            return Pjax.load(opts.done);
+            return Pjax.load(opts.load);
           };
         }
       }
-      if (opts.p) {
-        opts.params = opts.p;
+      if (opts.form) {
+        opts.params || (opts.params = $(opts.form).serializeHash());
+        _disable_button = $(opts.form).find('*[disable-with]');
+        if (_disable_button[0]) {
+          _disable_button.data('html-data', _disable_button.html());
+          _disable_button.html(_disable_button.attr('disable-with') + '...');
+          _disable_button.prop('disabled', true);
+        }
       }
       opts.params || (opts.params = {});
       if ((_ref = opts.params) != null ? _ref.getAttribute : void 0) {
@@ -54,7 +63,7 @@
       _ref1 = Object.keys(opts);
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
         key = _ref1[_i];
-        if (['p', 'params', 'silent', 'done'].indexOf(key) === -1) {
+        if (['params', 'silent', 'done', 'load', 'form'].indexOf(key) === -1) {
           alert("Unknown attribute [" + key + "] in Api.post opts");
         }
       }
@@ -66,7 +75,11 @@
           Info.auto(ret);
         }
         if (opts['done'] && !ret['error']) {
-          return opts['done'](ret);
+          opts['done'](ret);
+        }
+        if (_disable_button) {
+          _disable_button.html(_disable_button.data('html-data'));
+          return _disable_button.prop('disabled', false);
         }
       });
     },

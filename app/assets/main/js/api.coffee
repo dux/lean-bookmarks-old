@@ -11,7 +11,7 @@
   post: (method, opts={}) ->
     if opts.done
       if opts.done == 'refresh'
-        opts.done = -> Pjax.refresh() 
+        opts.done = -> Pjax.refresh()
 
       if opts.done == 'redirect'
         opts.done = (data) -> Pjax.load(data.path)
@@ -68,4 +68,3 @@
       opts = {}
 
     Api.post(method, { p:opts, done:func })
-
