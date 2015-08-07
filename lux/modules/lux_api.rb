@@ -1,3 +1,5 @@
+require 'pp'
+
 class LuxApi
 
   @@opts = {}
@@ -14,6 +16,7 @@ class LuxApi
   #     @user.slice(:id, :name, :avatar, :email)
   #   end
   # end
+  
   def self.action(proc_name)
     proc = yield
     @@actions[proc_name] = @@opts.dup
@@ -75,9 +78,8 @@ class LuxApi
   end
 
   # public mount method
-  def self.resolve(*path)
-    return 'Unsupported API call' if path[3]
-    return 'Unsupported API call' unless path[1]
+  def self.resolve(path)
+    return 'Unsupported API call' if !path[1] || path[3]
 
     @@class_name = path[0].classify
 
@@ -175,6 +177,7 @@ class LuxApi
 
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
+    ap @response if Lux.dev?
     @response
   end
 

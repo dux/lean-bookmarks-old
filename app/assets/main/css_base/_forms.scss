@@ -62,3 +62,9 @@ textarea {
     input { padding:5px; font-size:10pt; }
     button { padding:5px 10px; }
 }
+
+input.grow {
+  @include transition(all .1s ease);
+  &:focus { width:250px !important; }
+}
+

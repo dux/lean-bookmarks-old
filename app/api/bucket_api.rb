@@ -46,4 +46,26 @@ class BucketApi < LuxApi
     'Bucket removed from collection'
   end
 
+  def add_object
+    name = params[:name]    
+
+    raise 'Name to short' unless name.to_s.length > 1
+
+    if name =~ /https?:\/\//
+      l = Link.new
+      l.url = name
+      l.bucket_id = @bucket.id
+      l.fetch_name
+      l.save!
+      return 'Link in bucket added'
+    else
+      b = Note.new
+      b.name = name
+      b.bucket_id = @bucket.id
+      b.save!
+      return 'Note created'
+    end
+
+  end
+
 end

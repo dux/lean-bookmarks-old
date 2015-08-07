@@ -38,7 +38,7 @@ class LuxCell
 
     return Error.not_found('Page not found') unless Lux.dev?
 
-    list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part]
+    list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part, :params]
     err = [%[No instance method "#{local_args[0].sub('!','')}" nor "#{local_args[0]}" found in class "#{self.name}"]]
     err.push ["Expected so see def show(id) ..."] if local_args[0] == 'show!'
     err.push %[You have defined \n- #{(list).join("\n- ")}]

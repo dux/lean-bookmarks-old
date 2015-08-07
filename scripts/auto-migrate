@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# cp config/database.yml scripts/rails/config/database.yml
+# cp config/schema.rb scripts/rails/db/schema.rb
+
+cd scripts/rails && rake db:auto:migrate && cd ../..
+
+# rm -fr scripts/auto_migrate
+# rm scripts/rails/config/database.yml
+# rm scripts/rails/db/schema.rb
+

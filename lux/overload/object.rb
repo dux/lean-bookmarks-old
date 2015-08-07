@@ -20,6 +20,7 @@ class Object
     # active record object
     return self.id? if respond_to?(:attributes) && respond_to?(:id) 
     return true if nil?
+    return false if self.class.name == 'Class'
 
     # if ['Arel::Nodes::Equality', 'Arel::SelectManager'].index(self.class.name)
     return false if self.class.name.index('Arel::')

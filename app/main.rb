@@ -44,6 +44,7 @@ def get
   # guest routes
   return resolve_promo_app if [:set_password, :login, :css].index(@root)
 
+  @root = @root.to_s.singularize.to_sym
   # main application routes
   return resolve_main_app if [:link, :note, :bucket, :user, :domain, :search].index(@root)
 
@@ -78,7 +79,7 @@ def resolve_main_app
   
   return Main::StaticCell.resolve(@root) if [:search].index(@root)
 
-  return "Main::#{@root.to_s.classify}Cell".constantize.resolve(*@path)
+  return "Main::#{@root.to_s.classify}Cell".constantize.resolve(@path)
 end
 
 def resolve_promo_app

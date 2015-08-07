@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# use {{@object}} as template
+# use {{object}} and {{objects}} and {{object.classify}}  as template
 
 require 'optparse'
 require 'colorize'
@@ -13,8 +13,15 @@ unless ARGV[0]
   exit
 end
 
-template_dir = 'scripts/app'
+template_dir = 'scripts/templates'
 exit puts "Template dir #{template_dir} is not accessible" unless Dir.exists?(template_dir)
+
+tpl_desc = {
+  p:'api',
+  m:'model',
+  a:'admin',
+  v:'view'
+}
 
 @object  = ARGV[0]
 @objects = @object.pluralize
@@ -24,13 +31,21 @@ puts "Singular  : #{@object.yellow}"
 puts "Plural    : #{@objects.yellow}"
 
 def parse_vars(data)
+  object = @object
+  objects = @objects
   data.gsub(/\{\{([^\}]+)\}\}/) { eval $1 }
 end
 
 # get all files
 templates = {}
 for el in Dir["./#{template_dir}/*.*"].map{ |file| file.split('/').last }
-  data = parse_vars(File.read("#{template_dir}/#{el}"))
+  begin
+    data = parse_vars(File.read("#{template_dir}/#{el}"))
+  rescue
+    puts '-'
+    puts "File error: #{el.red}: #{$!.message}"
+    exit
+  end
   type = el[0,1]
 
   path = el.split('|', 2)[1]
@@ -40,7 +55,8 @@ for el in Dir["./#{template_dir}/*.*"].map{ |file| file.split('/').last }
   templates[type].push [path, data]
 end
 
-puts  "Templates : #{templates.keys.map(&:yellow).join(',')}"
+# # puts  "Templates : #{templates.keys.sort.map{ |el| tpl_desc[el.to_sym] ? tpl_desc[el.to_sym].sub(el, el.upcase.yellow) : el.yellow }.join(', ')}"
+puts  "Templates : #{templates.keys.map{ |el| "#{tpl_desc[el.to_sym]}(#{el.yellow})" }.join(', ')}"
 print "Execute   : "
 
 parse_templates = STDIN.gets.chomp

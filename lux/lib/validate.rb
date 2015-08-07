@@ -19,6 +19,7 @@ class Validate
   end
 
   def self.check_oib(oib) # iso 7064 - module 10,11
+    oib = oib.to_s
     raise "OIB nije definiran" unless oib.to_s.present?
     raise "OIB nije sastavljen od brojeva" if oib =~ /[^\d]/
     raise "OIB mora imati točno 11 znamenki, vaš ima #{oib.to_s.length}" if oib.to_s.length != 11

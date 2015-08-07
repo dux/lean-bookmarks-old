@@ -18,6 +18,7 @@ end
 
 Lux.irregular 'bonus', 'bonuses'
 Lux.irregular 'clothing', 'clothes'
+Lux.irregular 'country', 'countries'
 
 
 # https://github.com/datamapper/extlib/blob/master/lib/extlib/inflection.rb

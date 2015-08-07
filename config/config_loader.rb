@@ -1,4 +1,5 @@
-db_config = YAML.load_file('./scripts/auto_migrate/config/database.yml')
+# 
+db_config = YAML.load_file('./scripts/rails/config/database.yml')
 
 if Lux.dev?
   ENV['COFFEE_PATH'] = '/usr/local/bin/coffee'
@@ -22,3 +23,13 @@ Mail.defaults do
     :password       => '8f5-59-ltEqpNPDLUp2eCA'
   }
 end
+
+# mailgun
+# config.action_mailer.smtp_settings = {
+#   :authentication => :plain,
+#   :address => "smtp.mailgun.org",
+#   :port => 587,
+#   :domain => "MYDOMAIN.mailgun.org",
+#   :user_name => "postmaster@MYDOMAIN.mailgun.org",
+#   :password => "MYPASSWORD"
+# }
