@@ -17,7 +17,10 @@ class Template
 
     raise "Template [#{template}] not found" unless @template
 
-    @@template_cache = {} if Lux.dev?
+    # clear only once per request
+    @@template_cache = {} if Lux.dev? && !Thread.current[:lux][:template_cache]
+    Thread.current[:lux][:template_cache] = true
+
     @@template_cache[template] ||= Tilt.new(@template, :ugly=>true)
     @engine = @@template_cache[template]
   end  

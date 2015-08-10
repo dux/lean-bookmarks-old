@@ -59,7 +59,7 @@
       func = opts
       opts = {}
 
-    Api.post(method, { p:opts, silent:true, done:func })
+    Api.post(method, { params:opts, silent:true, done:func })
 
 
   send: (method, opts, func) ->
@@ -67,4 +67,4 @@
       func = opts
       opts = {}
 
-    Api.post(method, { p:opts, done:func })
+    Api.post(method, { params:opts, done:func })

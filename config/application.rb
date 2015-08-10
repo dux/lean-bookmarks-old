@@ -11,6 +11,7 @@ def get
 end
 
 before do
+  @page_render_start = Time.now
   Lux.init(self)
 
   path = request.path.split(':', 2)
@@ -34,6 +35,8 @@ post '*' do
 end
 
 after do
+  puts "- #{Lux.request.path} rendered in #{((Time.now-@page_render_start)*1000).to_i} ms".yellow
+
   test_body = response.body.kind_of?(Array) && !response.body[1] ? response.body[0] : response.body
 
   if test_body.kind_of?(String)

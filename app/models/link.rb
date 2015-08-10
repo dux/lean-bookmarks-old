@@ -3,7 +3,8 @@ class Link < MasterModel
 
   validates :name, :presence=>{ :message=>'Link name is required' }
 
-  belongs_to :bucket
+  belongs_to_cached :bucket
+  # belongs_to :bucket
 
   array_on :tags
 

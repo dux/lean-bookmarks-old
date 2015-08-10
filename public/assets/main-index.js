@@ -89,7 +89,7 @@
         opts = {};
       }
       return Api.post(method, {
-        p: opts,
+        params: opts,
         silent: true,
         done: func
       });
@@ -100,7 +100,7 @@
         opts = {};
       }
       return Api.post(method, {
-        p: opts,
+        params: opts,
         done: func
       });
     }
