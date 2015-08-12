@@ -175,6 +175,18 @@ class LuxApi
       @error ||= "Wrong type for @message" if @message && !@message.kind_of?(String)
     end
 
+    # if we define _redirect then we will be redirected to exact page
+    # useful for file uploads
+    if @@params[:_redirect]
+      if @error
+        Lux.flash :error, @error
+      elsif @message
+        Lux.flash :info, @message
+      end 
+
+      Lux.redirect(@@params[:_redirect])
+    end
+
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
     ap @response if Lux.dev?
@@ -273,5 +285,6 @@ class LuxApi
   def index
     @error = 'No index method defiend'
   end
+
 end
 

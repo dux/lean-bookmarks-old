@@ -136,6 +136,14 @@ module EssentialsPlugin
 
     included do
       class_attribute :base_route
+
+      # escape all HTML entities
+      before_save do
+        for k,v in attributes
+          v.gsub!('<','&lt;') if v.kind_of?(String)
+          v.gsub!('>','&gt;') if v.kind_of?(String)
+        end
+      end
     end
 
     def token
