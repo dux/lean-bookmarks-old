@@ -59,7 +59,11 @@
       func = opts
       opts = {}
 
+<<<<<<< HEAD
     Api.post(method, { params:opts, done:func, silent:true })
+=======
+    Api.post(method, { params:opts, silent:true, done:func })
+>>>>>>> c44304992fcdc0ce94dff443e966905b45d0e660
 
 
   send: (method, opts, func) ->
@@ -68,4 +72,7 @@
       opts = {}
 
     Api.post(method, { params:opts, done:func })
+<<<<<<< HEAD
 
+=======
+>>>>>>> c44304992fcdc0ce94dff443e966905b45d0e660

@@ -5,7 +5,7 @@ class MasterModel < ActiveRecord::Base
   include SecurityPlugin::Model
   include UserStampsPlugin::Model
   # include LocalizationPlugin::Model
-  # include CacheingPlugin::Model
+  include CacheingPlugin::Model
   # include PgarrayPlugin::Model
 
   after_update do

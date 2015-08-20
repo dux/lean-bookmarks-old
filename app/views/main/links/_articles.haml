@@ -11,8 +11,8 @@
           %br
           %p
             %small= link_to el.url
-          %small.gray #{Time.ago(el.created_at)} at #{link_to el.domain, "/domain/#{el.domain}"}
+          %small.gray #{Time.ago(el.created_at)} | #{link_to el.domain, "/domain/#{el.domain}"} | #{el.bucket.as_link}
           - if el.description?
-            %p.desc= el.description
+            %p.desc{ :style=>"margin-top:10px;" }= el.description
 
 = paginate @articles if @articles.respond_to?(:paginate_page)

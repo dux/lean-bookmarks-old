@@ -43,7 +43,7 @@ module FormHelper
 
     data = ''
 
-    opts[:onsubmit] ||= "Api.post('/api/#{opts.delete('api-action')}', { form:this, params:$(this).serializeHash(), done:function(){ #{opts.delete(:done)}; }}); return false;"
+    opts[:onsubmit] ||= "Api.post('/api/#{opts.delete('api-action')}', { form:this, done:function(){ #{opts.delete(:done)}; }}); return false;"
     @form = FormTemplate.create(@form_template, @form_object, opts)
     
     # copy some fields for new objects, experimental
