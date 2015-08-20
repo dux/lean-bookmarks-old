@@ -15,6 +15,7 @@
   .well
     = form @bucket, :ver do
       = input :name
+      = input :image, :hint=>'Backgound image, upload to imgur.com'
       = input :description, :as=>:memo, :style=>"height:200px;"
       = submit 'Save'
 

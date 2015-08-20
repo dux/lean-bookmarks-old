@@ -10,7 +10,7 @@ class LinkApi < AppApi
     end
 
     if b = Link.my.where( bucket_id:params[:bucket_id], url:params[:url] ).first
-      respond 'You allready added this link' 
+      @message = 'You allready added this link' 
       return b
     end
 

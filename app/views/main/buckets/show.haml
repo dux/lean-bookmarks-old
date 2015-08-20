@@ -1,6 +1,8 @@
 = render :_menu
 
-%div{ :style=>"background-color:#fff; padding-top:10px; border:1px solid #ddd; border-radius:4px;" }
+%div{ :style=>"background-color:#fff; padding-top:10px; border:1px solid #ddd; border-radius:4px; " }
+  - if @bucket.image
+    = image_tag @bucket.image, :style=>"float:right; margin-bottom:-200px; max-height:110px; margin-right:50px;"
   %div{ :style=>"margin:10px 15px 5px 15px;" }
     %h2
       = @bucket.name

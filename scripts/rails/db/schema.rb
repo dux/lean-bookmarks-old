@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150417181923) do
     t.string   "tags",          default: [],              array: true
     t.integer  "child_buckets", default: [],              array: true
     t.string   "template"
+    t.string   "image"
   end
 
   create_table "links", force: true do |t|
