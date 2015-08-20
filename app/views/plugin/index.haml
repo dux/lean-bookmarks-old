@@ -3,7 +3,7 @@
   %hr
 
 = form @link, :template=>:ver, :done=>:refresh do
-  = input :name, :id=>'bm_name', :disabled=>true
+  = input :name, :id=>'bm_name', :value=>params[:title]
   = input :is_article, :as=>:checkbox
   = input :url
   = input :tags, :as=>:tag
@@ -13,7 +13,7 @@
 - unless @link.id
   :coffee
     Api.silent '/api/links/get_title', { url:'#{params[:url]}' }, (res) ->
-      $('#bm_name').val(res.data.name).attr('disabled', false)
+      $('#bm_name').val(res.data.name)
       $('#bm_desc').val(res.data.description)
 
 %hr
