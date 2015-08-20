@@ -180,8 +180,8 @@ class LuxApi
     if @@params[:_redirect]
       if @error
         Lux.flash :error, @error
-      elsif @message
-        Lux.flash :info, @message
+      elsif @response[:message]
+        Lux.flash :info, @response[:message]
       end 
 
       Lux.redirect(@@params[:_redirect])

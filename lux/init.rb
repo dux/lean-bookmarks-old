@@ -49,6 +49,7 @@
 # reload code in development
   before do
     for file, mtime in $LIVE_REQUIRE
+      # next if file.index('generic')
       next if mtime == File.mtime(file).to_i
       $LIVE_REQUIRE[file] = File.mtime(file).to_i
       puts "Live reload: #{file.red}"

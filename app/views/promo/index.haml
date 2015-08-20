@@ -1,2 +1,6 @@
-.well
-  %h1{ :style=>'text-align:center; padding:60px; line-height:30pt;' } Stash buckets is simple service for organizing <br /> bookmarks and notes
+.well{ :style=>'text-align:center; padding:40px; line-height:30pt;' }
+  %h1 Lean bookmarks
+  %h4 is simple service for organizing <br /> bookmarks and notes
+
+%div{ :style=>"text-align:center; padding-top:40px;", :onclick=>"Pjax.load('/login')" }
+  = svg_ico :bucket, 256, '#8765A8'

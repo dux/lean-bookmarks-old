@@ -1,7 +1,7 @@
 module RailsHelper
   def path_to_image(src)
     return src if src[0, 4] == 'http'
-    src = "/images/#{src}" unless srcsrc[0, 1] == '/'
+    src = "/images/#{src}" unless src[0, 1] == '/'
     src
   end
 

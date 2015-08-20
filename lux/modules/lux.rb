@@ -9,6 +9,14 @@ class Lux
     end
   end  
 
+  def self.once(name, &block)
+    Thread.current[:lux][:_once_hash] ||= {}
+    unless Thread.current[:lux][:_once_hash][name]
+      Thread.current[:lux][:_once_hash][name] = true
+      yield
+    end
+  end
+
   def self.root
     __FILE__.sub('/lux/modules/lux.rb','')
   end

@@ -6,6 +6,7 @@ module CacheingPlugin
     extend ActiveSupport::Concern
 
     class_methods do
+
       def belongs_to_cached(klass)
         begin
           Cache.get('_test')  
@@ -14,7 +15,7 @@ module CacheingPlugin
           exit
         end
 
-        puts "#{name.classify}: belongs_to_cached(#{klass})".red
+        puts "* belongs_to_cached: #{name.classify}.#{klass}".yellow
         define_method klass do
           val = self["#{klass}_id"]
           return nil unless val

@@ -259,4 +259,13 @@ class Input
     ret.join('')
   end
 
+  def as_pass
+    value = @opts[:value]
+    id = @opts[:id]
+    @opts[:value] = ''
+    @opts[:style] = 'width:200px; display:inline;'
+    ret = @opts.tag(:input)
+    %[<span class="btn btn-default" onclick="$(this).hide(); $(this).next().show().focus();">#{value.present? ? 'Change' : 'Set'} password</span><span id="s-#{id}" style="display:none;">#{ret} or <a onclick="p=$(this).parent(); p.hide(); p.prev().show(); return false;" href="#">cancel</a></span>]
+  end
+
 end
