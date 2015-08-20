@@ -27,7 +27,7 @@ class Url
 
     @path = path_with_qs[0] || '/'
     @proto = @elms[0].split(':').first.downcase
-    @host = @domain_parts.join('.')
+    @host = @domain_parts.reverse.join('.')
     @port = domain_and_port[1] ? domain_and_port[1].to_i : 80
   end
 

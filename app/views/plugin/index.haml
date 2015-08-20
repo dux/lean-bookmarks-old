@@ -3,7 +3,7 @@
   %hr
 
 = form @link, :template=>:ver, :done=>:refresh do
-  = input :name, :id=>'bm_name'
+  = input :name, :id=>'bm_name', :disabled=>true
   = input :is_article, :as=>:checkbox
   = input :url
   = input :tags, :as=>:tag
@@ -12,8 +12,8 @@
 
 - unless @link.id
   :coffee
-    Api.silent '/api/bookmarks/get_title', { url:'#{params[:url]}' }, (res) ->
-      $('#bm_name').val(res.data.name)
+    Api.silent '/api/links/get_title', { url:'#{params[:url]}' }, (res) ->
+      $('#bm_name').val(res.data.name).attr('disabled', false)
       $('#bm_desc').val(res.data.description)
 
 %hr
@@ -21,7 +21,7 @@
 - unless @link.id
   %h5 create by tag
 
-  = labels Link.my.all_tags, lambda { |el| "javascript:Api.send('links/create', { name:$('#bm_name').val(), url:'#{params[:url]}', tag:'#{el}' }, function(){ Pjax.refresh() })" }
+  = labels Link.my.all_tags, lambda { |el| "javascript:Api.send('links/create', { name:$('#bm_name').val(), description:$('#bm_desc').val(), url:'#{params[:url]}', tag:'#{el}' }, function(){ Pjax.refresh() })" }
 
   %hr
 

@@ -1,6 +1,6 @@
 class PluginCell < LuxCell
 
-  def self.resolve(*path)
+  def self.resolve(path)
     return render(:guest) unless User.current
 
     base = (path.shift || :index).to_sym;
