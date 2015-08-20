@@ -1,10 +1,3 @@
-begin
-  Cache.get('_test')  
-rescue
-  puts "Memcached error: #{$!.message}".red
-  exit
-end
-
 require 'active_support/concern'
 
 module CacheingPlugin
@@ -14,6 +7,13 @@ module CacheingPlugin
 
     class_methods do
       def belongs_to_cached(klass)
+        begin
+          Cache.get('_test')  
+        rescue
+          puts "Memcached error: #{$!.message}".red
+          exit
+        end
+
         puts "#{name.classify}: belongs_to_cached(#{klass})".red
         define_method klass do
           val = self["#{klass}_id"]
