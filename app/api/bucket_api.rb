@@ -5,28 +5,12 @@ class BucketApi < LuxApi
   end
 
   def create
-    name = params[:name]    
-    raise "Name or link is required" unless name.present?
-
-    if name =~ /https?:\/\//
-      if params[:bucket_id]
-        raise 'Link is present in a bucket' if Link.where(:bucket_id=>params[:bucket_id], :url=>name).first
-
-        l = Link.new
-        l.url = name
-        l.bucket_id = params[:bucket_id]
-        l.fetch_name
-        l.save!
-        return 'Link in bucket added'
-      else
-        raise 'Bucket ID not present'
-      end
-    else
-      b = Bucket.new
-      b.name = name
-      b.save!
-      return 'Bucket created'
+    if exists = Bucket.my.where(name:params[:name]).first
+      @message = "You allready have bucket with that name"
+      return exists
     end
+
+    super
   end
 
   def add_bucket
@@ -57,6 +41,7 @@ class BucketApi < LuxApi
       l.bucket_id = @bucket.id
       l.fetch_name
       l.save!
+      l.bucket.touch
       return 'Link in bucket added'
     else
       b = Note.new

@@ -6,7 +6,7 @@
         = render @note
   .col-1
     - if @bucket.description?
-      .w.markdown= @bucket.description
+      .w.markdown.bucket.note{ :style=>"width:100%; padding:15px;" }= @bucket.description
 
 %hr
 

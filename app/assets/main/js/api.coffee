@@ -9,6 +9,8 @@
 
 @Api =
   post: (method, opts={}) ->
+    return false if opts.confirm && !confirm(opts.confirm)
+
     if opts.done
       if opts.done == 'refresh'
         opts.done = -> Pjax.refresh() 
@@ -40,7 +42,7 @@
       $(opts.disable).disable()
 
     for key in Object.keys(opts)
-      alert "Unknown attribute [#{key}] in Api.post opts" if ['params','silent','done','load', 'form'].indexOf(key) == -1
+      alert "Unknown attribute [#{key}] in Api.post opts" if ['params','silent','done','load', 'form', 'confirm'].indexOf(key) == -1
 
     method = "/api/#{method}" unless /^\/api/.test(method)
 
