@@ -27,6 +27,7 @@ class Template
 
   def self.helper(base_class, opts={})
     base_class = base_class.to_s
+    
     helper = LuxHelper.new
     # if base class is defined, use it, othervise use application global class
     if ("#{base_class.capitalize}Helper".constantize rescue false)

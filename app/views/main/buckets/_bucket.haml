@@ -5,7 +5,7 @@
 
   %br
 
-  - if @bucket.image
+  - if @bucket.image?
     = image_tag @bucket.image, :style=>"float:right; width:100%; max-height:220px; margin:10px 0 -200px 0; "
 
   %br

@@ -1,4 +1,5 @@
 module RailsHelper
+  
   def path_to_image(src)
     return src if src[0, 4] == 'http'
     src = "/images/#{src}" unless src[0, 1] == '/'
@@ -23,4 +24,5 @@ module RailsHelper
     opts[:target] ||= 'new_window' if where =~ /https?:\/\//
     opts.tag :a, name
   end
+
 end
