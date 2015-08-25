@@ -368,8 +368,6 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 --
 
 COPY buckets (id, name, description, created_at, created_by, updated_at, updated_by, active, tags, child_buckets, template, image) FROM stdin;
-1	Various	\N	2015-07-24 00:45:01.721697	1	2015-08-20 21:52:17.433307	1	t	{}	{}	\N	\N
-7	Jobs APP	\N	2015-07-26 00:26:47.980385	1	2015-08-20 21:52:26.579555	1	t	{idea}	{}	\N	\N
 4	Motor	\N	2015-07-25 18:38:23.56807	1	2015-07-25 18:38:23.568184	1	t	{}	{}	\N	\N
 5	VC	\N	2015-07-26 00:25:54.163502	1	2015-07-26 00:25:54.163592	1	t	{}	{}	\N	\N
 8	Design	\N	2015-07-26 01:08:08.229439	1	2015-07-26 01:08:08.229549	1	t	{}	{}	\N	\N
@@ -382,15 +380,18 @@ COPY buckets (id, name, description, created_at, created_by, updated_at, updated
 2	Stash buckets		2015-07-24 00:50:45.944953	1	2015-08-04 15:28:27.740682	1	t	{project}	{}	\N	\N
 17	Jakov	\N	2015-08-05 09:41:56.585943	1	2015-08-05 09:47:24.281258	1	t	{}	{}	\N	\N
 15	node	\N	2015-08-04 09:31:26.601929	1	2015-08-05 09:47:24.295466	1	t	{}	{}	\N	\N
-29	Deals APP	ivanina ideja, malo razrade\n	2015-08-22 10:45:42.239171	1	2015-08-22 10:46:56.04619	1	t	{}	{}	\N	
 24	Lists (Movies, Music)	\N	2015-08-18 09:57:41.066759	1	2015-08-18 11:53:24.135586	1	t	{}	{}	\N	\N
+25	Membership Management	ideja od Nikolasa	2015-08-19 14:49:44.583494	1	2015-08-24 12:20:30.307317	1	t	{}	{}	\N	http://i.imgur.com/Jlx0EUk.png
 20	Img resize and thumbnails	\N	2015-08-07 08:43:12.921551	1	2015-08-07 09:17:20.433341	1	t	{}	{}	\N	\N
 19	German	just a place to put all resources found helpful in learning german	2015-08-07 08:33:52.628018	1	2015-08-07 13:45:42.373684	1	t	{}	{}	\N	\N
 21	job	\N	2015-08-10 07:32:50.23858	1	2015-08-10 07:32:56.643674	1	f	{}	{}	\N	\N
 6	Jobs	\N	2015-07-26 00:26:35.036538	1	2015-08-10 10:47:56.094527	1	t	{}	{}	\N	\N
+29	Deals APP	ivanina ideja, malo razrade\n	2015-08-22 10:45:42.239171	1	2015-08-24 12:20:30.321975	1	t	{}	{}	\N	
 26	CRM	\N	2015-08-20 08:11:30.004098	1	2015-08-20 12:32:51.08996	1	t	{}	{}	\N	\N
+7	Jobs APP	\N	2015-07-26 00:26:47.980385	1	2015-08-24 14:29:01.446161	1	t	{idea}	{}	\N	\N
+1	Various	\N	2015-07-24 00:45:01.721697	1	2015-08-24 14:29:34.119333	1	t	{}	{}	\N	\N
+30	Site SASS support apps	\N	2015-08-24 14:30:25.826008	1	2015-08-24 14:30:31.649231	1	t	{}	{}	\N	\N
 18	Networking		2015-08-06 10:49:53.96074	1	2015-08-20 12:56:40.381257	1	t	{}	{}	\N	http://i.imgur.com/remKXlnm.jpg
-25	Membership Management	ideja od Nikolasa	2015-08-19 14:49:44.583494	1	2015-08-20 12:58:53.919865	1	t	{}	{}	\N	http://i.imgur.com/Jlx0EUk.png
 16	ClubWeb	\N	2015-08-04 15:27:08.588288	1	2015-08-20 12:59:09.419791	1	f	{idea}	{}	\N	\N
 3	Games		2015-07-24 00:52:02.958331	1	2015-08-20 15:05:18.226914	1	t	{}	{}	\N	http://i.imgur.com/fENkykfm.jpg
 23	CupoNation CN		2015-08-18 09:13:35.043676	1	2015-08-20 18:21:05.721802	1	t	{}	{}	\N	http://c93fea60bb98e121740fc38ff31162a8.s3.amazonaws.com/wp-content/uploads/2012/12/cn.png
@@ -404,7 +405,7 @@ COPY buckets (id, name, description, created_at, created_by, updated_at, updated
 -- Name: buckets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sbprod
 --
 
-SELECT pg_catalog.setval('buckets_id_seq', 29, true);
+SELECT pg_catalog.setval('buckets_id_seq', 30, true);
 
 
 --
@@ -620,7 +621,7 @@ COPY links (id, name, url, domain, tags, kind, description, created_by, updated_
 190	thepugautomatic.com	http://thepugautomatic.com/2012/07/sinatra-with-rack-cache-on-heroku/	thepugautomatic.com	{}		\N	1	1	2015-07-25 11:56:49.471347	2015-07-25 12:14:47.826991	t	t	1
 189	Business Process Management Tool & Workflow Software | Automate Workflows	https://kissflow.com/	kissflow.com	{}		KiSSFLOW is a workflow tool & business process workflow management software to automate your workflow process. Rated #1 cloud workflow software in Google Apps Marketplace.	1	1	2015-07-25 11:56:39.450746	2015-07-25 12:14:47.829214	t	f	1
 188	en.wikipedia.org	https://en.wikipedia.org/wiki/Synthwave	en.wikipedia.org	{}		\N	1	1	2015-07-25 11:56:34.065948	2015-07-25 12:14:47.831207	t	f	1
-187	The 100% FREE live chat application for your website!	https://www.tawk.to/	tawk.to	{}		tawk.to is a free live chat app that lets you monitor and chat with visitors on your website or from a free customizable page	1	1	2015-07-25 11:56:23.534312	2015-07-25 12:14:47.833437	t	f	1
+187	The 100% FREE live chat application for your website!	https://www.tawk.to/	tawk.to	{saas}		tawk.to is a free live chat app that lets you monitor and chat with visitors on your website or from a free customizable page	1	1	2015-07-25 11:56:23.534312	2015-08-24 14:30:31.646624	t	f	30
 186	Business Process Management Tool & Workflow Software | Automate Workflows	https://kissflow.com/#home	kissflow.com	{}		KiSSFLOW is a workflow tool & business process workflow management software to automate your workflow process. Rated #1 cloud workflow software in Google Apps Marketplace.	1	1	2015-07-25 11:56:18.343628	2015-07-25 12:14:47.83549	t	f	1
 185	Dino Reic (dinoreic) | Pearltrees	http://www.pearltrees.com/dinoreic	pearltrees.com	{}		Unnamed pearl. Stash buckets	1	1	2015-07-25 11:56:13.092611	2015-07-25 12:14:47.837437	t	f	1
 184	deveiate.org	http://deveiate.org/code/linguistics/Linguistics/EN.html	deveiate.org	{}		\N	1	1	2015-07-25 11:56:07.206251	2015-07-25 12:14:47.839147	t	f	1
@@ -691,6 +692,7 @@ COPY links (id, name, url, domain, tags, kind, description, created_by, updated_
 233	About Us | YogaGlo	https://www.yogaglo.com/about	yogaglo.com	{}		Yoga videos and classes from the top yoga instructors. YogaGlo brings poses and styles like hatha, yin and vinyasa flow yoga right into your living room.	1	1	2015-08-04 15:27:13.071798	2015-08-20 12:58:53.916504	t	f	25
 250	drive.google.com	https://drive.google.com/folderview?id=0B0bQGZDHkWXBfkpmdkxWWTV6eXViVUZ2ZTFrTlZIdFVjQ2lsdHJoM1hzd01USFdrc09vWm8&usp=sharing_eid	drive.google.com	{}		\N	1	1	2015-08-11 20:44:18.913647	2015-08-12 06:46:40.289924	t	t	22
 249	hack.chat	https://www.hack.chat/	hack.chat	{saas}		\N	1	1	2015-08-10 20:11:18.417389	2015-08-12 06:46:40.295329	t	f	1
+277	influxhq.com	https://influxhq.com/tour/	influxhq.com	{}		\N	1	1	2015-08-24 12:19:09.841576	2015-08-24 12:20:30.293812	t	f	25
 251	Search & Compare Cheap Buses, Trains & Flights | GoEuro	http://www.goeuro.com/	goeuro.com	{saas}		Start your European journey with one click. GoEuro makes it easy to compare and combine air, rail, bus and car for better pricing and easier booking.	1	1	2015-08-12 06:41:42.390637	2015-08-12 06:46:40.281828	t	f	1
 248	Nobel Laureate Smashes the Global Warming Hoax - YouTube	https://www.youtube.com/watch?v=TCy_UOjEir0	youtube.com	{}	vid	Nobel laureate Ivar Giaever's speech at the Nobel Laureates meeting 1st July 2015. Ivar points out the mistakes which Obama makes in his speeches about globa...	1	1	2015-08-10 14:42:10.32418	2015-08-12 06:46:40.300242	t	t	1
 252	Bus travel through Europe | FlixBus	https://www.flixbus.com	flixbus.com	{saas}		Low cost bus travel. 10,000 daily connections to around 300 destinations in over 15 different European countries.	1	1	2015-08-12 06:47:25.01259	2015-08-12 06:47:29.739896	t	f	1
@@ -710,11 +712,15 @@ COPY links (id, name, url, domain, tags, kind, description, created_by, updated_
 263	Membership Software by Wild Apricot  | Get a free trial now!	http://www.wildapricot.com/	wildapricot.com	{}		Powerful, easy-to-use membership software with friendly and knowledgeable support. Get your instant free trial account now!	1	1	2015-08-19 14:49:54.938535	2015-08-20 12:32:51.097023	t	f	25
 267	Bulletproof contracts, simple e-signing, integrated escrow for freelancers | Bonsai	https://www.hellobonsai.com/	hellobonsai.com	{saas}		Bonsai provides bulletproof freelance work contract templates, simple e-signing, and payment escrow for creative freelancers like designers and developers.	1	1	2015-08-20 12:33:40.854563	2015-08-20 13:18:44.028525	t	f	1
 268	Narcolepsy medication modafinil is world's first safe 'smart drug' | Science | The Guardian	http://www.theguardian.com/science/2015/aug/20/narcolepsy-medication-modafinil-worlds-first-safe-smart-drug	theguardian.com	{}		Increasingly taken by healthy people to improve focus before exams, after a comprehensive review researchers say modafinil is safe in the short-term	1	1	2015-08-20 18:20:24.402774	2015-08-20 18:20:38.658975	t	t	1
-272	Stin Jee. Eat & Drink For Less!	http://stinjee.com/	stinjee.com	{}	\N	Stin Jee finds the best special deals on food and drink near you.  Just launch the app and you'll see unbeatable specials on food and drink near you.  Tap on the one you like for directions to the store.  When you get there, just show the store manager or	1	1	2015-08-22 10:46:32.017915	2015-08-22 10:46:32.018025	t	f	29
-273	Uz aplikaciju Stin Jee pronađite povoljnu hranu u blizini	http://www.netokracija.com/stin-jee-aplikacija-hrana-102314	netokracija.com	{}	\N	Zar još jedna aplikacija za 'naručivanje hrane'? Pomislila sam to nakon što sam čula za Stin Jee, koji je nakon Italije i Cipra lansiran i u Hrvatskoj.	1	1	2015-08-22 10:59:52.802055	2015-08-22 10:59:52.802133	t	t	29
 269	movieo.me	http://movieo.me	movieo.me	{}		\N	3	3	2015-08-20 18:40:34.010192	2015-08-20 18:40:57.780773	t	f	27
 270	imba.io	http://imba.io/	imba.io	{}		\N	1	1	2015-08-20 18:49:42.902294	2015-08-20 21:09:18.315106	t	f	28
 271	Gigster - Hire a quality developer	https://www.trygigster.com/	trygigster.com	{}			1	1	2015-08-20 21:51:56.932768	2015-08-20 21:52:26.576237	t	f	7
+275	MINDBODY: Online Business Management Software	https://www.mindbodyonline.com/	mindbodyonline.com	{}		A world of possibilities, from the world leader in software for class- and appointment-based businesses. See why over 45,000 of them rely on MINDBODY.	1	1	2015-08-24 12:14:05.257291	2015-08-24 12:20:30.304826	t	f	25
+273	Uz aplikaciju Stin Jee pronađite povoljnu hranu u blizini	http://www.netokracija.com/stin-jee-aplikacija-hrana-102314	netokracija.com	{}		Zar još jedna aplikacija za 'naručivanje hrane'? Pomislila sam to nakon što sam čula za Stin Jee, koji je nakon Italije i Cipra lansiran i u Hrvatskoj.	1	1	2015-08-22 10:59:52.802055	2015-08-24 12:20:30.314862	t	t	29
+272	Stin Jee. Eat & Drink For Less!	http://stinjee.com/	stinjee.com	{}		Stin Jee finds the best special deals on food and drink near you.  Just launch the app and you'll see unbeatable specials on food and drink near you.  Tap on the one you like for directions to the store.  When you get there, just show the store manager or	1	1	2015-08-22 10:46:32.017915	2015-08-24 12:20:30.319779	t	f	29
+276	What is the best gym management software to use?	http://www.ideafit.com/answers/what-is-the-best-gym-management-software-to-use?	ideafit.com	{}		I am looking for a new software to use for my fitness center	1	1	2015-08-24 12:18:32.334474	2015-08-24 12:20:30.299112	t	t	25
+274	China shares wipe out 2015 gains as stocks tumble 8.5% - MarketWatch	http://www.marketwatch.com/story/china-shares-wipe-out-2015-gains-as-stocks-tumble-85-2015-08-24?page=2	marketwatch.com	{design}		At the heart of the selloff is the concern that the once-highflying Chinese economy may be slowing down dramatically. Lack of action over the weekend by the central bank triggered fresh selling on Monday.	1	1	2015-08-24 11:13:15.729611	2015-08-24 12:20:30.309817	t	t	1
+278	Home - Alma Career	http://www.almacareer.com/	almacareer.com	{}		vlasnik MojPosao.hr i ostalih portala u regiji	1	1	2015-08-24 14:25:52.98572	2015-08-24 14:29:01.443497	t	f	7
 \.
 
 
@@ -722,7 +728,7 @@ COPY links (id, name, url, domain, tags, kind, description, created_by, updated_
 -- Name: links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sbprod
 --
 
-SELECT pg_catalog.setval('links_id_seq', 273, true);
+SELECT pg_catalog.setval('links_id_seq', 278, true);
 
 
 --

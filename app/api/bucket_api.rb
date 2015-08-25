@@ -4,6 +4,15 @@ class BucketApi < LuxApi
     Bucket.select('id,name').can.paginate(50).map(&:attributes)
   end
 
+  def create
+    if exists = Bucket.my.where(name:params[:name]).first
+      @message = "You allready have bucket with that name"
+      return exists
+    end
+
+    super
+  end
+
   def add_bucket
     bucket = Bucket.get params[:id]
     return 'Bucket is allready in collection' if @bucket[:child_buckets].index(bucket.id)
@@ -34,6 +43,7 @@ class BucketApi < LuxApi
       l.bucket_id = @bucket.id
       l.fetch_name
       l.save!
+      l.bucket.touch
       return 'Link in bucket added'
     else
       b = Note.new

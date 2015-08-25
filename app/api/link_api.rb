@@ -9,15 +9,16 @@ class LinkApi < AppApi
       params[:bucket_id] = Bucket.unsorted_bucket.id
     end
 
-    if b = Link.my.where( bucket_id:params[:bucket_id], url:params[:url] ).first
-      @message = 'You allready added this link' 
-      return b
+    if l = Link.my.where( bucket_id:params[:bucket_id], url:params[:url] ).first
+      @message = "You allready added this link in bucket #{l.bucket.name}"
+      return l
     end
 
     bm = Link.new(:url=>params[:url], :name=>params[:name], :description=>params[:description], :tags=>params[:tags], :bucket_id=>params[:bucket_id])
     bm.fetch_name unless bm.name?
     bm.tags = [params[:tag]] if params[:tag]
     bm.save!
+    bm.bucket.touch
     @message = 'Link added'
     bm
   end

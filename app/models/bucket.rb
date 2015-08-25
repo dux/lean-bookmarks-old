@@ -16,7 +16,7 @@ class Bucket < MasterModel
   end
 
   def self.unsorted_bucket
-    unscoped.order('id asc').my.first || create!(name:'General')
+    unscoped.order('id asc').my.first || create!(name:'Various')
   end
 
   def self.can(what=:read)

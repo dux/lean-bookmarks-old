@@ -5,7 +5,7 @@
     %button.btn + add link or note
 
 - else
-  %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.post('buckets/create', { form:this, done:'redirect', confirm:'Sure to create bucket?'}); return false;" }
+  %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.post('buckets/create', { form:this, done:'redirect', confirm:'Sure to create bucket?' }); return false;" }
     %input{ :name=>:name, :style=>"width:200px;" }
     %button.btn+ add bucket
 
