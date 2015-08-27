@@ -28,7 +28,7 @@ module MainHelper
     if User.current
       menu.add '/users/profile', "#{User.current.email.split('@')[0].trim(15)}@ #{svg_ico(:gear)}"
     else
-      menu.add '/login', 'Login or signup'
+      menu.add '/login', 'Login or signup', :onclick=>"ga('send', 'event', 'ab', 'login-action', 'icon');"
     end
 
     menu.active_by_path

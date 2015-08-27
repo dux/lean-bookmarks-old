@@ -69,7 +69,7 @@
           window.history.pushState({ href:href, type:'pushed' }, document.title, href)
 
       # Google Analytics support
-      _gaq.push ['_trackPageview'] if window._gaq
+      ga('send', 'pageview') if window.ga;
 
       opts.func() if opts.func
 
