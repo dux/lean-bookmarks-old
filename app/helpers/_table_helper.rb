@@ -67,7 +67,9 @@ class HtmlTable
       data = opts[:name] || opts[:field].to_s.humanize
       header.push tag.tag :th, data
     end
-    out.push header.join('')
+    out.push %[<thead>#{header.join('')}</thead>]
+
+    out.push '<tbody>'
 
     for data in @list
       @data_row = data
@@ -78,6 +80,7 @@ class HtmlTable
           td_value = opts[:data].call( opts[:field].present? ? data[opts[:field]] : data) 
         elsif opts[:field]
           td_value = data.send(opts[:field])
+          td_value = td_value.name if td_value.respond_to?(:name)
         end
         tag = { style:'' }
         tag[:style] += "; text-align:#{opts[:align]}" if opts[:align]
@@ -91,6 +94,8 @@ class HtmlTable
 
       out.push row_hash.tag(:tr, row.join(''))
     end
+
+    out.push '</tbody>'
 
     out.join("\n")
   end

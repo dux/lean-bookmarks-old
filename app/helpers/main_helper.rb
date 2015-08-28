@@ -6,38 +6,43 @@ module MainHelper
   include SvgIcoModule
 
   def main_menu
-    menu = Menu.new( :default=>!Lux.request.path.index('/users')  )
+    ret = []
+    ret.push li(svg_ico(:home), '/', :style=>"width:50px;", :active=>Proc.new { |path| path == '/' })
 
-    menu.add '/', svg_ico(:home), Proc.new { |path| path == '/' }
     if User.current
-      # menu.add '/', 'Home'
-      menu.add '/buckets', "#{svg_ico(:bucket)} Buckets", '/bucket'
-      menu.add '/links',   "#{svg_ico(:link)} Links", '/link'
-      menu.add '/notes',   "#{svg_ico(:note)} Notes", '/note'
-    else
-
+      ret.push li("#{svg_ico(:bucket)} Buckets", '/bucket')
+      ret.push li("#{svg_ico(:link)} Links", '/link')
+      ret.push li("#{svg_ico(:note)} Notes", '/note')
     end
 
-    menu.active_by_path
-    menu.render_li.sub('>',' style="width:50px;">')
+    ret.join('')
   end
 
   def sub_menu
-    menu = Menu.new
+    ret = []
 
     if User.current
-      menu.add '/users/profile', "#{User.current.email.split('@')[0].trim(15)}@ #{svg_ico(:gear)}"
+      ret.push li("#{User.current.email.split('@')[0].trim(15)}@ #{svg_ico(:gear)}", '/users/profile')
     else
-      menu.add '/login', 'Login or signup', :onclick=>"ga('send', 'event', 'ab', 'login-action', 'icon');"
+      ret.push li('Login or signup', '/login', :onclick=>"ga('send', 'event', 'ab', 'login-action', 'icon');")
     end
 
-    menu.active_by_path
-    menu.render_li
+    ret.join('')
   end
 
   def narrow(width=500)
     data = capture do; yield; end
     %[<div class="row nudge"><div class="col-1"></div><div class="col-1" style="min-width:#{width}px;">#{data}</div><div class="col-1"></div></div>]
+  end
+
+  # li svg_ico(:home), '/', :style=>"width:50px;", :active=>Proc.new { |path| path == '/' })
+  # li 'Links', '/link'
+  def li(name, path, opts={})
+    opts = { active:opts } unless opts.kind_of?(Hash)
+    opts[:active] ||= path
+    opts[:active] = request.path.start_with?(path) if opts[:active].kind_of?(String)
+    opts[:class]='active' if true.resolve?(opts.delete(:active))
+    opts.tag(:li, %[<a href="#{path}">#{name}</a>])
   end
 
   # def export(data)
