@@ -1,5 +1,7 @@
-require './lux_test'
-require './promo_test'
+#/usr/bin/env ruby
+
+require './test/lux_test'
+require './test/promo_test'
 
 LuxTest.new( :url=>'http://localhost:3000' ).run! do
   PromoTest.new( :user=>3 ).run!

@@ -3,7 +3,16 @@
 # ApiTesting.new( :url=>'http://localhost' ).run! do
 #   SessionTest.new( :email=>'jozo@bozo1.com' ).run!
 #   MeetingTest.new( :user=>1 ).run! # put user if 100000 for error
+#
+#   run! do
+#     test 'Varoius' do
+#       exists 'is simple service for organizing', http_get('/')
+#       error 'users/login', :email=>'rejotl@gmail.com', :pass=>'drx'
+#       ok 'users/login', :email=>'rejotl@gmail.com', :pass=>'dr'
+#     end
+#   end
 # end
+
 
 require 'rest_client'
 require 'pp'
@@ -20,6 +29,7 @@ class LuxTest
   def initialize(opts={})
     @@url = opts[:url] || 'http://localhost:3000'
     @@count = 0
+    @@test_count = 0
     @@error_count = 0
     @@time = 0
     self
@@ -31,18 +41,18 @@ class LuxTest
     yield
     time = ((Time.now-time)*1000).round
       
-    print "\n  -\n"
+    print "\n   ---\n"
     
     if @@error_count == 0
-      green "All tests finished in #{time} ms with no errors"
+      green "All #{@@test_count} tests finished in #{time} ms with no errors"
     else
-      red "All tests finished in #{time} ms with #{@@error_count} errors"
+      red "All #{@@test_count} tests finished in #{time} ms with #{@@error_count} errors"
     end
   end
 
   # put test title, extract class name and yiled if block given
   def test(text)
-    print "\n#{@@count += 1}. #{self.class.name.sub(/Test/,'')}: #{text.chomp}".ljust(50).blue
+    puts "\n#{@@count += 1}. #{self.class.name.sub(/Test/,'')}: #{text.chomp}".ljust(40).blue
     begin
       yield if block_given?
     rescue
@@ -63,7 +73,7 @@ class LuxTest
   # execute rails /api calls and return response as Hash
   def api(url, opts={})
     url_base = "#{@@url}/api/#{url}"
-    puts "  API: #{url_base}?" + opts.map{|k,v|"#{k}=#{v}"}.join('&')
+    puts "   API: #{url_base}?" + opts.map{|k,v|"#{k}=#{v}"}.join('&')
     opts[:local_testing] = 1
     time = Time.now
 
@@ -81,13 +91,16 @@ class LuxTest
     end
     data = JSON data
     data['ms'] = ((Time.now - time)*1000).round
+    data.delete 'backtrace'
     data
   end
 
   # excepts api response, exptects response with errors
-  def assert_error(data)
+  def error(api_url, opts={})
+    data = api api_url, opts
+    @@test_count += 1
     if data['error']
-      green "OK [#{data['ms']} ms]: #{data['error']}"
+      green "ERR [#{data['ms']} ms]: #{data['error']}"
       return true
     else
       red "ERROR [#{data['ms']} ms]: #{data}"
@@ -97,18 +110,21 @@ class LuxTest
   end
 
   # excepts api response, exptects valid response
-  def assert_ok(data)
+  def ok(api_url, opts={})
+    data = api api_url, opts
+    @@test_count += 1
     if data['error']
       red "ERROR [#{data['ms']} ms]: #{data.delete('error')}\n  #{data}"
       @@error_count += 1
       return false
     else
-      green "OK [#{data['ms']} ms]: #{data['message']}"
+      green "OK [#{data['ms']} ms]: #{data['message'] || data['data']}"
       return true
     end
   end
 
-  def assert_exists(data, search)
+  def exists(search, data)
+    @@test_count += 1
     if data.index(search)
       green "FOUND: #{search}"  
     else

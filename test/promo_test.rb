@@ -9,13 +9,16 @@ class PromoTest < LuxTest
   def run!
 
     test 'Home page' do
-      data = http_get '/'
-      assert_exists data, 'is simple service for organizing'
+      exists 'is simple service for organizing', http_get('/')
     end
 
     test 'Login page present' do
-      data = http_get '/login'
-      assert_exists data, '/api/users/login'
+      exists '/api/users/login', http_get('/login')
+    end
+
+    test 'User login' do
+      error 'users/login', :email=>'rejotl@gmail.com', :pass=>'drx'
+      ok    'users/login', :email=>'rejotl@gmail.com', :pass=>'dr'
     end
 
   end
