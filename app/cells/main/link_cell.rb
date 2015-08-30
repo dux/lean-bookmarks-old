@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Main::LinkCell < LuxCell
 
   def index
@@ -30,6 +32,8 @@ class Main::LinkCell < LuxCell
   end
 
   def add
+    params[:title] = params[:title].fix
+
     @link = Link.new :url=>params[:url]
     @domain = Domain.get(@link.domain)
     @exists_in = Bucket.where('id in (select bucket_id from links where url=?)', params[:url])

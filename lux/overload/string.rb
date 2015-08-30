@@ -64,6 +64,10 @@ class String
   def wrap(node_name, opts={})
     opts.tag(node_name, self)
   end
+
+  def fix
+    self.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '?')    
+  end
 end
 
 class NilClass
