@@ -44,6 +44,9 @@ def get
   # root
   return resolve_root unless @root
 
+  # add link
+  return Main::LinkCell.render(:add) if @root == :add
+
   # main application routes
   return resolve_part if [:part].index(@root)
 

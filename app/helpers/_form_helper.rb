@@ -43,7 +43,11 @@ module FormHelper
 
     data = ''
 
-    opts[:onsubmit] ||= "Api.post('/api/#{opts.delete('api-action')}', { form:this, done:function(){ #{opts.delete(:done)}; }}); return false;"
+    on_done = opts.delete(:done);
+    on_done = 'Pjax.load(data.path)' if on_done == :redirect
+    on_done = 'Pjax.refresh()' if on_done == :refresh
+
+    opts[:onsubmit] ||= "Api.post('/api/#{opts.delete('api-action')}', { form:this, done:function(data){ #{on_done}; }}); return false;"
     @form = FormTemplate.create(@form_template, @form_object, opts)
     
     # copy some fields for new objects, experimental

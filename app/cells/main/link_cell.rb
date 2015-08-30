@@ -29,4 +29,11 @@ class Main::LinkCell < LuxCell
     @domains = Domain.can.paginate(50)
   end
 
+  def add
+    @link = Link.new :url=>params[:url]
+    @domain = Domain.get(@link.domain)
+    @exists_in = Bucket.where('id in (select bucket_id from links where url=?)', params[:url])
+
+  end
+
 end

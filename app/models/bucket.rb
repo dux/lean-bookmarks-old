@@ -23,6 +23,15 @@ class Bucket < MasterModel
     where(:created_by=>User.current.id)
   end
 
+  def self.as_select
+    ret = []
+    for el in Bucket.select('id, name, (select count(*) from links where bucket_id=buckets.id) as cnt').limit(40)
+      el.cnt = 999 if el.cnt > 999
+      ret.push [el.id, "#{el.name.trim(20)} (#{el.cnt})"]
+    end
+    ret
+  end
+
   def desc
     ret = []
     lcount = links.count

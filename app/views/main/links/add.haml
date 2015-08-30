@@ -1,0 +1,62 @@
+%h1
+  Add new link
+  %small in
+  = input :bucket_id, :collection=>(@bas=Bucket.as_select), :style=>"display:inline;", :onchange=>"$('#bid').val(this.value)"
+
+
+%hr
+
+%br
+%br
+
+.row
+  .col-3
+    - unless @link.id
+      %h4
+        create by tag
+        %small (by using parametars in form)
+
+      = labels Link.my.all_tags, lambda { |el| "javascript:Api.send('links/create', { name:$('#bm_name').val(), description:$('#bm_desc').val(), url:'#{params[:url]}', tag:'#{el}' }, function(){ Pjax.refresh() })" }
+
+      %hr
+
+    - if @links.empty?
+      %p no bookmarks on domain
+    - else
+      %ul.list
+        - for el in @links
+          %li
+            = link_to el.name.trim(100), el.path
+            - if el.description
+              %br
+              %small= el.description
+
+    - unless @exists_in.empty?
+      %hr
+      %h5 Exists in      
+      - for el in @exists_in
+        = render el
+
+  .col-4
+    %h4 create using form
+    - if @domain.description?
+      = @domain.description.chomp.gsub(/\n/,'<br />')
+      %hr
+
+    = form @link, :template=>:hor, :done=>:redirect do
+      = input :name, :id=>'bm_name', :value=>params[:title]
+      = input :bucket_id, :id=>'bid', :value=>@bas[0][0], :as=>:hidden
+      = input :is_article, :as=>:checkbox
+      = input :url
+      = input :tags, :as=>:tag
+      = input :description, :as=>:memo, :id=>'bm_desc', :style=>"height:95px;"
+      = submit @link.id ? 'Update existing' : 'Create link'
+
+    - unless @link.id
+      :coffee
+        Api.silent '/api/links/get_title', { url:'#{params[:url]}' }, (res) ->
+          $('#bm_name').val(res.data.name) unless $('#bm_name').val()
+          $('#bm_desc').val(res.data.description)
+
+
+
