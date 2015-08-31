@@ -1,4 +1,4 @@
-#/usr/bin/env ruby
+#!/usr/bin/env ruby
 
 require './test/lux_test'
 require './test/promo_test'
