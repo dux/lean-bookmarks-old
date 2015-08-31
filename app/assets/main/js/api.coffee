@@ -49,7 +49,7 @@
     $.post method, opts.params, (ret) ->
       Info.auto(ret) unless opts['silent']
 
-      opts['done'](ret) if opts['done'] && ! ret['error']
+      opts.done(ret) if opts.done && ! ret.error
 
       if _disable_button
         _disable_button.html(_disable_button.data('html-data'))
