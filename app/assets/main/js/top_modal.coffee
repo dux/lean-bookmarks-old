@@ -27,8 +27,25 @@ window.TopModal =
     $.get url, (data) ->
       $('#top_modal_data').html(data)
 
+  respond_click: -> alert('TopModal.respond not binded');
+
+  respond_drop:(ev, id) ->
+    link_id = ev.dataTransfer.getData("link_id");
+    TopModal.close()
+    Api.send "links/#{link_id}/move", bucket_id:id
+
   app:
-    select_bucket: (id, no_overlay=false) ->
+    link_bucket_to_bucket: (id, no_overlay=false) ->
+      TopModal.respond_click = App.add_bucket_to_bucket
       TopModal.load 'Select bucket', "/bucket/select?id=#{id}", no_overlay
+
+    select_bucket_for_a_link:(link_id) ->
+      TopModal.respond_click = (bucket_id) ->
+        TopModal.close();
+        Api.post "links/#{link_id}/update", params:{ bucket_id:bucket_id }, done: Pjax.refresh
+
+      TopModal.load 'Select bucket', "/bucket/select?id=0"
+
+
 
 

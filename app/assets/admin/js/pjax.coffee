@@ -2,7 +2,7 @@
   skip_on: [],
   push_state: false,
   load_is_safe: false,
-  refresh: (func) -> Pjax.load(location.pathname+location.search, { func:func })  
+  refresh: (func) -> Pjax.load(location.pathname+location.search, { done:func })  
 
   init: (@full_page=false) ->
     return alert "#full_page ID referece not defined in PJAX!\n\nWrap whole page in one DIV element" unless @full_page
@@ -77,7 +77,12 @@
       # Google Analytics support
       _gaq.push ['_trackPageview'] if window._gaq
 
-      opts.func() if opts.func
+      if opts.func
+        if typeof(opts.func) == 'function'
+          opts.func() 
+        else
+          alert('Pjax.load func: is not a func');
+          console.log(opts.func)
 
       window.scrollTo(0, 0)
 

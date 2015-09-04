@@ -68,7 +68,7 @@ Popup.go =
     Api.send "#{url}/toggle_tag", { tag:tag_name }, ->
       App.reload_container '#tags_list'
 
-window.App =
+@App =
   reload_container: (id) ->
     el = $(id)
     url = el.attr('data-url')
@@ -81,17 +81,10 @@ window.App =
     Api.send 'links/create', form, -> Pjax.load('/links')
     return false
 
-
-  add_bucket_to_bucket: (parent_id, child_id) ->
+  add_bucket_to_bucket: (child_id, parent_id) ->
     TopModal.close()
     Api.send "buckets/#{parent_id}/add_bucket?id=#{child_id}", Pjax.refresh
-
 
   link_drag:(ev, id) ->
     ev.dataTransfer.setData("link_id", id);
     TopModal.app.select_bucket(0, 'no_overlay')
-
-  link_drop:(ev, id) ->
-    link_id = ev.dataTransfer.getData("link_id");
-    TopModal.close()
-    Api.send "links/#{link_id}/move", bucket_id:id

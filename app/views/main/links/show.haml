@@ -12,6 +12,7 @@
     %a{ :href=>"/domain/#{@link.domain}" }= @link.domain
     in
     = @link.bucket.as_link
+    %button.btn.btn-sm{ :onclick=>"TopModal.app.select_bucket_for_a_link(#{@link.id})", :title=>'Switch to another bucket' } &uarr;
   
   %hr
 
@@ -20,11 +21,8 @@
 .row
   .col-1
     %a{ :href=>@link.url }= image_tag @link.thumbnail, :style=>"max-width:100%; border:1px solid #ccc;"
+
   .col-1
-    = input :asda, :collection=>Bucket.can, :value=>@link.bucket_id, :onchange=>"Api.send('links/#{@link.id}/update', { bucket_id:this.value })", :style=>"display:inline;"
-    %a.btn.btn-empty.btn-sm{ :href=>@link.bucket.path } &rarr;
-    %br
-    %br
     = render 'main/_tags', :object=>@link
 
     #link_desc

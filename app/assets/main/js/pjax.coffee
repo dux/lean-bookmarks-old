@@ -71,7 +71,7 @@
       # Google Analytics support
       ga('send', 'pageview') if window.ga;
 
-      opts.func() if opts.func
+      opts.done() if opts.done
 
       # window.scrollTo(0, 0)
 

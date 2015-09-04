@@ -21,7 +21,7 @@
   %br
   %br
 
-%a.bucket.default{ :onclick=>"TopModal.app.select_bucket(#{@bucket.id})", :style=>"height:15px; text-decoration:none; font-weight:bold;" } + Add linked bucket
+%a.bucket.default{ :onclick=>"TopModal.app.link_bucket_to_bucket(#{@bucket.id})", :style=>"height:15px; text-decoration:none; font-weight:bold;" } + Add linked bucket
 
 - for el in @buckets
   %a.bucket.default{ :style=>"height:15px; text-decoration:none;", :href=>el.path }= el.name.trim(30)
