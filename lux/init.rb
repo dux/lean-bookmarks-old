@@ -5,6 +5,8 @@
   @module_error = []
       
   def lux_smart_require(name)
+    return if name.index('/!')
+
     file = "#{name}.rb"
     $LIVE_REQUIRE[file] = File.mtime(file).to_i
     # puts file.red
@@ -37,7 +39,7 @@
   lux_load_lib './lux/modules/*'
   lux_load_lib './lux/overload/*'
   lux_load_lib './app/*'
-  lux_load_lib './config/*'
+  lux_load_lib './config/*.rb'
 
   @module_error.map { |lib| require lib } 
   @module_error = nil

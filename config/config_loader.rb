@@ -1,4 +1,3 @@
-# 
 db_config = YAML.load_file('./scripts/rails/config/database.yml')
 
 if Lux.dev?

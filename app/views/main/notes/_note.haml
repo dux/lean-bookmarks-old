@@ -4,4 +4,4 @@
     - unless @bucket
       %h5 in #{@note.bucket.as_link}
 
-    .w.markdown.small= @note.data.to_s.trim(350)
+    .w.markdown.small{ :style=>"font-size:90%;" }= @note.data.to_s.trim(330)

@@ -35,14 +35,6 @@ post '*' do
 end
 
 after do
-  if Lux.dev?
-    Object.send(:remove_const, :LuxHelper)
-    Object.send(:remove_const, :RailsHelper)
-
-    load './lux/modules/lux_helper.rb' 
-    load './lux/modules/rails_helper.rb' 
-  end
-
   puts "- #{Lux.request.path} rendered in #{((Time.now-@page_render_start)*1000).to_i} ms".yellow
 
   test_body = response.body.kind_of?(Array) && !response.body[1] ? response.body[0] : response.body

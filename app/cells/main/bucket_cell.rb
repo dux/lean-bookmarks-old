@@ -53,7 +53,7 @@ class Main::BucketCell < LuxCell
 
   def select
     @template = false
-    @buckets = Bucket.select('id,name').can.where('id<>?', params[:id]).paginate(20)
+    @buckets = Bucket.select('id,name').can.where('id<>?', params[:id]).paginate(40)
   end
 
 end

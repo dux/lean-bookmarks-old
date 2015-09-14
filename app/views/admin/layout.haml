@@ -41,12 +41,13 @@
             %h5 Admin objects
 
             %ul.nav.nav-pills.nav-stacked
+              - @path = request.path.split('/')[2].singularize.pluralize
               - for el in AdminCell.admin_on
                 - if el.kind_of?(String)
                   %li
                     %h5= el
                 - else
-                  %li{ :class=>el.to_s == params[:model] ? :active : nil }
+                  %li{ :class=>el.to_s == @path ? :active : nil }
                     %a{ href: "/admin/#{el}" }
                       = el.to_s.humanize
                       %span.badge.pull-right= el.to_s.classify.constantize.count

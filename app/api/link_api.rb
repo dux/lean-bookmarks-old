@@ -36,4 +36,8 @@ class LinkApi < AppApi
     %[Link moved from bucket "#{old_bucket_name}" to bucket "#{@link.bucket.name}"]
   end
 
+  def index2
+    Link.all
+  end
+
 end
