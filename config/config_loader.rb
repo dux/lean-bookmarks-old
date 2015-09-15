@@ -1,4 +1,4 @@
-db_config = YAML.load_file('./scripts/rails/config/database.yml')
+db_config = YAML.load_file('./config/database.yml')
 
 if Lux.dev?
   ENV['COFFEE_PATH'] = '/usr/local/bin/coffee'

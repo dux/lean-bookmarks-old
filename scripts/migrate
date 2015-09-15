@@ -78,21 +78,19 @@ class AutoMigrate
         next
       end
 
-      current = obj.columns_hash[field.to_s]
-      current_type = current.cast_type.type
+      if current = obj.columns_hash[field.to_s]
+        current_type = current.cast_type.type
 
-      is_change = false
-      is_change = true if current_type != type
-      is_change = true if current_type == :string && ((current.limit || 255).to_i != opts[:limit] || current.null != opts[:null])
-      is_change = true if current.array != opts[:array]
+        is_change = false
+        is_change = true if current_type != type
+        is_change = true if current_type == :string && ((current.limit || 255).to_i != opts[:limit] || current.null != opts[:null])
+        is_change = true if current.array != opts[:array]
 
-      if is_change
-        puts "#{field} limit:#{current.limit || 255} != #{opts[:limit]}, null:#{current.null} != #{opts[:null]}, array:#{current.array} != #{opts[:array]}"
-        ActiveRecord::Migration.change_column  @table_name, field, type, opts
+        if is_change
+          puts "#{field} limit:#{current.limit || 255} != #{opts[:limit]}, null:#{current.null} != #{opts[:null]}, array:#{current.array} != #{opts[:array]}"
+          ActiveRecord::Migration.change_column  @table_name, field, type, opts
+        end
       end
-
-      # process changed columns
-      # changed = opts[1].diff()
     end
 
   end
