@@ -1,11 +1,128 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 
-# cp config/database.yml scripts/rails/config/database.yml
-# cp config/schema.rb scripts/rails/db/schema.rb
+require 'colorize'
+require 'ap'
+require 'rubygems'
+require 'bundler'
 
-cd scripts/rails && rake db:auto:migrate && cd ../..
+Bundler.require
 
-# rm -fr scripts/auto_migrate
-# rm scripts/rails/config/database.yml
-# rm scripts/rails/db/schema.rb
+require './lux/init'
 
+class AutoMigrate
+  attr_accessor :fields
+
+  def initialize(table_name)
+    @table_name = table_name
+    @fields = {}
+  end
+
+  def self.table(table_name)
+    unless ActiveRecord::Base.connection.table_exists?(table_name.to_s)
+      # ActiveRecord::Migration.drop_table table_name
+      ActiveRecord::Base.connection.create_table(table_name)
+    end
+
+    t = new(table_name)
+    yield(t)
+    t.fix_fields
+    t.update
+  end
+
+  def self.migrate(&block)
+    instance_eval(&block)
+  end
+
+  def fix_fields
+    for field, vals in @fields
+      type = vals[0]
+      opts = vals[1]
+
+      if type == :string
+        opts[:limit] ||= 255 
+      end
+
+      if type == :boolean
+        opts[:default] ||= false
+      end
+
+      opts[:null] = true unless opts[:null].class.name == 'FalseClass'
+      opts[:array] ||= false
+      opts[:default] = [] if opts[:array]
+    end    
+  end
+
+  def update
+    begin
+      obj = @table_name.to_s.classify.constantize
+      o = obj.new
+    rescue 
+      puts "Object #{@table_name.to_s.classify.red} does not exist, yet table #{@table_name.to_s.red} exists!" 
+      return
+    end
+
+    # remove extra fields
+    existing_fields = o.attributes.keys - ['id']
+    for field in (existing_fields - @fields.keys.map(&:to_s))
+      ActiveRecord::Migration.remove_column @table_name, field
+    end
+    
+    for field, opts_in in @fields
+
+      type = opts_in[0]
+      opts = opts_in[1]
+      
+      # create missing columns
+      unless o.respond_to?(field) 
+        ActiveRecord::Migration.add_column @table_name, field, type, opts
+        next
+      end
+
+      if current = obj.columns_hash[field.to_s]
+        current_type = current.cast_type.type
+
+        is_change = false
+        is_change = true if current_type != type
+        is_change = true if current_type == :string && ((current.limit || 255).to_i != opts[:limit] || current.null != opts[:null])
+        is_change = true if current.array != opts[:array]
+
+        if is_change
+          puts "#{field} limit:#{current.limit || 255} != #{opts[:limit]}, null:#{current.null} != #{opts[:null]}, array:#{current.array} != #{opts[:array]}"
+          ActiveRecord::Migration.change_column  @table_name, field, type, opts
+        end
+      end
+    end
+
+  end
+
+  def rename(field_old, field_new)
+    existing_fields = @table_name.to_s.classify.constantize.new.attributes.keys.map(&:to_sym)
+    if existing_fields.index(field_old) && ! existing_fields.index(field_new)
+      ActiveRecord::Migration.rename_column(@table_name, field_old, field_new)
+    end
+  end
+
+  def method_missing(type, *args)
+    name = args[0]
+    opts = args[1] || {}
+    if [:string, :integer, :text, :boolean, :datetime].index(type)
+      @fields[name] = [type, opts]
+    elsif type == :timestamps
+      @fields[:created_at] = [:datetime, opts]
+      @fields[:created_by] = [:integer, opts]
+      @fields[:updated_at] = [:datetime, opts]
+      @fields[:updated_by] = [:integer, opts]
+    elsif type == :polymorphic
+      @fields["#{name}_id".to_sym]   = [:integer, opts]
+      @fields["#{name}_type".to_sym] = [:string, opts.merge(:limit=>100)]
+    else
+      puts "Unknown #{type.to_s.red}"
+    end
+  end
+end
+
+# ActiveRecord::Migration.drop_table :domains
+
+require './config/!schema.rb'
+
+exit

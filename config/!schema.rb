@@ -1,13 +1,11 @@
 # t.rename :old_field_name, :new_field_name
 # t.timestamps
 # t.polymorphic :grp
-# rest same as all others
+# rest same as rails schema
 
 AutoMigrate.migrate do
 
   table :buckets do |t|
-    t.rename :image2, :image3
-
     t.string   "name",          null: false
     t.text     "description"
     t.boolean  "active",        default: true
@@ -15,7 +13,6 @@ AutoMigrate.migrate do
     t.integer  "child_buckets", array: true
     t.string   "template"
     t.string   "image"
-    t.string   "image3"
     t.timestamps
   end
 
