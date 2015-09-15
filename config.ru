@@ -1,6 +1,6 @@
 # allways use C ver of JSON
-require 'json/ext'
-JSON.freeze
+# require 'json/ext'
+# JSON.freeze
 
 require 'rubygems'
 require 'bundler'

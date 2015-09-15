@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# http://exposinggotchas.blogspot.de/2011/02/activerecord-migrations-without-rails.html
+
 require 'colorize'
 require 'ap'
 require 'rubygems'
