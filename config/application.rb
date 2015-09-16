@@ -49,3 +49,4 @@ after do
   end
 end
 
+lux_smart_require './config/config_loader'

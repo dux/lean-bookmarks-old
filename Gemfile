@@ -7,7 +7,7 @@ gem 'rack'#, '1.6.4'
 gem 'therubyracer', :platforms => :ruby
 gem 'pg'
 gem 'sinatra'
-gem "sinatra-contrib"
+gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
 gem 'mail'
 gem 'json'

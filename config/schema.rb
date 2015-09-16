@@ -1,9 +1,18 @@
 # t.rename :old_field_name, :new_field_name
 # t.timestamps
 # t.polymorphic :grp
+# t.add_index :created_by
 # rest same as rails schema
 
 AutoMigrate.migrate do
+
+  table :logs do |t|
+    t.string   "kind"
+    t.string   "name"
+    t.integer  "created_by"
+    t.datetime "created_at"
+    t.polymorphic :grp
+  end
 
   table :buckets do |t|
     t.string   "name",          null: false
@@ -14,6 +23,8 @@ AutoMigrate.migrate do
     t.string   "template"
     t.string   "image"
     t.timestamps
+
+    t.add_index :created_by
   end
 
   table :links do |t|
@@ -23,25 +34,19 @@ AutoMigrate.migrate do
     t.string   "tags",       array: true
     t.string   "kind"
     t.string   "description"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "active",     default: true
     t.boolean  "is_article", default: false
     t.integer  "bucket_id",  null: false
+    t.timestamps
   end
 
   table :notes do |t|
     t.string   "name",        null: false
     t.text     "data"
-    t.datetime "created_at",  null: false
-    t.integer  "created_by",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "updated_by",  null: false
     t.integer  "bucket_id",   null: false
     t.boolean  "active",      default: true
     t.string   "tags",        array: true
+    t.timestamps
   end
 
   # table :comments do |t|
@@ -56,20 +61,9 @@ AutoMigrate.migrate do
 
   table :domains do |t|
     t.string   "name",        null: false
-    t.datetime "created_at",  null: false
-    t.integer  "created_by",  null: false
-    t.datetime "updated_at",  null: false
     t.text     "description"
     t.boolean  "is_article"
-  end
-
-  table :logs do |t|
-    t.string   "kind"
-    t.string   "name"
-    t.integer  "created_by"
-    t.datetime "created_at"
-    t.integer  "grp_id",     index:true
-    t.string   "grp_type",   index:true
+    t.timestamps
   end
 
   table :users do |t|

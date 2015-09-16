@@ -39,7 +39,10 @@
   lux_load_lib './lux/modules/*'
   lux_load_lib './lux/overload/*'
   lux_load_lib './app/*'
-  lux_load_lib './config/*.rb'
+  
+  lux_smart_require './config/application'
+
+  # lux_load_lib './config/*.rb'
 
   @module_error.map { |lib| require lib } 
   @module_error = nil

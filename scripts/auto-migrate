@@ -1,15 +1,20 @@
 #!/usr/bin/env ruby
 
-# http://exposinggotchas.blogspot.de/2011/02/activerecord-migrations-without-rails.html
-
-require 'colorize'
 require 'ap'
-require 'rubygems'
-require 'bundler'
+require 'yaml'
+require 'active_support'
+require 'active_record'
+require 'colorize'
 
-Bundler.require
+# require 'rubygems'
+# require 'bundler'
+# Bundler.require
+# require './lux/init'
 
-require './lux/init'
+db_config = YAML.load_file('./config/database.yml')[ENV['RACK_ENV'] || 'development']
+
+ActiveRecord::Base.establish_connection(db_config)
+ActiveRecord::Base.connection.create_database(db_config['database']) rescue true
 
 class AutoMigrate
   attr_accessor :fields
@@ -20,6 +25,9 @@ class AutoMigrate
   end
 
   def self.table(table_name)
+    klass = table_name.to_s.classify
+    Object.class_eval "class #{klass} < ActiveRecord::Base; end" unless Object.const_defined?(klass)
+
     unless ActiveRecord::Base.connection.table_exists?(table_name.to_s)
       # ActiveRecord::Migration.drop_table table_name
       ActiveRecord::Base.connection.create_table(table_name)
@@ -68,6 +76,8 @@ class AutoMigrate
     for field in (existing_fields - @fields.keys.map(&:to_s))
       ActiveRecord::Migration.remove_column @table_name, field
     end
+
+    puts "Table #{@table_name.to_s.yellow}, #{@fields.keys.length} fields"
     
     for field, opts_in in @fields
 
@@ -93,8 +103,15 @@ class AutoMigrate
           ActiveRecord::Migration.change_column  @table_name, field, type, opts
         end
       end
+
+      add_index(field, opts[:index])  if opts[:index]
     end
 
+  end
+
+  def add_index(field, index=nil)
+    field = [field, index.to_sym] if index && !index.kind_of?(TrueClass)
+    ActiveRecord::Migration.add_index(@table_name, field) unless ActiveRecord::Migration.index_exists?(@table_name, field)
   end
 
   def rename(field_old, field_new)
@@ -107,16 +124,18 @@ class AutoMigrate
   def method_missing(type, *args)
     name = args[0]
     opts = args[1] || {}
+    # puts "#{@table_name} - #{type} - #{args[0]}"
     if [:string, :integer, :text, :boolean, :datetime].index(type)
       @fields[name] = [type, opts]
     elsif type == :timestamps
+      opts[:null] ||= false 
       @fields[:created_at] = [:datetime, opts]
       @fields[:created_by] = [:integer, opts]
       @fields[:updated_at] = [:datetime, opts]
       @fields[:updated_by] = [:integer, opts]
     elsif type == :polymorphic
       @fields["#{name}_id".to_sym]   = [:integer, opts]
-      @fields["#{name}_type".to_sym] = [:string, opts.merge(:limit=>100)]
+      @fields["#{name}_type".to_sym] = [:string, opts.merge(:limit=>100, :index=>"#{name}_id")]
     else
       puts "Unknown #{type.to_s.red}"
     end
@@ -125,6 +144,5 @@ end
 
 # ActiveRecord::Migration.drop_table :domains
 
-require './config/!schema.rb'
+require './config/schema.rb'
 
-exit
