@@ -19,7 +19,7 @@
 #   ret.push User.request.path
 #   key = "#{name}-"+Crypt.md5(ret.join('-'))
 
-#   data = App.no_cache ? nil : Cache.read(key)
+#   data = App.no_cache? ? nil : Cache.read(key)
 #   return concat(data) if data
 #   data = capture { block.call(true) } || ' '
 #   Cache.write(key, data)
@@ -56,7 +56,7 @@ class Cache
     end
 
     def fetch(key, ttl=nil)
-      exec.delete key if Lux.no_cache
+      exec.delete key if Page.no_cache?
       exec.fetch key, ttl do
         yield
       end

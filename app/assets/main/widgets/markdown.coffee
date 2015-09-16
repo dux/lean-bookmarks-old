@@ -4,5 +4,9 @@ Widget.register 'markdown',
 
     return '' unless /\w/.test(@root.innerHTML)
 
-    @root.innerHTML = marked @root.innerHTML
+    data = marked @root.innerHTML
+    data = data.replace(/\[\]/g, '<input type="checkbox" onclick="return false;" />')
+    data = data.replace(/\[x\]/g, '<input type="checkbox" checked="" onclick="return false;" />')
+
+    @root.innerHTML = data
 

@@ -10,7 +10,7 @@
           %br
           &nbsp;
           %br
-          %a{ :href=>Lux.host }= image_tag "#{Lux.host}/favicon.ico", :width=>60, :height=>60
+          %a{ :href=>Page.host }= image_tag "#{Page.host}/favicon.ico", :width=>60, :height=>60
           %br
           %br
         %td
@@ -20,13 +20,13 @@
           #content{ :style=>"padding:20px 20px 20px; background-color:#fff; border:1px solid #ddd; border-radius:5px; min-height:500px; max-width:600px; font-size:11pt;"  }
             %h2{ :style=>"text-align:center;" }= App.name
             %br
-            = yield.gsub(/\shref="\//,%[ href="#{Lux.host}/]).gsub(/\ssrc="\//,%[ src="#{Lux.host}/]).html_safe
+            = yield.gsub(/\shref="\//,%[ href="#{Page.host}/]).gsub(/\ssrc="\//,%[ src="#{Page.host}/]).html_safe
         %td
       %tr
         %td
         %td{ :style=>"color:#aaa; text-align:right;"}
           %br
-          = link_to 'Unsubscribe', "#{Lux.host}/action/unsubscribe?data=#{Crypt.encrypt(@to)}", :style=>"color:#aaa;"
+          = link_to 'Unsubscribe', "#{Page.host}/action/unsubscribe?data=#{Crypt.encrypt(@to)}", :style=>"color:#aaa;"
           %br
           %br
           %br

@@ -12,7 +12,7 @@ class Main::ActionCell < LuxCell
     begin
       new.send(action_name)
     rescue
-      Lux.status :error, "Action <b>#{action_name}</b>: #{$!.message}"
+      Page.status :error, "Action <b>#{action_name}</b>: #{$!.message}"
     end
   end
   
@@ -23,9 +23,9 @@ class Main::ActionCell < LuxCell
 
     # do shit
 
-    # Lux.flash :info, 'All ok'
-    # Lux.redirect_to('/login')
-    # Lux.sinatra.redirect('/login')
+    # Page.flash :info, 'All ok'
+    # Page.redirect_to('/login')
+    # Page.sinatra.redirect('/login')
   end
 
   def unsubscribe

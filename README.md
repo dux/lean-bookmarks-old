@@ -25,7 +25,7 @@ Here is example that
         # application routes
         case @root_part.singularize.to_sym
           when :test
-            Lux.flash :info, 'all ok'
+            Page.flash :info, 'all ok'
             return redirect '/'
           when :user
             return Main::UserCell.resolve(@path)
@@ -34,11 +34,11 @@ Here is example that
           when :grid
             return Template.part('grid')
           else
-            Lux.status :not_found, "Unknown route for path /#{@root_part}"
+            Page.status :not_found, "Unknown route for path /#{@root_part}"
         end
 
         # debug routes
-        if Lux.dev?
+        if Page.dev?
           case @root_part.singularize.to_sym
             when :lux
               return LuxRenderCell.dev_row(*@path)
@@ -47,7 +47,7 @@ Here is example that
           end
         end
 
-        Lux.status :not_found, "Page not found not route /#{@root_part}"
+        Page.status :not_found, "Page not found not route /#{@root_part}"
       end
 
       post '/api/*' do
@@ -55,7 +55,7 @@ Here is example that
       end
 
       post '*' do
-        Lux.status :forbiden, 'Request not allowed'
+        Page.status :forbiden, 'Request not allowed'
       end
 
 ## LuxCell
@@ -217,12 +217,12 @@ No need for mail cachers here.
       after do
         @subject = "[For: #{@to}] #{@subject}"
         @to = 'reic.dino@gmail.com'
-      end if Lux.dev?
+      end if Page.dev?
 
       def confirm_email(email)
         @subject = 'Wellcom to Lux!'
         @to = email
-        @link = "#{Lux.host}/action/confirm_email?data=#{Crypt.encrypt(@to)}"
+        @link = "#{Page.host}/action/confirm_email?data=#{Crypt.encrypt(@to)}"
       end
 
       def self.confirm_email_preview

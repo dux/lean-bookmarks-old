@@ -57,7 +57,7 @@
             %a.title{href: '/admin' } #{App.name} admin
             - if current_user
               = # input 'lang', :as=>:select, :collection=>App.langs, :onchange=>"Pjax.load('?lang='+this.value)", :class=>'form-control', :value=>session[:lang]
-              = I18n.available_locales.map{ |el| %[<a class="btn btn-xs btn-#{Lux.session[:locale].to_s == el.to_s ? 'info' : 'default'}" href="?locale=#{el}">#{el}</a>] }.join(' ').html_safe
+              = I18n.available_locales.map{ |el| %[<a class="btn btn-xs btn-#{Page.session[:locale].to_s == el.to_s ? 'info' : 'default'}" href="?locale=#{el}">#{el}</a>] }.join(' ').html_safe
 
           %div{ :style=>'padding-left:20px; min-height:500px;' }
             = yield

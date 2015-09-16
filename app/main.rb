@@ -4,7 +4,7 @@ require './lux/init'
 
 before do
   # for testing
-  session[:u_id] = params[:usrid].to_i if Lux.dev? && params[:usrid]
+  session[:u_id] = params[:usrid].to_i if Page.dev? && params[:usrid]
 
   headers({ 'X-Frame-Options'=>'ALLOWALL' })
 
@@ -33,25 +33,26 @@ end
 
 def get
   # debug development routes
-  if Lux.dev?
+  if Page.dev?
     for el in [ [:lux, LuxRenderCell], [:api, LuxApi] ]
       return el[1].resolve(@path) if @root == el[0]
     end
   end
   
-  # return ENV.to_json if @root == :env
-
   # root
   return resolve_root unless @root
+
+   # guest routes
+  unless User.current
+    return resolve_promo_app if [:set_password, :login, :css].index(@root)
+    return PromoCell.render(:login)
+  end
 
   # add link
   return Main::LinkCell.render(:add) if @root == :add
 
   # main application routes
   return resolve_part if [:part].index(@root)
-
-  # guest routes
-  return resolve_promo_app if [:set_password, :login, :css].index(@root)
 
   @root = @root.to_s.singularize.to_sym
   # main application routes
@@ -69,7 +70,7 @@ end
 def post
   return LuxApi.resolve(@path) if @root == :api
 
-  Lux.forbiden('POST request is not allowed in this route')
+  Page.forbiden('POST request is not allowed in this route')
 end
 
 ### Resolvers
@@ -81,10 +82,10 @@ def resolve_admin_app
 end
 
 def resolve_main_app
-  # return Lux.status :forbiden, 'Only for registred users' unless User.current
+  # return Page.status :forbiden, 'Only for registred users' unless User.current
   return Error.unauthorized unless User.current
 
-  Lux.locals[:class] = @root.to_s.pluralize
+  Page.locals[:class] = @root.to_s.pluralize
   
   return Main::StaticCell.resolve(@root) if [:search].index(@root)
 
@@ -93,7 +94,7 @@ end
 
 def resolve_promo_app
   if User.current
-    Lux.flash :info, 'Only for guests'
+    Page.flash :info, 'Only for guests'
     return redirect '/buckets'
   else
     return PromoCell.resolve(@root)

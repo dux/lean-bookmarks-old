@@ -1,13 +1,19 @@
-class Lux
+class Page
   @@irregulars = {}
 
   def self.try(name)
     begin
       yield
     rescue
-      Lux.report_error_html($!, name)
+      Page.report_error_html($!, name)
     end
   end  
+
+  def self.report_error_html(o, name=nil)
+    trace = o.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] }.map{ |el| "- #{el}" }.join("\n")
+    msg   = o.message.gsub('","',%[",\n "])
+    return %[<pre style="color:red; background:#eee; padding:10px; font-family:'Lucida Console'; line-height:14pt; font-size:10pt;">#{name || 'Undefined name'}\nError: #{msg}\n#{trace}</pre>]
+  end
 
   def self.once(name, &block)
     Thread.current[:lux][:_once_hash] ||= {}
@@ -18,17 +24,10 @@ class Lux
   end
 
   def self.root
-    __FILE__.sub('/lux/modules/lux.rb','')
-  end
-
-  def self.report_error_html(o, name=nil)
-    trace = o.backtrace.select{ |el| el.index('/app/') }.map{ |el| el.split('/app/', 2)[1] }.map{ |el| "- #{el}" }.join("\n")
-    msg   = o.message.gsub('","',%[",\n "])
-    return %[<pre style="color:red; background:#eee; padding:10px; font-family:'Lucida Console'; line-height:14pt; font-size:10pt;">#{name || 'Undefined name'}\nError: #{msg}\n#{trace}</pre>]
+    __FILE__.sub('/lux/modules/page.rb','')
   end
 
   def self.dev?
-    # Lux.sinatra.request.ip == '127.0.0.1' ? true : false
     !prod?
   end
 
@@ -97,12 +96,11 @@ class Lux
     Thread.current[:lux][:sinatra].request.session
   end
 
-  def self.no_cache
-    Lux.sinatra.request.env['HTTP_CACHE_CONTROL'] == 'no-cache' ? true : false
+  def self.no_cache?
+    Page.sinatra.request.env['HTTP_CACHE_CONTROL'] == 'no-cache' ? true : false
   end
 
-  def body(data)
-    return if Thread.current[:lux][:body]
+  def body=(data)
     Thread.current[:lux][:body] = data
   end
 

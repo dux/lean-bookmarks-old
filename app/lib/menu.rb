@@ -17,7 +17,7 @@ class Menu
   end
 
   def active_by_path
-    path = Lux.request.path
+    path = Page.request.path
     for el in @menu
       break if @we_have_active
       if el[:check]

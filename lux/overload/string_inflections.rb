@@ -1,6 +1,6 @@
 class String
   def pluralize
-    Lux.irregulars[self] || self+'s'
+    Page.irregulars[self] || self+'s'
   end
 end
 
@@ -16,10 +16,9 @@ class Fixnum
   end
 end
 
-Lux.irregular 'bonus', 'bonuses'
-Lux.irregular 'clothing', 'clothes'
-Lux.irregular 'country', 'countries'
-
+Page.irregular 'bonus', 'bonuses'
+Page.irregular 'clothing', 'clothes'
+Page.irregular 'country', 'countries'
 
 # https://github.com/datamapper/extlib/blob/master/lib/extlib/inflection.rb
 

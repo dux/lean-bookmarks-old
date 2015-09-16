@@ -1,8 +1,9 @@
-%form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.send('notes/create', this, function(data){ Pjax.load(data.path+'/edit') }); return false;" }
-  %input{ :name=>:name }
-  %button.btn + add note
+- unless @note
+  %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.send('notes/create', this, function(data){ Pjax.load(data.path+'/edit') }); return false;" }
+    %input{ :name=>:name }
+    %button.btn + add note
 
-.top-menu
-  %a.btn.btn-sm.btn-empty{ :href=>'/notes/archive' } archive
-  %a.btn.btn-sm.btn-empty{ :href=>'/links?t=doc  ' } document links
+  .top-menu
+    %a.btn.btn-sm.btn-empty{ :href=>'/notes/archive' } archive
+    %a.btn.btn-sm.btn-empty{ :href=>'/links?t=doc  ' } document links
 

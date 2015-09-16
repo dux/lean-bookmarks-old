@@ -1,7 +1,7 @@
 class Main::BucketCell < LuxCell
 
   def index
-    @buckets = Bucket.can.tagged_with(Lux.params[:suffix]).paginate(20)
+    @buckets = Bucket.can.tagged_with(Page.params[:suffix]).paginate(20)
 
     unless @buckets[0]
       @buckets.push Bucket.create :name=>'Various'
@@ -10,6 +10,7 @@ class Main::BucketCell < LuxCell
 
   def show(id)
     @bucket = Bucket.get(id)
+
     @top_info = 'Bucket is archived and is not active' unless @bucket.active
 
     @notes = params[:page].to_i < 2 ? @bucket.notes.limit(50).to_a : []

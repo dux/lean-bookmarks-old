@@ -5,7 +5,7 @@ class Mailer < LuxMailer
   end
 
   after do
-    if Lux.dev? && @to != 'rejotl@gmail.com'
+    if Page.dev? && @to != 'rejotl@gmail.com'
       @subject = "[For: #{@to}] #{@subject}"
       @to = 'rejotl@gmail.com'
     end
@@ -14,7 +14,7 @@ class Mailer < LuxMailer
   def confirm_email(email)
     @subject = 'Wellcom to Lux!'
     @to = email
-    @link = "#{Lux.host}/users/profile?user_hash=#{Crypt.encrypt(@to)}"
+    @link = "#{Page.host}/users/profile?user_hash=#{Crypt.encrypt(@to)}"
   end
 
   def self.confirm_email_preview

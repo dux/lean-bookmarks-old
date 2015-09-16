@@ -47,7 +47,7 @@ module MainHelper
 
   # def export(data)
   #   ret = []
-  #   # id = Lux.uid
+  #   # id = Page.uid
   #   # ret.push %[<script type="template/json" id="#{id}">#{data.to_json.sub(/^\s+/,'')}</script>]
   #   # ret.push %[<script>if (window.data === undefined) { window.data = {}; }
   #   #    window.data.#{name} = JSON.parse(document.getElementById('#{id}').innerHTML);

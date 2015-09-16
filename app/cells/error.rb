@@ -10,7 +10,7 @@ class Error
     end
 
     def render(code, name, desc)
-      Lux.sinatra.status code
+      Page.sinatra.status code
       Template.part('error', { :@short=>'Unauthorized', :@code=>code, :@descripton=>desc })
     end
 
@@ -30,7 +30,7 @@ class Error
     end
 
     def server(desc=nil)
-      Lux.sinatra.status 500
+      Page.sinatra.status 500
       data = "Server error (500)\n\n#{desc}"
       return %[<html><head><title>Server error (500)</title></head><body style="background:#fdd;"><pre style="color:red; padding:10px; font-size:14pt;">#{data}</pre></body></html>]
     end

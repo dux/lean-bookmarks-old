@@ -34,6 +34,10 @@
   &.note {
     border-top:2px solid #F7CA0F;
     background-color: #FCF8EC;
+    overflow: hidden;
+    p { margin-bottom: 20px; }
+    ul { margin-bottom: 20px; }
+    ul li { padding-bottom: 3px !important; }
   }
   &.default {
     padding:10px;

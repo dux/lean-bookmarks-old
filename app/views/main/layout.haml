@@ -26,6 +26,16 @@
                 %input{ :name=>:q, :placeholder=>'search...', :value=>params[:q] }
             %ul.pull-right= sub_menu
 
+
+
+        - if @Object
+          .bucket-header
+            .container
+              - if @Object.bucket.image?
+                = image_tag @Object.bucket.image
+              %h3{ :onclick=>"Pjax.load('#{@Object.bucket.path}');" }= @Object.bucket.name
+              %a{ :style=>"position:absolute; margin-top:-10px;", :onclick=>"TopModal.app.select_bucket_for_object('#{@Object.class.name.tableize}', #{@Object.id})", :title=>'Switch to another bucket' } change bucket for #{@Object.class.name.humanize} &uarr;
+
     
       - if @top_info
         .top-info{ :style=>"background-color:#FBB; padding:10px 0; margin-top:-20px; color:#555; margin-bottom:30px;" }
@@ -40,7 +50,7 @@
       .container
         LeanBookmarks.com &bull; @dux &bull; #{DateTime.now.year}
 
-  - unless Lux.dev?
+  - unless Page.dev?
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

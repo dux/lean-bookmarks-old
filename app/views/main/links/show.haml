@@ -10,9 +10,6 @@
     = image_tag @link.ico, :style=>'width:16px; height:16px; margin-top:5px; position:relative; top:4px;'
 
     %a{ :href=>"/domain/#{@link.domain}" }= @link.domain
-    in
-    = @link.bucket.as_link
-    %button.btn.btn-sm{ :onclick=>"TopModal.app.select_bucket_for_a_link(#{@link.id})", :title=>'Switch to another bucket' } &uarr;
   
   %hr
 

@@ -9,7 +9,7 @@ class LuxRenderCell < LuxCell
     return dev_mount_mailer(path[1]) if path.first == 'mailer'
     return dev_mount_debug if path.first == 'debug'
 
-    Lux.status :error, "<b>#{path[0]}</b> is not supported route part for /lux route"
+    Page.status :error, "<b>#{path[0]}</b> is not supported route part for /lux route"
   end
 
   # renders list of emails in /mailer or perticular template in /mailer/[tempplate_name]_preview
@@ -19,7 +19,7 @@ class LuxRenderCell < LuxCell
       method_name = "#{template}_preview"
       # return Mailer.render(method_name) if Mailer.respond_to?(method_name)
 
-      if Lux.sinatra.params['send']
+      if Page.sinatra.params['send']
         Mailer.send(method_name).deliver
         return 'Email sent'
       else
@@ -30,9 +30,9 @@ class LuxRenderCell < LuxCell
       return Error.server("There is no class method >><b>#{method_name}</b><< in Mailer class.\n\nMailer.#{method_name}() failed")
     end
 
-    # if Lux.params[:preview] && Lux.params[:send]
-    #   Mailer.send(Lux.params[:preview])
-    #   Lux.sinatra.redirect Url.current.delete(:send).to_s
+    # if Page.params[:preview] && Page.params[:send]
+    #   Mailer.send(Page.params[:preview])
+    #   Page.sinatra.redirect Url.current.delete(:send).to_s
     # end
 
     im =  Mailer.methods.select{ |el| el.to_s.index('_preview') }.map{ |el| el.to_s.sub('_preview','') } 

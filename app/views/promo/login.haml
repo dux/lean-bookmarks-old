@@ -4,7 +4,7 @@
     %h2 Login
 
     .well
-      = form '/api/users/login', :template=>:ver, :done=>"Pjax.load('/')" do
+      = form '/api/users/login', :template=>:ver, :done=>params[:url] ? "location.reload()" : "Pjax.load('/')" do
         = input :email
         = input :pass, :as=>:password
         = submit 'Prijava'

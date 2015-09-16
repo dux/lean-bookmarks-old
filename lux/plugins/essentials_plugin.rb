@@ -7,7 +7,7 @@ module EssentialsPlugin
 
     class_methods do
       def paginate(per_page=20, page_var=:page)
-        page = Lux.params[page_var] || 1
+        page = Page.params[page_var] || 1
         page = page.to_i - 1
 
         ret = where({}).limit(per_page).offset(page * per_page).all.to_a
@@ -234,53 +234,4 @@ module EssentialsPlugin
       end
 
   end
-
-  module App
-    extend ActiveSupport::Concern
-
-    included do 
-      cattr_accessor :current_url
-      cattr_accessor :no_cache 
-    end
-    
-    class_methods do
-      def uid
-        @cnt ||= 0
-        "_uid_#{@cnt+=1}"
-      end
-
-      def host
-        User.request.protocol + User.request.host_with_port
-      end
-
-      def log(text)
-        return unless Rails.env.development?
-        log_file = "#{Rails.root}/log/runtime.log"
-        File.open(log_file, 'a') { |file| file.write("#{DateTime.now.strftime("%H:%M %S")}: #{text}\n") }
-      end
-
-      # Thread.new in Rails creates new DB conn, we have to close it at the end
-      def background(&block)
-        Thread.new do
-          yield
-          ActiveRecord::Base.connection.close
-        end
-      end
-
-      def speed
-        time = Time.new
-        yield
-        r "#{(Time.new-time)*1000}ms"
-      end
-
-      def once(name, &block)
-        User.request[:_once_hash] ||= {}
-        unless User.request[:_once_hash][name]
-          User.request[:_once_hash][name] = true
-          yield
-        end
-      end
-    end
-  end
-
 end

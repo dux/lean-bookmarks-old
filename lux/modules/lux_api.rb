@@ -83,7 +83,7 @@ class LuxApi
 
     @@class_name = path[0].classify
 
-    opts = Lux.params
+    opts = Page.params
 
     return run(path[0], path[1], opts) unless path[2]
     
@@ -96,7 +96,7 @@ class LuxApi
   # public method for running actions on global class
   # use as LuxApi.run 'users', 'show', { email:'rejotl@gmail.com' }
   def self.run(klass, action, options=nil)
-    @@params = options || Lux.params
+    @@params = options || Page.params
     @@params.delete_if{ |el| [:captures, :splat].index(el.to_sym) }
 
     if @@params[@@class_name.underscore]
@@ -184,17 +184,17 @@ class LuxApi
     # useful for file uploads
     if @@params[:_redirect]
       if @error
-        Lux.flash :error, @error
+        Page.flash :error, @error
       elsif @response[:message]
-        Lux.flash :info, @response[:message]
+        Page.flash :info, @response[:message]
       end 
 
-      Lux.redirect(@@params[:_redirect])
+      Page.redirect(@@params[:_redirect])
     end
 
     @response[:error] = @error if @error
     @response[:ip] = '127.0.0.1'
-    ap @response if Lux.dev?
+    ap @response if Page.dev?
     @response
   end
 

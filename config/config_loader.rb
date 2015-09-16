@@ -1,6 +1,6 @@
 db_config = YAML.load_file('./config/database.yml')
 
-if Lux.dev?
+if Page.dev?
   ENV['COFFEE_PATH'] = '/usr/local/bin/coffee'
   db_config = db_config['development']
 else

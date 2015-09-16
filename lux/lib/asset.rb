@@ -9,9 +9,9 @@ class Asset
   def self.get_link(path)
     return path if path.index(/https?:/)
 
-    asset = new(path, { :root=>Lux.root })
+    asset = new(path, { :root=>Page.root })
 
-    if Lux.prod?
+    if Page.prod?
       if !@@cache[path] && File.exists?(asset.file_full)
         @@cache[path] ||= asset.browser_file
       end
@@ -32,7 +32,7 @@ class Asset
   end
 
   def self.jquery
-    %[<script src="#{Lux.dev? ? '/jquery.js' : 'https://code.jquery.com/jquery-2.1.1.min.js'}"></script>]
+    %[<script src="#{Page.dev? ? '/jquery.js' : 'https://code.jquery.com/jquery-2.1.1.min.js'}"></script>]
   end
 
   def initialize(file, opts={})
@@ -179,7 +179,7 @@ class Asset
 
     File.open(@file_full, 'w') { |f| f.write(public_data.join("\n")) } 
 
-    if Lux.prod?
+    if Page.prod?
       run! "minify --no-comments -o '#{@file_full}' '#{@file_full}'", @file_full
       run! "gzip -f -c -1 '#{@file_full}' > '#{@file_full}.gz'"
     end

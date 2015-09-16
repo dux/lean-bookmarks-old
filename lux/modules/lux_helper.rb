@@ -5,11 +5,11 @@ class LuxHelper
   end
 
   def params
-    Lux.params
+    Page.params
   end
 
   def request
-    Lux.sinatra.request
+    Page.sinatra.request
   end
 
   # renders just template but it is called 

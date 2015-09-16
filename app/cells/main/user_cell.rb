@@ -16,9 +16,9 @@ class Main::UserCell < LuxCell
   end
 
   def bye
-    Lux.session.delete(:u_id)
-    Lux.flash :info, 'Bye bye'
-    Lux.redirect '/'
+    Page.session.delete(:u_id)
+    Page.flash :info, 'Bye bye'
+    Page.redirect '/'
   end
 
 end

@@ -5,7 +5,7 @@
 - else
   %div{ :style=>"zoom:110%;" }
     - for tag in @tags
-      %a.label{ :class=>(Lux.params.suffix == tag.name ? 'label-primary' : 'label-default'), :href=>"/#{@klass.name.tableize}:#{tag.name}", :style=>"margin-right:5px;" }
+      %a.label{ :class=>(Page.params.suffix == tag.name ? 'label-primary' : 'label-default'), :href=>"/#{@klass.name.tableize}:#{tag.name}", :style=>"margin-right:5px;" }
         #{tag.name}
         = tag.cnt.to_i > 1 ? "(#{tag.cnt})" : ''
 %hr

@@ -138,7 +138,7 @@ class Input
   def as_date
     @opts[:type] = 'text'
     @opts[:style] = 'width:100px; display:inline;'
-    @opts[:id] = "date_#{Lux.uid}"
+    @opts[:id] = "date_#{Page.uid}"
     id = "##{@opts[:id]}"
     ret = @opts.tag(:input)
     ret += %[ <button class="btn btn-default btn-sm" onclick="$('#{id}').val('#{DateTime.now.strftime('%Y-%m-%d')}'); return false;">Today</button>]

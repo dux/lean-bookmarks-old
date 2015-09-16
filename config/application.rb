@@ -12,12 +12,12 @@ end
 
 before do
   @page_render_start = Time.now
-  Lux.init(self)
+  Page.init(self)
 
   path = request.path.split(':', 2)
   if path[1]
     @namespace = path[1]
-    Lux.params[:suffix] = @namespace
+    Page.params[:suffix] = @namespace
   end
   @path = path[0].split('/')
   @path.shift
@@ -35,7 +35,7 @@ post '*' do
 end
 
 after do
-  puts "- #{Lux.request.path} rendered in #{((Time.now-@page_render_start)*1000).to_i} ms".yellow
+  puts "- #{Page.request.path} rendered in #{((Time.now-@page_render_start)*1000).to_i} ms".yellow
 
   test_body = response.body.kind_of?(Array) && !response.body[1] ? response.body[0] : response.body
 
@@ -43,7 +43,7 @@ after do
     content_type('text/plain') unless test_body[0,1] == '<'
   elsif test_body.kind_of?(Hash)
     content_type :json
-    ret = Lux.dev? ? JSON.pretty_generate(response.body) : JSON.generate(response.body)
+    ret = Page.dev? ? JSON.pretty_generate(response.body) : JSON.generate(response.body)
     ret = "#{params[:callback]}(#{ret})" if params[:callback]
     body "#{ret}\n"
   end

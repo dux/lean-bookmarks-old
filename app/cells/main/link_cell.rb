@@ -3,7 +3,7 @@
 class Main::LinkCell < LuxCell
 
   def index
-    @links = Link.can.tagged_with(Lux.params[:suffix])
+    @links = Link.can.tagged_with(Page.params[:suffix])
     @links = @links.where(is_article:true) if params[:art]
     @links = @links.where(is_article:false) if params[:root]
     @links = @links.where(kind:params[:t]) if params[:t] =~ /^\w{3}$/
@@ -19,7 +19,7 @@ class Main::LinkCell < LuxCell
   end
 
   def show(id)
-    @link = Link.get(id)
+    @Object = @link = Link.get(id)
     @top_info = 'Link is archived and is not active' unless @link.active
   end
 

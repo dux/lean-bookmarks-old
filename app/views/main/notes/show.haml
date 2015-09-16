@@ -1,19 +1,13 @@
 = render :_menu
 
-.row.nudge
+.row{ :style=>"clear:both;" }
   .col-1
   .col-5
-    / .widget.bucketSelect{ :value=>2 }= Bucket.can.json
-
-    %div{ :style=>"float:left;" }= input :asda, :collection=>Bucket.can, :value=>@note.bucket_id, :onchange=>"Api.send('notes/#{@note.id}/update', { bucket_id:this.value })"
-    %a.btn.btn-empty.btn-sm{ :href=>@note.bucket.path, :style=>"padding:2px 0; margin-left:5px;" } &rarr;
-    %sman{ :style=>"margin-left:15px; color:#aaa;" } &mdash;
-    %a.btn.btn-sm{ :href=>@note.path(:edit), :style=>'margin:5px 0 0 20px;' } Edit note
-
     %div{ :style=>"clear:both; margin-top:30px; margin-bottom:20px; min-height:50px;" }= render 'main/_tags', :object=>@note
    
     %div
       .bucket.note{ :style=>"width:100%; min-height:600px; padding:30px;" }
+        %a.btn.btn-sm{ :href=>@note.path(:edit), :style=>'float:right;' } Edit note
         %h3= @note.name
 
         %br

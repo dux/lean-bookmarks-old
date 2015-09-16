@@ -36,12 +36,12 @@ module MasterHelper
 
   def base_js
     ret = ['<script>']
-    ret.push "window.DEV = #{Lux.dev? ? 'true' : 'false' };"
+    ret.push "window.DEV = #{Page.dev? ? 'true' : 'false' };"
     ret.push "window.app = {}"
 
-    if flash = (Lux.session[:flash] || Thread.current[:lux][:flash])
+    if flash = (Page.session[:flash] || Thread.current[:lux][:flash])
       ret.push "Info.#{flash[0]}(#{flash[1].to_json})"
-      Lux.session.delete(:flash)
+      Page.session.delete(:flash)
     end
 
     ret.push ['</script>']

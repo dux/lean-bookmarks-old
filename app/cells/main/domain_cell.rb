@@ -1,6 +1,6 @@
 class Main::DomainCell < LuxCell
 
-  def self.resolve(*path)
+  def self.resolve(path)
     return render(:index) unless path[0]
     return render(:show, path[0])
   end

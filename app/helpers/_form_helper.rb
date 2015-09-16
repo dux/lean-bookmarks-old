@@ -28,7 +28,7 @@ module FormHelper
     @form_opts = opts
     @form_object = nil
 
-    location ||= Lux.sinatra.request.path
+    location ||= Page.sinatra.request.path
     if location.kind_of?(String)
       if location.sub!(/\/api\//,'')
         opts['api-action'] = location
@@ -82,7 +82,7 @@ module FormHelper
 
     # auto fill value for GET forms
     @form_opts ||= {}
-    opts[:value] ||= Lux.params[name] if @form_opts[:method] == 'get'
+    opts[:value] ||= Page.params[name] if @form_opts[:method] == 'get'
 
     return Input.new(@form_object).render(name, opts).html_safe if opts[:as] == :hidden || !@form
 
@@ -155,7 +155,7 @@ class FormTemplateHor < FormTemplate
 
   def row(name, opts, label)
     opts[:class] = "#{opts[:class]} form-control" if opts[:as] != :checkbox
-    opts[:id] ||= Lux.uid
+    opts[:id] ||= Page.uid
     input = opts[:input] || Input.new(@object).render(name, opts.dup)
     hint = opts[:hint]
     # if opts[:as] == :checkbox
@@ -185,7 +185,7 @@ class FormTemplateVer < FormTemplate
 
   def row(name, opts, label)
     opts[:class] = "#{opts[:class]} form-control" if opts[:as] != :checkbox
-    opts[:id] ||= Lux.uid
+    opts[:id] ||= Page.uid
     input = opts[:input] || Input.new(@object).render(name, opts.dup)
     hint = opts[:hint]
     # if opts[:as] == :checkbox
@@ -210,7 +210,7 @@ class FormTemplateTab < FormTemplate
 
   def row(name, opts, label)
     opts[:class] = "#{opts[:class]} form-control"
-    opts[:id] ||= Lux.uid
+    opts[:id] ||= Page.uid
     input = opts[:input] || Input.new(@object).render(name, opts)
     %[<tr><td><label for="#{opts[:id]}">#{label}</label></td><td>#{input}</td></tr>]
   end

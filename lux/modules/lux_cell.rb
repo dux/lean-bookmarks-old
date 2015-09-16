@@ -36,7 +36,7 @@ class LuxCell
     local_args[0] = "#{local_args[0]}!"
     return obj.send(*local_args) if obj.respond_to?(local_args[0])
 
-    return Error.not_found('Page not found') unless Lux.dev?
+    return Error.not_found('Page not found') unless Page.dev?
 
     list = self.instance_methods - Object.instance_methods - [:render, :render_part, :_find_template_path, :template, :template_part, :params]
     err = [%[No instance method "#{local_args[0].sub('!','')}" nor "#{local_args[0]}" found in class "#{self.name}"]]
@@ -61,7 +61,7 @@ class LuxCell
     @template = obj.instance_variables_hash[:@template]
     @local_path = @template if @template
 
-    data = Lux.try 'Temmplate error' do
+    data = Page.try 'Temmplate error' do
       Template.new(@local_path).part( obj.instance_variables_hash )
     end
     [data, obj.instance_variables_hash]
@@ -123,7 +123,7 @@ class LuxCell
   end
 
   def params
-    Lux.params
+    Page.params
   end
 
 end

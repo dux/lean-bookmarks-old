@@ -18,7 +18,7 @@ class Template
     raise "Template [#{template}] not found" unless @template
 
     # clear only once per request
-    @@template_cache = {} if Lux.dev? && !Thread.current[:lux][:template_cache]
+    @@template_cache = {} if Page.dev? && !Thread.current[:lux][:template_cache]
     Thread.current[:lux][:template_cache] = true
 
     @@template_cache[template] ||= Tilt.new(@template, :ugly=>true)
@@ -40,7 +40,7 @@ class Template
       helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
     end
 
-    for k, v in Lux.locals
+    for k, v in Page.locals
       helper.instance_variable_set("@#{k.to_s.sub('@','')}", v)
     end
     helper
@@ -65,7 +65,7 @@ class Template
 
     helper = Template.helper(base_class, opts)
 
-    Lux.try "Template [#{@template}] render error" do
+    Page.try "Template [#{@template}] render error" do
       @engine.render(helper) do
         yield if block_given?
       end

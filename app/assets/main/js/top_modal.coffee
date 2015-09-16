@@ -39,10 +39,10 @@ window.TopModal =
       TopModal.respond_click = App.add_bucket_to_bucket
       TopModal.load 'Select bucket', "/bucket/select?id=#{id}", no_overlay
 
-    select_bucket_for_a_link:(link_id) ->
+    select_bucket_for_object:(objects, object_id) ->
       TopModal.respond_click = (bucket_id) ->
         TopModal.close();
-        Api.post "links/#{link_id}/update", params:{ bucket_id:bucket_id }, done: Pjax.refresh
+        Api.post "#{objects}/#{object_id}/update", params:{ bucket_id:bucket_id }, done: Pjax.refresh
 
       TopModal.load 'Select bucket', "/bucket/select?id=0"
 

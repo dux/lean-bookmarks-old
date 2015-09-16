@@ -1,12 +1,13 @@
-%form.form-inline{ :style=>"float:right;", :onsubmit=>"return App.create_link(this)" }
-  %input{ :name=>:url }
-  %button.btn + add link
+- unless @link
+  %form.form-inline{ :style=>"float:right;", :onsubmit=>"return App.create_link(this)" }
+    %input{ :name=>:url }
+    %button.btn + add link
 
-.top-menu
-  %a.btn.btn-sm{ :class=>request.path.index('/links/articles') ? 'btn-primary' : 'btn-empty', :href=>'/links/articles' } articles
-  %a.btn.btn-sm{ :class=>params[:root] ? 'btn-primary' : 'btn-empty', :href=>'/links?root=true' } root sites
-  %a.btn.btn-sm{ :class=>request.path.index('/links/domain')=='' ? 'btn-primary' : 'btn-empty', :href=>'/domains' } domains
-  %a.btn.btn-sm{ :class=>params[:t]=='img' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=img' } images
-  %a.btn.btn-sm{ :class=>params[:t]=='vid' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=vid' } videos
-  %a.btn.btn-sm{ :class=>params[:t]=='doc' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=doc' } documents
-  %a.btn.btn-sm{ :class=>request.path.index('/links/archive') ? 'btn-primary' : 'btn-empty', :href=>'/links/archive' } archived
+  .top-menu
+    %a.btn.btn-sm{ :class=>request.path.index('/links/articles') ? 'btn-primary' : 'btn-empty', :href=>'/links/articles' } articles
+    %a.btn.btn-sm{ :class=>params[:root] ? 'btn-primary' : 'btn-empty', :href=>'/links?root=true' } root sites
+    %a.btn.btn-sm{ :class=>request.path.index('/links/domain')=='' ? 'btn-primary' : 'btn-empty', :href=>'/domains' } domains
+    %a.btn.btn-sm{ :class=>params[:t]=='img' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=img' } images
+    %a.btn.btn-sm{ :class=>params[:t]=='vid' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=vid' } videos
+    %a.btn.btn-sm{ :class=>params[:t]=='doc' ? 'btn-primary' : 'btn-empty', :href=>'/links?t=doc' } documents
+    %a.btn.btn-sm{ :class=>request.path.index('/links/archive') ? 'btn-primary' : 'btn-empty', :href=>'/links/archive' } archived

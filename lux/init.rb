@@ -60,8 +60,8 @@
       puts "Live reload: #{file.red}"
       File.read(file).gsub(/class\s+([:\w]+)/) { load file }
     end
-  end if Lux.dev?
+  end if Page.dev?
 
 # inform about enviroment
-  puts "* #{Lux.dev? ? 'development'.green : 'production'.red } mode"
+  puts "* #{Page.dev? ? 'development'.green : 'production'.red } mode"
 
