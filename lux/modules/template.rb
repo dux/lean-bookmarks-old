@@ -29,11 +29,17 @@ class Template
     base_class = base_class.to_s
     
     helper = LuxHelper.new
-    # if base class is defined, use it, othervise use application global class
-    if ("#{base_class.capitalize}Helper".constantize rescue false)
-      eval %[helper.extend #{base_class.capitalize}Helper]
+
+    name = "#{base_class.capitalize}Helper"
+    if name == 'LuxHelper'
+       helper.extend RailsHelper
     else
-      eval %[helper.extend ApplicationHelper] rescue false
+      # if base class is defined, use it, othervise use application global class
+      if (name.constantize rescue false)
+        eval %[helper.extend #{name}]
+      else
+        eval %[helper.extend ApplicationHelper] rescue false
+      end
     end
 
     for k, v in opts

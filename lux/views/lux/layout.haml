@@ -14,7 +14,7 @@
           %span.icon-bar
           %span.icon-bar
         %ul.nav.navbar-nav
-          - for el in [['debug','Routes'], ['api','API'], ['mailer','Mailer']]
+          - for el in [['api','API'], ['mailer','Mailer']]
             %li{ :class=>request.path.index(el[0]) ? :active : nil }
               %a{ href:"/lux/#{el[0]}" }= el[1]
         %ul.nav.navbar-nav.pull-right

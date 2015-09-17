@@ -3,13 +3,12 @@ class LuxRenderCell < LuxCell
   # usuaal usage in main router
   #  when :lux
   #    return LuxRenderCell.dev_mount(*@path)
-  def self.resolve(*path)
+  def self.resolve(path)
     return Template.render('lux/index') unless path.first
     return dev_mount_api_root if path.first == 'api'
     return dev_mount_mailer(path[1]) if path.first == 'mailer'
-    return dev_mount_debug if path.first == 'debug'
 
-    Page.status :error, "<b>#{path[0]}</b> is not supported route part for /lux route"
+    Error.not_found("<b>#{path[0]}</b> is not supported route part for /lux route")
   end
 
   # renders list of emails in /mailer or perticular template in /mailer/[tempplate_name]_preview
@@ -60,35 +59,6 @@ class LuxRenderCell < LuxCell
   def self.get_api(*path)
       return Error.server('API error: action not defined') unless path[1]
       return LuxApi.run path[0], path[1]
-  end
-
-  def self.dev_mount_debug
-    ret = []
-    ret.push ">>> Routes"
-    for file in `find ./app/cells | grep .rb`.split("\n").sort
-      el = file.split(/\.|\//).reverse
-      klass = "#{el[2]}/#{el[1]}".classify
-      ret.push "\n  * #{klass}"
-      for m in (klass.constantize.instance_methods - Object.instance_methods - [:render, :render_part, :sinatra, :params, :request])
-        ret.push "    - #{m}"
-      end
-    end
-
-    ret.push "\n\n\>>> Templates\n"
-
-    last = nil
-    for file in `find ./app/views`.split("\n").map{|el| el.sub('./app/views','')}.sort.reverse.select{|el| el.index('.') }
-      elms = file.split('/')
-      elms.shift
-      if last != elms[0]
-        ret.push "    * #{elms[0]}/"
-        last = elms[0]
-      end
-      elms.shift
-      ret.push "      - #{elms.join('/').sub('.haml','')}"
-    end
-
-    Template.render('lux/debug', :@data=>ret.join("\n") )
   end
 
 end
