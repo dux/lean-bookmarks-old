@@ -12,6 +12,11 @@
     Edit bucket
     %small or <a href="#{@bucket.path}">go back</a>
 
+  %p{ :style=>"margin-top:-5px;" }
+  = render 'main/_tags', :object=>@bucket
+
+  %hr
+
   .well
     = form @bucket, :ver do
       = input :name

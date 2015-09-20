@@ -27,7 +27,7 @@ before do
   # load user if there is session string
   if session[:u_id]
     begin
-      User.current = User.find(session[:u_id])
+      User.current = User.find(session[:u_id].to_i)
     rescue
       session.delete(:u_id)
     end

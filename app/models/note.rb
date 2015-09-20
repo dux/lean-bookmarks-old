@@ -5,7 +5,7 @@ class Note < MasterModel
 
   validates :name, presence:{ message:'Name is required' }
 
-  belongs_to :bucket
+  belongs_to_cached :bucket
 
   default_scope -> { order('notes.updated_at desc').where('notes.active=?', true) }
 

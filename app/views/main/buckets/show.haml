@@ -1,15 +1,12 @@
 = render :_menu
 
-%div{ :style=>"background-color:#fff; padding-top:10px; border:1px solid #ddd; border-radius:4px; " }
+%div{ :style=>"background-color:#fff; padding-top:10px; border:1px solid #ddd; border-radius:4px; min-height:130px;" }
   - if @bucket.image?
     = image_tag @bucket.image, :style=>"float:right; margin-bottom:-200px; max-height:110px; margin-right:50px;"
   %div{ :style=>"margin:10px 15px 5px 15px;" }
     %h2
       = @bucket.name
       %a.btn.show-on-hover{ :href=>@bucket.path(:edit), :style=>"float:right;" } edit
-
-    %p{ :style=>"margin-top:-5px;" }
-    = render 'main/_tags', :object=>@bucket
 
   %br.c
 

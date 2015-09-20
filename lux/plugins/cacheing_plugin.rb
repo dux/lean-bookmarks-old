@@ -24,6 +24,15 @@ module CacheingPlugin
           end
         end
       end
+
+      # this works nicely
+      def find(*args)
+        return super(*args) unless args[0].kind_of?(Integer) && !args[1]
+
+        Cache.fetch "#{name.underscore}/#{args[0]}" do
+          unscoped.where(id:args[0]).first
+        end
+      end
     end
 
     included do
