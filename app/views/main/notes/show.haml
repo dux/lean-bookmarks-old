@@ -3,17 +3,37 @@
 .row{ :style=>"clear:both;" }
   .col-1
   .col-5
-    %div{ :style=>"clear:both; margin-top:30px; margin-bottom:20px; min-height:50px;" }= render 'main/_tags', :object=>@note
+    .state1{ :style=>"height:50px;" }
+    .state2{ :style=>"clear:both; margin-top:30px; margin-bottom:20px; min-height:50px;" }= render 'main/_tags', :object=>@note
    
-    %div
-      .bucket.note{ :style=>"width:100%; min-height:600px; padding:30px;" }
-        %a.btn.btn-sm{ :href=>@note.path(:edit), :style=>'float:right;' } Edit note
+    .bucket.note{ :style=>"width:100%; height:auto; min-height:700px; padding:30px;" }
+      %button.btn.btn-sm{ :style=>"float:right;", :onclick=>"State.toggle();" } Edit note
+      .state1
         %h3= @note.name
 
         %br
 
         .w.markdown= @note.data
 
-  .col-1
+      .state2
+        = form @note, :template=>:ver, :done=>:refresh do
+          = input :name
+          = input :data, :as=>:memo, :style=>"height:600px;"
+          = submit 'Save'
+
+      %br{ :style=>"clear:both;" }
+
+  .col-1{ :style=>"padding-top:105px;" }
+    .state2
+      - if @note.active
+        %button.btn.btn-error.btn-sm{ :onclick=>"delete_object('notes', #{@note.id})", :style=>"width:100%;" } Archive
+      - else
+        %button.btn.btn-sm{ :onclick=>"restore_object('notes', #{@note.id})" } Restore from archive
+
+      .tip
+        %h6 Pro tip
+
+        %p It is encuraged to use hackpad.com, docs.google.com or similar service for keeping bigger douments. Notes are just for small documents.
+
+      
     
-  

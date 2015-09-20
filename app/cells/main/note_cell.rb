@@ -13,10 +13,6 @@ class Main::NoteCell < LuxCell
     @top_info = 'Note is archived and is not active' unless @note.active
   end
 
-  def edit(id)
-    show(id)
-  end
-
   def archive
     @notes = Note.unscoped.order('updated_at desc').my.where('active=?', false).paginate(30)
   end

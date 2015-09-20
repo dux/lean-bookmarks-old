@@ -88,3 +88,11 @@ Popup.go =
   link_drag:(ev, id) ->
     ev.dataTransfer.setData("link_id", id);
     TopModal.app.select_bucket(0, 'no_overlay')
+
+
+@State =
+  toggle: -> $('.state1, .state2').toggle();
+
+  set: (id) ->
+    $('.state1, .state2, .state2').hide();
+    $(".state#{id}").show();

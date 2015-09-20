@@ -86,6 +86,7 @@ end
 
 def resolve_main_app
   # return Page.status :forbiden, 'Only for registred users' unless User.current
+  # should not be triggered
   return Error.unauthorized unless User.current
 
   Page.locals[:class] = @root.to_s.pluralize
