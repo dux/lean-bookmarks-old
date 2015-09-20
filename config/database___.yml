@@ -1,17 +1,17 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: stash_buckets_new
+  database: stash_buckets
   host: localhost
   pool: 5
-  username: dux
-  password: "!Netlife"
+  username: user
+  password: "pass"
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: stash_buckets_new
+  database: stash_buckets
   host: localhost
   pool: 10
-  username: sbprod
-  password: sbprod1337  
+  username: user
+  password: "pass"
