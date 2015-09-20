@@ -9,9 +9,11 @@ before do
   headers({ 'X-Frame-Options'=>'ALLOWALL' })
 
   if hash = params[:user_hash]
-    usr_email = Crypt.decrypt(hash)
-    usr = User.quick_create(usr_email)
-    request.session[:u_id] = usr.id
+    if usr = User.where(token:hash).first
+      u = Url.current
+      u.delete(:user_hash)
+      return redirect u.relative
+    end
     return redirect request.path
   end
 

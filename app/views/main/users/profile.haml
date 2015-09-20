@@ -3,6 +3,8 @@
   .col-500
     %h2 Edit profile data
 
+
+
     .well
       = form User.current, :ver do
         = input :name
@@ -19,12 +21,19 @@
         = submit 'Save'
     
     %hr
+
+    %h5 Add bookmarlt
+
+    %p Just drag <a href="javascript:window.open('#{Page.host}/add?url='+escape(location.href)+'&title='+escape(document.title)+'&user_hash=#{User.current.token}')">this</a> link to bookmarks folder.
+
+    %hr
     
     %h5 Tips
 
     %ul
       %li
         You can drag links to buckets by draging link image
+
 
   .col-1{ :style=>"padding-top:50px;" }
     %ul.vertical-links

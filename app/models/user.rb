@@ -46,4 +46,13 @@ class User < MasterModel
     true
   end
 
+  def set_token
+    update_column :token, Crypt.sha1(DateTime.now.to_s)
+  end
+
+  def token
+    return self[:token] if self[:token].present?
+    set_token
+  end
+
 end

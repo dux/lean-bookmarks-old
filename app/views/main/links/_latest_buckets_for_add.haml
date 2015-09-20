@@ -1,0 +1,2 @@
+- for bucket in Bucket.can.like(params[:name], :name).limit(50)
+  = render bucket, onclick:"function(id){ $('#bid').val(id); $('#step1, #step2').toggle(); }"

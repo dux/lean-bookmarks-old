@@ -33,16 +33,18 @@ class Bucket < MasterModel
   end
 
   def desc
-    ret = []
-    lcount = links.count
-    ncount = notes.count
-    bcount = self[:child_buckets].length
+    Cache.fetch("bucket-info-#{id}") do
+      ret = []
+      lcount = links.count
+      ncount = notes.count
+      bcount = self[:child_buckets].length
 
-    h = Template.helper(:main)
-    ret.push "#{lcount} #{h.svg_ico(:link, 12)}" if lcount > 0
-    ret.push "#{ncount} #{h.svg_ico(:note, 12)}" if ncount > 0
-    ret.push "#{bcount} #{h.svg_ico(:bucket, 12)}" if bcount > 0
-    ret.join(' ')
+      h = Template.helper(:main)
+      ret.push "#{lcount} #{h.svg_ico(:link, 12)}" if lcount > 0
+      ret.push "#{ncount} #{h.svg_ico(:note, 12)}" if ncount > 0
+      ret.push "#{bcount} #{h.svg_ico(:bucket, 12)}" if bcount > 0
+      ret.join(' ')
+    end
   end
 
   def template

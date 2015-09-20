@@ -38,6 +38,8 @@ AutoMigrate.migrate do
     t.boolean  "is_article", default: false
     t.integer  "bucket_id",  null: false
     t.timestamps
+
+    t.add_index :created_by
   end
 
   table :notes do |t|
@@ -63,8 +65,13 @@ AutoMigrate.migrate do
     t.string   "name",        null: false
     t.text     "description"
     t.boolean  "is_article"
-    t.timestamps
+    t.datetime "created_at",  null:true
+    t.datetime "updated_at",  null:true
+    t.integer  "created_by",  null:true, index:true
   end
+
+  # Domain.update_all('updated_at=now() where created_at is null')
+  # Domain.update_all('created_by=1 where created_by is null')
 
   table :users do |t|
     t.string   "name",       limit: 140
@@ -76,6 +83,7 @@ AutoMigrate.migrate do
     t.string   "pass"
     t.string   "connect_via"
     t.string   "description"
+    t.string   "token"
   end
 end
 

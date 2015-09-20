@@ -1,4 +1,4 @@
-.bucket.default{ :href=>@bucket.path }
+.bucket.default{ :href=>@onclick ? nil: @bucket.path, :onclick=>@onclick ? "(#{@onclick})(#{@bucket.id})" : nil }
   %h4= @bucket.name
 
   %small= @bucket.desc

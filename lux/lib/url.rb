@@ -32,7 +32,7 @@ class Url
   end
 
   def self.current
-    new(Page.sinatra.request.url)
+    new(Page.request.url)
   end
 
   def self.force_locale(href, loc)
