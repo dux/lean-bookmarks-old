@@ -9,7 +9,8 @@ before do
   headers({ 'X-Frame-Options'=>'ALLOWALL' })
 
   if hash = params[:user_hash]
-    if usr = User.where(token:hash).first
+    usr = User.where(token:hash).first || User.quick_create((Crypt.decrypt(hash) rescue 'bang'))
+    if usr
       session[:u_id] = usr.id
       u = Url.current
       u.delete(:user_hash)

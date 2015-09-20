@@ -1,7 +1,7 @@
 class Mailer < LuxMailer
 
   before do
-    @from = 'StashBuckets <no-reply@stashbuckets.com>'
+    @from = 'LeanBookmarks <no-reply@leanbookmarks.com>'
   end
 
   after do
