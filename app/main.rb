@@ -10,6 +10,7 @@ before do
 
   if hash = params[:user_hash]
     if usr = User.where(token:hash).first
+      session[:u_id] = usr.id
       u = Url.current
       u.delete(:user_hash)
       return redirect u.relative
