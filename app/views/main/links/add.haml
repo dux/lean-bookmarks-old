@@ -5,7 +5,7 @@
 #step1
   %h3 Select bucket for a link
 
-  %form{ :onsubmit=>"$('#latest_buckets').load('/part/main/links/_latest_buckets?name='+$('#bname').val()); return false;" }
+  %form{ :onsubmit=>"$('#latest_buckets').load('/part/main/links/_latest_buckets_for_add?name='+$('#bname').val()); return false;" }
     %input#bname{ :type=>:text, :placeholder=>'bucket name', :autocomplete=>:off }
     :javascript
       $('#bname').focus()
