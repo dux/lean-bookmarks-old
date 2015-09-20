@@ -1,15 +1,16 @@
-- if @bucket
-  %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.send('buckets/#{@bucket.id}/add_object', this, Pjax.refresh); return false;" }
-    %input{ :name=>:bucket_id, :value=>@bucket.id, :type=>:hidden }
-    %input.grow{ :name=>:name, :style=>"width:150px;" }
-    %button.btn + add link or note
+- if User.current
+  - if @bucket
+    %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.send('buckets/#{@bucket.id}/add_object', this, Pjax.refresh); return false;" }
+      %input{ :name=>:bucket_id, :value=>@bucket.id, :type=>:hidden }
+      %input.grow{ :name=>:name, :style=>"width:150px;" }
+      %button.btn + add link or note
 
-- else
-  %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.post('buckets/create', { form:this, done:'redirect', confirm:'Sure to create bucket?' }); return false;" }
-    %input{ :name=>:name, :style=>"width:200px;" }
-    %button.btn+ add bucket
+  - else
+    %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.post('buckets/create', { form:this, done:'redirect', confirm:'Sure to create bucket?' }); return false;" }
+      %input{ :name=>:name, :style=>"width:200px;" }
+      %button.btn+ add bucket
 
-.top-menu
-  %a.btn.btn-sm.btn-empty{ :href=>'/buckets/archive' } archived
+  .top-menu
+    %a.btn.btn-sm.btn-empty{ :href=>'/buckets/archive' } archived
 
-= render 'main/_tag_list', klass:Bucket
+  = render 'main/_tag_list', klass:Bucket

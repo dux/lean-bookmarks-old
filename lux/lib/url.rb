@@ -32,13 +32,13 @@ class Url
   end
 
   def self.current
-    new(Page.request.url)
+    new(Page.sinatra.request.url)
   end
 
   def self.force_locale(href, loc)
     u = new(href)
     u.locale(loc)
-    u.local_url
+    u.relative
   end
 
   def url_escape(str)
@@ -71,7 +71,8 @@ class Url
   end
 
   def path(val=nil)
-    return '/'+@path unless val
+    return '/'+@path+(@namespace ? ":#{@namespace}" : '') unless val
+
     @path = val.sub(/^\//,'')
     self
   end
@@ -93,6 +94,11 @@ class Url
     else
       @qs
     end
+    self
+  end
+
+  def namespace(data)
+    @namespace = data.to_s
     self
   end
 

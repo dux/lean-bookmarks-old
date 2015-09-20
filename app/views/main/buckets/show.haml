@@ -6,7 +6,8 @@
   %div{ :style=>"margin:10px 15px 5px 15px;" }
     %h2
       = @bucket.name
-      %a.btn.show-on-hover{ :href=>@bucket.path(:edit), :style=>"float:right;" } edit
+      - if User.current
+        %a.btn.show-on-hover{ :href=>@bucket.path(:edit), :style=>"float:right;" } edit
 
   %br.c
 
@@ -18,7 +19,8 @@
   %br
   %br
 
-%a.bucket.default{ :onclick=>"TopModal.app.link_bucket_to_bucket(#{@bucket.id})", :style=>"height:15px; text-decoration:none; font-weight:bold;" } + Add linked bucket
+- if User.current
+  %a.bucket.default{ :onclick=>"TopModal.app.link_bucket_to_bucket(#{@bucket.id})", :style=>"height:15px; text-decoration:none; font-weight:bold;" } + Add linked bucket
 
 - for el in @buckets
   %a.bucket.default{ :style=>"height:15px; text-decoration:none;", :href=>el.path }= el.name.trim(30)

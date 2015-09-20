@@ -45,6 +45,12 @@ def get
   # root
   return resolve_root unless @root
 
+  if @namespace && @root == :bucket && @path[0]
+    if Crypt.sha1(@path[0].to_i) == @namespace
+      return Main::BucketCell.render(:show, @path[0])
+    end
+  end
+
    # guest routes
   unless User.current
     return resolve_promo_app if [:set_password, :login, :css].index(@root)

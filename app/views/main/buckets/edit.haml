@@ -25,8 +25,12 @@
       = submit 'Save'
 
 
-  %br
-  %br
+  %hr
+
+  = link_to 'Direct link', "#{@bucket.path}:#{Crypt.sha1(@bucket.id)}"
+  for guest users. Send it to share bucket content
+
+  %hr
 
   .well
     %h5 Linked buckets in colection
