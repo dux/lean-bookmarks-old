@@ -100,12 +100,16 @@ class Page
     Page.sinatra.request.env['HTTP_CACHE_CONTROL'] == 'no-cache' ? true : false
   end
 
-  def body=(data)
+  def self.body=(data)
     Thread.current[:lux][:body] = data
   end
 
-  def body
+  def self.body
     Thread.current[:lux][:body]
+  end
+
+  def self.status(s)
+    Thread.current[:lux][:sinatra].status(s)
   end
 
 end
