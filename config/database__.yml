@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: lean_bookmarks
+  host: localhost
+  pool: 5
+  username: user
+  password: "pass"
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: lean_bookmarks
+  host: localhost
+  pool: 5
+  username: user
+  password: "pass"
