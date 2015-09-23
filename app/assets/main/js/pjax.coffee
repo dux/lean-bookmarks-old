@@ -9,7 +9,7 @@
 @Pjax =
   skip_on: [],
   push_state: false,
-  refresh: (func) -> Pjax.load(location.pathname+location.search, { func:func })  
+  refresh: (func) -> Pjax.load(location.pathname+location.search, { done:func })  
 
   init: (@full_page=false) ->
     return alert "#full_page ID referece not defined in PJAX!\n\nWrap whole page in one DIV element" unless @full_page
@@ -61,7 +61,7 @@
       body = obj.find(@full_page).html() || data
 
       Pjax.replace obj.find('title').first().html(), body
-      
+
       unless opts['history']
         if location.href.indexOf(href) > -1
           window.history.replaceState({ href:href, type:'replaced' }, document.title, href)

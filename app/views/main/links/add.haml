@@ -1,19 +1,40 @@
+:coffee
+  @create_and_select_bucket = (forma) ->
+    Api.post 'buckets/create', form:forma, done: (ret) ->
+      Pjax.refresh ->
+        $('#step1, #step2').toggle();
+        $('#bid').val(ret.data.id)
+
+
 %h2 Add new link
+
+%hr
+
+%h6= params[:title]
+%h6= link_to params[:url]
 
 %hr
 
 #step1
   %h3 Select bucket for a link
 
-  %form{ :onsubmit=>"$('#latest_buckets').load('/part/main/links/_latest_buckets_for_add?name='+$('#bname').val()); return false;" }
-    %input#bname{ :type=>:text, :placeholder=>'bucket name', :autocomplete=>:off }
-    :javascript
-      $('#bname').focus()
+  %table
+    %tr
+      %td{ :style=>"width:250px;" }
+        %form{ :onsubmit=>"$('#latest_buckets').load('/part/main/links/_latest_buckets_for_add?name='+$('#bname').val()); return false;" }
+          %input#bname{ :type=>:text, :placeholder=>'search for bucket', :autocomplete=>:off }
+          :javascript
+            $('#bname').focus()
+
+      %td{ :style=>"padding:0 20px;" } or create new one
+      %td
+        %form{ :onsubmit=>"create_and_select_bucket(this); return false;" }
+          %input{ :type=>:text, :name=>:name, :placeholder=>'bucket name', :autocomplete=>:off }
 
   %br
   %br
 
-  #latest_buckets{ :style=>"zoom:0.67;" }= render 'main/links/_latest_buckets_for_add'
+  #latest_buckets= render 'main/links/_latest_buckets_for_add'
 
 #step2.hidden
   %br
