@@ -1,10 +1,10 @@
 /.bundle
 /log
 /tmp
-/.assets_cache
-/public/assets
-/scripts/remote
-/config/database.yml
+.assets_cache
+public/assets
+scripts/remote
+config/database.yml
 
 */.DS_Store
 .DS_Store
