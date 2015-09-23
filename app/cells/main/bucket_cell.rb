@@ -4,7 +4,7 @@ class Main::BucketCell < LuxCell
     @buckets = Bucket.can.tagged_with(Page.params[:suffix]).paginate(20)
 
     unless @buckets[0]
-      @buckets.push Bucket.create :name=>'Various'
+      @buckets.push Bucket.create :name=>'Various', :image=>'http://i.imgur.com/Boj92y2.gif?1'
     end
   end
 

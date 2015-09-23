@@ -84,14 +84,14 @@ h1, h2, h3, h4, h5, h6 {
 // other
 .top-menu { margin:10px 0 20px 0; }
 
-.widget.markdown {
-  p { margin-bottom:5px; }
+#link_desc .w.markdown {
+  p { margin-bottom:10px; }
   ul { margin-top:15px; }
   &.small {
     font-size:9pt;
     p {height: 10pt; }
     li { padding-bottom:5px !important; }
-    ul ul { margin-top:6px; }
+    ul ul { margin-top:1px; }
   }
 }
   

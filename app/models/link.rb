@@ -15,9 +15,6 @@ class Link < MasterModel
 
   validate do
     errors.add(:url, 'URL is not link') if self[:url].present? && self[:url] !~ /^https?:\/\//
-    for el in [:name, :description]
-      self[el] = self[el][0, 255] if self[el]
-    end
   end
 
   def self.can(what=:read)
