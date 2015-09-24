@@ -7,7 +7,7 @@ class Main::LinkCell < LuxCell
   end
 
   def index
-    return if Page.etag Link.can.last_updated
+    return if Page.etag Link.my_last_updated
 
     @links = Link.can.tagged_with(Page.params[:suffix])
     @links = @links.where(is_article:true) if params[:art]
