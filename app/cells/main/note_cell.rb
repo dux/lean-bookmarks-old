@@ -1,11 +1,9 @@
 class Main::NoteCell < LuxCell
 
   def index
+    return if Page.etag Note.my_last_updated
+
     @notes = Note.can.tagged_with(Page.params[:suffix]).paginate(20)
-    # @w_notes = []
-    # @notes.each do |el|
-    #   @w_notes.push( path: el.path, name: el.name, data: el.data.to_s )
-    # end
   end
 
   def show(id)

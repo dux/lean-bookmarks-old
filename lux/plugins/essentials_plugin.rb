@@ -37,9 +37,10 @@ module EssentialsPlugin
       def random; order('random()'); end
       def desc; order('id desc'); end
       def last_updated
-        o = unscoped.order(column_names.index('updated_at') ? 'updated_at desc' : 'id desc').limit(1).first
-        return nil unless o
-        "#{o.id}-#{o.updated_at rescue 0}"
+        unscoped.order(column_names.index('updated_at') ? 'updated_at desc' : 'id desc').first
+      end
+      def my_last_updated
+        unscoped.order(column_names.index('updated_at') ? 'updated_at desc' : 'id desc').can.first
       end
 
     # search modules

@@ -65,6 +65,8 @@ class Template
   end
 
   def part(opts={})
+    return 'Halted' if Thread.current[:lux][:halt]
+
     base_class = @template.split('/')[3]
 
     Thread.current[:last_template_path] = @template.sub('/app/views','').sub(/\/[^\/]+$/,'').sub(/^\./,'')
@@ -79,6 +81,8 @@ class Template
   end
 
   def render(opts={})
+    return 'Halted' if Thread.current[:lux][:halt]
+
     @part_data = part(opts)
     layout_path = "#{@original_template.split('/')[0]}/layout"
     Template.new(layout_path).part(opts) do

@@ -1,6 +1,8 @@
 class Main::BucketCell < LuxCell
 
   def index
+    return if Page.etag Bucket.can.last_updated
+
     @buckets = Bucket.can.tagged_with(Page.params[:suffix]).paginate(20)
 
     unless @buckets[0]

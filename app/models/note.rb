@@ -14,7 +14,7 @@ class Note < MasterModel
   end
   
   def self.can(what=:read)
-    where(:created_by=>User.current.id)
+    my
   end
 
 end

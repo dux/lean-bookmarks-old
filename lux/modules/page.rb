@@ -23,6 +23,35 @@ class Page
     end
   end
 
+  def self.etag(*args)
+    ret = []
+    ret.push Page.request.url
+
+    for el in args
+      if el.respond_to? :updated_at
+        ret.push "#{el.class.name}-#{el.id}-#{el.updated_at.to_i}"
+      elsif el.kind_of? Symbol
+        ret.push el.to_s
+      elsif el.respond_to? :id
+        ret.push "#{el.class.name}:#{el.id}" rescue ''
+      else
+        ret.push ret.to_s rescue 'nil'
+      end
+    end
+
+    etag = Crypt.md5(ret.join('-'))
+    
+    if etag == Page.sinatra.request.env['HTTP_IF_NONE_MATCH']
+      Page.status(304)
+      Thread.current[:lux][:halt] = true
+      return true
+    end
+    
+    Page.sinatra.response.headers['ETag'] = etag
+
+    false
+  end
+
   def self.root
     __FILE__.sub('/lux/modules/page.rb','')
   end

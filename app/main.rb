@@ -117,7 +117,7 @@ def resolve_plugin_app
 end
 
 def resolve_root
-  User.current ? Template.render('main/index') : PromoCell.render(:index)
+  User.current ? Main::LinkCell.render(:home) : PromoCell.render(:index)
 end
 
 def resolve_part
