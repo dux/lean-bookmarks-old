@@ -39,7 +39,7 @@ class Page
       end
     end
 
-    etag = Crypt.md5(ret.join('-'))
+    etag = %[W/"#{Crypt.md5(ret.join('-'))}"]
     
     if etag == Page.sinatra.request.env['HTTP_IF_NONE_MATCH']
       Page.status(304)
