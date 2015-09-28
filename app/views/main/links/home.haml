@@ -1,5 +1,5 @@
 :ruby
-  @articles = Link.can.paginate(30)
+  @articles = Link.can.paginate(130)
 
 %form.form-inline{ :style=>"float:right;", :onsubmit=>"Api.post('links/create', { form:this, done:'refresh' }); return false;" }
   %input{ :name=>:url, :style=>"width:200px;" }

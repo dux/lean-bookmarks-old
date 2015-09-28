@@ -3,7 +3,7 @@
 class Main::LinkCell < LuxCell
 
   def home
-    return if Page.etag Link.my_last_updated
+    # return if Page.etag Link.my_last_updated
   end
 
   def index
