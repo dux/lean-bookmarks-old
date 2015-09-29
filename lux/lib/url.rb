@@ -46,7 +46,7 @@ class Url
   end
 
   def url_unescape(str)
-    str.tr('+', ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/n) { [$1.delete('%')].pack('H*') }
+    str.to_s.tr('+', ' ').gsub(/((?:%[0-9a-fA-F]{2})+)/n) { [$1.delete('%')].pack('H*') }
   end
 
   def domain(what=nil)

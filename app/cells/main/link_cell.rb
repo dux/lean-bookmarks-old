@@ -38,7 +38,11 @@ class Main::LinkCell < LuxCell
   end
 
   def add
-    params[:title] = params[:title].fix
+    params[:title] = params[:title].to_s.fix
+    
+    unless params[:title].present?
+      params[:title] = Url.new(params[:url]).domain
+    end
 
     @link = Link.new :url=>params[:url]
     @domain = Domain.get(@link.domain)

@@ -24,7 +24,7 @@
 
     %h5 Add bookmarlt
 
-    %p Just drag <a href="javascript:window.open('#{Page.host}/add?url='+escape(location.href)+'&title='+escape(document.title)+'&user_hash=#{User.current.token}')">this</a> link to bookmarks folder.
+    %p Just drag <a href="javascript:window.open('#{Page.host}/add?url='+escape(location.href)+'&title='+escape(document.title.replace(/[^\w\s\-_]/,''))+'&user_hash=#{User.current.token}')">this</a> link to bookmarks folder.
 
     %hr
     
