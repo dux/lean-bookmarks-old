@@ -19,7 +19,7 @@ class Url
     @domain_parts = domain_and_port[0].to_s.split('.').reverse.map(&:downcase)
 
     @qs = {}
-    path_with_qs = @elms[3].split(/\?|#/)
+    path_with_qs = @elms[3].to_s.split(/\?|#/)
     path_with_qs[1].split('&').map do |el|
       parts = el.split('=')
       @qs[parts[0]] = url_unescape parts[1]
