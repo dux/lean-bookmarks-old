@@ -51,16 +51,6 @@ AutoMigrate.migrate do
     t.timestamps
   end
 
-  # table :comments do |t|
-  #   t.datetime "created_at",  null: false
-  #   t.integer  "created_by",  null: false
-  #   t.datetime "updated_at",  null: false
-  #   t.integer  "updated_by",  null: false
-  #   t.text     "data",        null: false
-  #   t.integer  "grp_id",      null: false
-  #   t.string   "grp_type",    null: false
-  # end
-
   table :domains do |t|
     t.string   "name",        null: false
     t.text     "description"
@@ -69,9 +59,6 @@ AutoMigrate.migrate do
     t.datetime "updated_at",  null:true
     t.integer  "created_by",  null:true, index:true
   end
-
-  # Domain.update_all('updated_at=now() where created_at is null')
-  # Domain.update_all('created_by=1 where created_by is null')
 
   table :users do |t|
     t.string   "name",       limit: 140
@@ -87,4 +74,3 @@ AutoMigrate.migrate do
   end
 end
 
-# add_index "users", ["email"], name: "index_users_on_email", using: :btree
