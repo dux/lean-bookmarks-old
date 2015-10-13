@@ -1,6 +1,6 @@
 class AppApi < LuxApi
 
-    action :toggle_tag do
+  action :toggle_tag do
     name 'Toggle tag on a link'
     params :tag, :string, :req
     lambda do
