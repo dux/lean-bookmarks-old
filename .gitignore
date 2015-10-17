@@ -2,6 +2,7 @@
 /log
 /tmp
 .assets_cache
+.vscode
 public/assets
 scripts/remote
 config/database.yml
