@@ -1,0 +1,11 @@
+- @base_path = @{{object}}.path(:admin)
+
+= link_to 'Show', @{{object}}.path, :style=>'float:right;', :class=>'no-pjax btn btn-default btn-xs'
+
+%h1= @{{object}}.name
+
+%br
+= bs_tabs [['/admin/{{objects}}','&larr;'], [@base_path,'{{object.humanize}}']]
+%br
+
+= yield

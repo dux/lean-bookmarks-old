@@ -1,0 +1,11 @@
+- @base_path = @note.path(:admin)
+
+= link_to 'Show', @note.path, :style=>'float:right;', :class=>'no-pjax btn btn-default btn-xs'
+
+%h1= @note.name
+
+%br
+= bs_tabs [['/admin/notes','&larr;'], [@base_path,'Note']]
+%br
+
+= yield

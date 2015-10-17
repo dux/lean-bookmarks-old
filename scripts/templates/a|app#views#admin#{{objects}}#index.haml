@@ -1,0 +1,20 @@
+%form{ :style=>'float:right; width:330px; text-align:right;', :action=>Page.request.path }
+  = input :q, :value=>params[:q]
+  %button Search
+  - if params[:q]
+    %a.btn.btn-default{ :href=>request.path } x
+
+%h1
+  {{objects.capitalize}}
+  %button.btn{ :onclick=>%[$(this).hide().parent().next().slideDown(200);] } +
+
+.alert.alert-info.none
+  = bs_form {{object.classify}}.new, :horizontal=>true, :done=>'refresh' do
+    = bs_input :name
+    = bs_submit 'Create new {{object}}', %[$(this).closest('.alert').hide().prev().find('button').show();]
+
+%br
+
+= table {{objects.classify}}.desc.like(params[:q], :name).paginate(20), :class=>'table table-striped hover', :tr=>{ href:lambda { |el| el.path(:admin) } } do
+  - row :id, :width=>40, :align=>:r, :name=>'ID'
+  - row :name

@@ -14,13 +14,11 @@ gem 'haml'
 gem 'tilt'
 gem 'colorize'
 gem 'hashie'
-# gem 'rake'
 
 gem 'therubyracer', :platforms => :ruby
 gem 'sass'
 gem 'less'
 gem 'coffee-script'
-gem 'dalli'
 
 if ENV['RACK_ENV'] != 'production'
   gem 'awesome_print'
@@ -30,3 +28,4 @@ end
 # app specific
 gem 'nokogiri'
 gem 'rest-client'
+gem 'dalli'

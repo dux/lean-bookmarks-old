@@ -41,7 +41,7 @@
             %h5 Admin objects
 
             %ul.nav.nav-pills.nav-stacked
-              - @path = request.path.split('/')[2].singularize.pluralize
+              - @path = request.path.split('/')[2].to_s.singularize.pluralize
               - for el in AdminCell.admin_on
                 - if el.kind_of?(String)
                   %li

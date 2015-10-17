@@ -1,0 +1,11 @@
+- @base_path = @bucket.path(:admin)
+
+= link_to 'Show', @bucket.path, :style=>'float:right;', :class=>'no-pjax btn btn-default btn-xs'
+
+%h1= @bucket.name
+
+%br
+= bs_tabs [['/admin/buckets','&larr;'], [@base_path, "Bucket"], [@base_path+'/links',"Links (#{Link.for(@bucket).count})"], [@base_path+'/notes',"Notes (#{Note.for(@bucket).count})"]]
+%br
+
+= yield

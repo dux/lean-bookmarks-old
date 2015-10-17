@@ -23,8 +23,6 @@ before do
   url = Url.new(request.url)
   return redirect "#{url.proto}://#{url.domain}" if url.subdomain && url.subdomain != 'old'
 
-  # r session[:u_id]
-
   # load user if there is session string
   if session[:u_id]
     begin

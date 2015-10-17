@@ -1,0 +1,18 @@
+= render '_wrap' do
+
+  %p Allow user to access <a href="/admin/databases">databases</a>.
+
+  %br
+
+  %table.table
+    %tr
+      %th.c{ :style=>"width:100px;" } Active
+      %th.c{ :style=>"width:100px;" } Allow?
+      %th Database
+    - for el in Database.all
+      %tr
+        %td.c
+          = el.active ? green('YES') : red('no')
+        %td.c
+          %input{ :onclick=>"Rails.api('users/#{@user.id}/toggle_database_access?database_id=#{el.id}')", :type=>:checkbox, :checked=>@user.db_allowed(el) }
+        %td= el.name

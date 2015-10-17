@@ -1,0 +1,24 @@
+%form{ :style=>'float:right; width:330px; text-align:right;', :action=>Page.request.path }
+  = input :q, :value=>params[:q]
+  %button Search
+  - if params[:q]
+    %a.btn.btn-default{ :href=>request.path } x
+
+%h1
+  Buckets
+  %button.btn{ :onclick=>%[$(this).hide().parent().next().slideDown(200);] } +
+
+.alert.alert-info.none
+  = bs_form Bucket.new, :horizontal=>true, :done=>'refresh' do
+    = bs_input :name
+    = bs_submit 'Create new bucket', %[$(this).closest('.alert').hide().prev().find('button').show();]
+
+%br
+
+= table Bucket.desc.like(params[:q], :name).paginate(20), :class=>'table table-striped hover', :tr=>{ href:lambda { |el| el.path(:admin) } } do
+  - row :id, :width=>40, :align=>:r, :name=>'ID'
+  - row :name
+  - row lambda { |el| el.links.count }, :name=>'Link cnt', :align=>:c, :width=>100
+  - row lambda { |el| el.notes.count }, :name=>'Note cnt', :align=>:c, :width=>100
+  - row :creator
+

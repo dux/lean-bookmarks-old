@@ -15,6 +15,9 @@
 
 %br
 
-= table Link.desc.like(params[:q], :name).paginate(20), :class=>'table table-striped hover', :tr=>{ href:lambda { |el| el.path(:admin) } } do
+= table (@links=Link.desc.like(params[:q], :name).paginate(30)), :class=>'table table-striped hover', :tr=>{ href:lambda { |el| el.path(:admin) } } do
   - row :id, :width=>40, :align=>:r, :name=>'ID'
   - row :url
+  - row :creator
+
+= paginate @links

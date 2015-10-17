@@ -1,0 +1,7 @@
+= render '_wrap' do
+
+  .form
+    = bs_form @bucket, :horizontal=>true, :done=>'refresh' do
+      = bs_input :name
+      = bs_submit 'Save', '/admin/buckets', 'go back to list'
+    

@@ -56,7 +56,7 @@ class Main::BucketCell < LuxCell
 
   def select
     @template = false
-    @buckets = Bucket.select('id,name').can.where('id<>?', params[:id]).paginate(40)
+    @buckets = Bucket.select('id,name').can.like(params[:name], 'name').where('id<>?', params[:id]).paginate(40)
   end
 
 end

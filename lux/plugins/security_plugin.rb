@@ -16,13 +16,9 @@ module SecurityPlugin
 
     def can?(what=:read)
       return true if what == :read
-      return true if what == :create
       return false unless User.current
-      if respond_to?(:created_by)
-        return true if my? || User.current.is_admin
-      else
-        return User.current.is_admin ? true : false
-      end
+      return true if User.current.is_admin
+      return true if respond_to?(:created_by) && my?
       return grp_object.can?(what) if respond_to?(:grp_id)
       return false
     end

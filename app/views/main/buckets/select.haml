@@ -1,4 +1,8 @@
 #bucket_select
+  %form{ :onsubmit=>%[$('#bucket_select').load('/bucket/select?id=#{params[:id]}&name='+$('#search').val()); return false;] }
+    %input#search.form-control{ :type=>:text, :placeholder=>'search...', :style=>"width:200px;", :value=>params[:name] }
+  %hr
+
   - for el in @buckets
     %button.btn{ :onclick=>"TopModal.respond_click(#{el.id}, #{params[:id]})", :ondragover=>"event.preventDefault();", :ondrop=>"TopModal.respond_drop(event, #{el.id})" }= el.name
 
@@ -9,3 +13,5 @@
     href = this.getAttribute('href');
     $('#bucket_select').load(href);
     false
+
+  $('#search').focus();

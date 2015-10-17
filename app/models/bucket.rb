@@ -19,10 +19,6 @@ class Bucket < MasterModel
     unscoped.order('id asc').my.first || create!(name:'Various')
   end
 
-  def self.can(what=:read)
-    where(:created_by=>User.current.id)
-  end
-
   def self.as_select
     ret = []
     for el in Bucket.select('id, name, (select count(*) from links where bucket_id=buckets.id) as cnt').limit(40)

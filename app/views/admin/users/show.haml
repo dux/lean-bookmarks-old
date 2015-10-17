@@ -1,0 +1,11 @@
+= render '_wrap' do
+
+  .form
+    = bs_form @user, :horizontal=>true, :done=>'refresh' do
+      = bs_input :name
+      = bs_input :email
+      = bs_input :pass, :as=>:pass
+      = bs_input :is_admin, :as=>:checkbox
+      = bs_input :description, :as=>:memo
+      = bs_submit 'Save', '/admin/users', 'go back to list'
+    

@@ -1,0 +1,8 @@
+= render '_wrap' do
+
+  = table (@notes=Note.desc.for(@bucket).like(params[:q], :name).paginate(20)), :class=>'table table-striped hover', :tr=>{ href:lambda { |el| el.path(:admin) } } do
+    - row :id, :width=>40, :align=>:r, :name=>'ID'
+    - row :name
+    - row :creator
+
+  = paginate @notes
