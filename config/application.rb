@@ -4,7 +4,10 @@ set :show_exceptions, true
 set :raise_errors, true
 
 use Rack::Session::Cookie, :key => 'lux.session', :path => '/', :expire_after => 1.month, :secret=>Digest::MD5.hexdigest(__FILE__)
-use BetterErrors::Middleware; BetterErrors.application_root = __dir__.sub('/config','')
+
+if Page.dev?
+  use BetterErrors::Middleware; BetterErrors.application_root = __dir__.sub('/config','')
+end
 
 def get
   "LUX is running!\n\nNow define get() and return some data"
