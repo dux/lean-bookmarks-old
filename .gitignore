@@ -4,6 +4,7 @@
 .assets_cache
 .vscode
 public/assets
+public/thumbs
 scripts/remote
 config/database.yml
 

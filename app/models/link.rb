@@ -33,6 +33,7 @@ class Link < MasterModel
       "http://img.youtube.com/vi/#{Url.new(url).qs(:v)}/0.jpg"
     else
       %[http://free.pagepeeker.com/v2/thumbs.php?size=l&url=#{domain}]
+      "/t/#{Crypt.encrypt(domain)}"
     end
     # %[http://web-services.s3.amazonaws.com/web-shot/#{domain}.png]
     # %[http://www.bitpixels.com/getthumbnail?code=93691&size=200&url=#{domain}]

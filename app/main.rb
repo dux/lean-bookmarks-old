@@ -41,6 +41,8 @@ def get
     end
   end
   
+  return DomainThumb.render(@path[0]) if @root == :t;
+
   # root
   return resolve_root unless @root
 

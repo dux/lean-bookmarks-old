@@ -30,25 +30,31 @@ before do
 end
 
 get '*' do
-  body get
+  get
 end
 
 post '*' do
-  body post
+  post
 end
 
 after do
-  puts "- #{Page.request.path} rendered in #{((Time.now-@page_render_start)*1000).to_i} ms".yellow
+  puts "- #{Page.request.path} rendered in #{((Time.now-@page_render_start)*1000).to_i} ms".yellow if Page.dev?
 
-  test_body = response.body.kind_of?(Array) && !response.body[1] ? response.body[0] : response.body
+  body Page.body
 
-  if test_body.kind_of?(String)
-    content_type('text/plain') unless test_body[0,1] == '<'
-  elsif test_body.kind_of?(Hash)
-    content_type :json
-    ret = Page.dev? ? JSON.pretty_generate(response.body) : JSON.generate(response.body)
-    ret = "#{params[:callback]}(#{ret})" if params[:callback]
-    body "#{ret}\n"
+  if Page.body
+    body Page.body    
+  else
+    test_body = response.body.kind_of?(Array) && !response.body[1] ? response.body[0] : response.body
+
+    if test_body.kind_of?(String)
+      content_type('text/plain') unless test_body[0,1] == '<'
+    elsif test_body.kind_of?(Hash)
+      content_type :json
+      ret = Page.dev? ? JSON.pretty_generate(response.body) : JSON.generate(response.body)
+      ret = "#{params[:callback]}(#{ret})" if params[:callback]
+      body "#{ret}\n"
+    end
   end
 end
 
