@@ -78,6 +78,6 @@ class DomainThumb
   end
 
   def placeholder_data
-    File.read('./public/thumbs/loading.gif')
+    File.read('./public/loading.gif')
   end
 end
