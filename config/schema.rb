@@ -33,7 +33,7 @@ AutoMigrate.migrate do
     t.string   "domain",     null: false
     t.string   "tags",       array: true
     t.string   "kind"
-    t.string   "description"
+    t.text     "description"
     t.boolean  "active",     default: true
     t.boolean  "is_article", default: false
     t.integer  "bucket_id",  null: false
