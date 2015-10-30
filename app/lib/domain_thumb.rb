@@ -10,7 +10,7 @@ class DomainThumb
     # basic headers
     Page.sinatra.response.headers['Connection'] = 'keep-alive'
 
-    dt = DomainThumb.new crypted_domain
+    dt = DomainThumb.new crypted_domain.split('.').first
 
     return Page.status(304) if Page.sinatra.request.env['HTTP_IF_NONE_MATCH'] == "W/#{crypted_domain}"
 
