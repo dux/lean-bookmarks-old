@@ -31,10 +31,14 @@ class Link < MasterModel
     # url = domain.split('.').count > 2 ? domain : "www.#{domain}"
     if domain == 'youtube.com'
       "http://img.youtube.com/vi/#{Url.new(url).qs(:v)}/0.jpg"
-    elsif domain.index('imgur.com') && url =~/\.(jpg|gif|png)/
-      u = url.split('.')
-      u[2] += 'm'
-      u.join('.')
+    elsif domain.index('imgur.com')
+      if url =~/\.(jpg|gif|png)/
+        u = url.split('.')
+        u[2] += 'm'
+        u.join('.')
+      else
+        %[http://i.imgur.com/#{url.split('/').last}m.jpg]
+      end
     else
       %[http://free.pagepeeker.com/v2/thumbs.php?size=l&url=#{domain}]
       "/t/#{Crypt.encrypt(domain)}.png"
