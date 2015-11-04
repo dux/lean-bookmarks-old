@@ -1,6 +1,4 @@
 //= req css_base/index.scss
-//= req css_app/*
-//= req ../components/toastr/toastr.min.css
 
 body { background-color: #f7f7f7; }
 html { overflow-y:scroll; }
@@ -137,3 +135,6 @@ ul.articles {
   a { display: none; color:#aaa; }
   &:hover a { display: inline-block; }
 }
+
+//= req css_app/*
+//= req ../components/toastr/toastr.min.css

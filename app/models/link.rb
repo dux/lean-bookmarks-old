@@ -31,6 +31,10 @@ class Link < MasterModel
     # url = domain.split('.').count > 2 ? domain : "www.#{domain}"
     if domain == 'youtube.com'
       "http://img.youtube.com/vi/#{Url.new(url).qs(:v)}/0.jpg"
+    elsif domain.index('imgur.com') && url =~/\.(jpg|gif)/
+      u = url.split('.')
+      u[2] += 'm'
+      u.join('.')
     else
       %[http://free.pagepeeker.com/v2/thumbs.php?size=l&url=#{domain}]
       "/t/#{Crypt.encrypt(domain)}.png"
@@ -81,6 +85,12 @@ class Link < MasterModel
     kind = 'img' if url =~ /\.(jpg|jpeg|gif|png)$/i
     kind = 'doc' if url.index('hackpad.com/') || url.index('https://docs.google.com') || url.index('https://office.live.com/')
     update(:kind=>kind) if kind != self[:kind]
+  end
+
+  def data
+    ret = att_prepare '*', :url, :domain, :ico, :tags, :description, :bucket, :thumbnail
+    ret[:ago] = Time.ago(created_at)
+    ret
   end
 
 end

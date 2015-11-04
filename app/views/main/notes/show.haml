@@ -6,10 +6,10 @@
     .state1{ :style=>"height:50px;" }
     .state2{ :style=>"clear:both; margin-top:30px; margin-bottom:20px; min-height:50px;" }= render 'main/_tags', :object=>@note
    
-    .bucket.note{ :style=>"width:100%; height:auto; min-height:700px; padding:30px;" }
+    .bucket.note.note-big{ :style=>"width:100%; height:auto; min-height:700px; padding:30px;" }
       %button.btn.btn-sm{ :style=>"float:right;", :onclick=>"State.toggle();" } Edit note
       .state1
-        %h3= @note.name
+        %h1= @note.name
 
         %br
 

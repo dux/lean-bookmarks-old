@@ -66,4 +66,13 @@ module MasterHelper
     %[<p class="tags">#{ret}</p>].html_safe
   end
 
+  def template(render_template, list)
+    data = list.map{ |el| el.respond_to?(:data) ? el.data : el.attributes }
+    %[<div id="#{render_template}"></div><script>
+      if (! window.DATA) { window.DATA = {}; }
+      window.DATA['#{render_template}'] = #{data.to_json};
+      Template.render('#{render_template}');
+    </script>]
+  end
+
 end
