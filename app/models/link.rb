@@ -8,7 +8,7 @@ class Link < MasterModel
 
   array_on :tags
 
-  default_scope -> { order('links.updated_at desc').where(active:true) }
+  default_scope -> { order('links.created_at desc').where(active:true) }
 
   scope :is_article, -> { where('is_article=?', true) }
   scope :not_article, -> { where('coalesce(is_article, false)=?', false) }
