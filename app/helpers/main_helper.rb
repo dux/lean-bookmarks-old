@@ -45,6 +45,15 @@ module MainHelper
     opts.tag(:li, %[<a href="#{path}">#{name}</a>])
   end
 
+  def link_thumb(link, opts={})
+    if link[:thumbnail]
+      opts[:onerror] = "this.src='#{link.thumbnail(true)}'"
+      image_tag link[:thumbnail], opts
+    else
+      image_tag link.thumbnail, opts
+    end
+  end
+
   # def export(data)
   #   ret = []
   #   # id = Page.uid
@@ -52,9 +61,9 @@ module MainHelper
   #   # ret.push %[<script>if (window.data === undefined) { window.data = {}; }
   #   #    window.data.#{name} = JSON.parse(document.getElementById('#{id}').innerHTML);
   #   #  </script>]
-    
+
   #   for el in data
-  #     ret.push %[<div class="w view-#{el.class.name.tableize.singularize}" style="display:none;">#{el.to_json.gsub(/\s+/,' ')}</div>] 
+  #     ret.push %[<div class="w view-#{el.class.name.tableize.singularize}" style="display:none;">#{el.to_json.gsub(/\s+/,' ')}</div>]
   #   end
 
   #   ret.join("\n")

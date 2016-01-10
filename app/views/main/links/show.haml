@@ -17,7 +17,7 @@
 
 .row
   .col-1
-    %a{ :href=>@link.url }= image_tag @link.thumbnail, :style=>"max-width:100%; border:1px solid #ccc;"
+    %a{ :href=>@link.url }= link_thumb @link, :style=>"max-width:100%; border:1px solid #ccc;"
 
   .col-1
     = render 'main/_tags', :object=>@link

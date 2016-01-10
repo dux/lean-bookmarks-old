@@ -30,9 +30,9 @@ class Link < MasterModel
     self[:domain] = self[:url].split('//')[1].split('/')[0].sub(/^www\./,'').downcase.sub(/[^\w_\-\.]/,'')
   end
 
-  def thumbnail
+  def thumbnail(skip=false)
     return url if url =~ /\.jpg/i;
-    return self[:thumbnail] if self[:thumbnail]
+    return self[:thumbnail] if !skip && self[:thumbnail]
     # url = domain.split('.').count > 2 ? domain : "www.#{domain}"
     if domain == 'youtube.com'
       "http://img.youtube.com/vi/#{Url.new(url).qs(:v)}/0.jpg"
