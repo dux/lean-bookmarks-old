@@ -16,7 +16,7 @@ class LuxApi
   #     @user.slice(:id, :name, :avatar, :email)
   #   end
   # end
-  
+
   def self.action(proc_name)
     proc = yield
     @@actions[proc_name] = @@opts.dup
@@ -86,7 +86,7 @@ class LuxApi
     opts = Page.params
 
     return run(path[0], path[1], opts) unless path[2]
-    
+
     # set path vaiable to id
     opts[:_id] = path[1]
 
@@ -121,7 +121,7 @@ class LuxApi
 
     # load default object
     if @@params[:_id]
-      eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:_id].to_i)" 
+      eval "@object = @#{@@class_name.underscore} = #{@@class_name}.unscoped.find(@@params[:_id].to_i)"
       @response[:path] = @object.path
     end
 
@@ -132,13 +132,13 @@ class LuxApi
         eval "@_#{key} = value" if value.present?
         for type in values
           case type
-            when :req          
+            when :req
               @error = "[#{key}] is required" unless value
             when :email
               begin
-                Validate.email value                
+                Validate.email value
               rescue
-                @error ||= "[#{key}] #{$!.message}"     
+                @error ||= "[#{key}] #{$!.message}"
               end
           end
         end
@@ -166,11 +166,11 @@ class LuxApi
     if res
       res = instance_eval(&res) if res.kind_of?(Proc)
       res = res.all.map{ |el| el.attributes } if res.class.name == 'ActiveRecord::Relation'
-  
+
       # object given
       if res.respond_to?(:attributes)
         @response[:path] = res.path if res.respond_to?(:path)
-        res = res.attributes.reject{ |f| ['updated_by', 'updated_at', 'created_by', 'created_at'].index(f) } 
+        res = res.attributes.reject{ |f| ['updated_by', 'updated_at', 'created_by', 'created_at'].index(f) }
       end
 
       @response[:data] = res
@@ -187,7 +187,7 @@ class LuxApi
         Page.flash :error, @error
       elsif @response[:message]
         Page.flash :info, @response[:message]
-      end 
+      end
 
       Page.redirect(@@params[:_redirect])
     end

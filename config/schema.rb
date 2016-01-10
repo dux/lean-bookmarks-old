@@ -30,6 +30,8 @@ AutoMigrate.migrate do
   table :links do |t|
     t.string   "name",       null: false
     t.string   "url",        null: false
+    t.string   "thumbnail"
+    t.string   "my_description"
     t.string   "domain",     null: false
     t.string   "tags",       array: true
     t.string   "kind"

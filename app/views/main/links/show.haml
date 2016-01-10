@@ -1,7 +1,7 @@
 = render :_menu
 
 .nudge
-  
+
   %h3= @link.name
 
   %p
@@ -10,7 +10,7 @@
     = image_tag @link.ico, :style=>'width:16px; height:16px; margin-top:5px; position:relative; top:4px;'
 
     %a{ :href=>"/domain/#{@link.domain}" }= @link.domain
-  
+
   %hr
 
 %br
@@ -23,6 +23,10 @@
     = render 'main/_tags', :object=>@link
 
     #link_desc
+      - if @link.my_description?
+        %hr
+        %p.desc{ :style=>"margin-top:10px; color:#080; font-weight:bold;" }= @link.my_description
+
       - if @link.description?
         %hr
         .w.markdown= @link.description
@@ -30,6 +34,9 @@
     %hr
 
     %button#link_button.btn.btn-primary{ :onclick=>"$(this).hide(); $('#link_desc').hide(); $('#link_edit').show();" } Edit link details
+    or
+    %button#refresh_button.btn.btn-primary{ :onclick=>"Api.send('links/#{@link.id}/refresh', { done:'refresh' })" } refresh
+
     #link_edit.hidden
       - if @link.active
         %button.btn.btn-error.btn-sm.fr{ :onclick=>"delete_object('links', #{@link.id})" } Delete
@@ -40,7 +47,10 @@
         = input :name
         = input :url
         = input :is_article
-        = input :description, :as=>:memo, :style=>"height:200px;"
+        = input :my_description, :as=>:memo, :style=>"height:100px;"
+        = input :description, :as=>:memo, :style=>"height:150px;"
         = submit 'Save' do
           or <a onclick="$('#link_desc').show(); $('#link_edit').hide(); $('#link_button').show();">cancel</a>
-    
+
+
+

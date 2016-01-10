@@ -17,6 +17,10 @@ class Link < MasterModel
     errors.add(:url, 'URL is not link') if self[:url].present? && self[:url] !~ /^https?:\/\//
   end
 
+  before_create do
+    fill_missing_data
+  end
+
   def self.can(what=:read)
     where(:created_by=>User.current.id)
   end
@@ -28,6 +32,7 @@ class Link < MasterModel
 
   def thumbnail
     return url if url =~ /\.jpg/i;
+    return self[:thumbnail] if self[:thumbnail]
     # url = domain.split('.').count > 2 ? domain : "www.#{domain}"
     if domain == 'youtube.com'
       "http://img.youtube.com/vi/#{Url.new(url).qs(:v)}/0.jpg"
@@ -61,17 +66,16 @@ class Link < MasterModel
     data
   end
 
-  def fetch_name
-    begin
-      data = RestClient.get self[:url]
-      doc = Nokogiri::HTML(data)
+  def fill_missing_data
+    data = RestClient.get self[:url]
+    @doc = Nokogiri::HTML(data)
+    self[:name]        ||= @doc.xpath("//title").first.text.gsub(/^\s+|\s+$/,'')
+    self[:description] = @doc.xpath("//meta[@name='description']").first[:content] rescue nil
+    self[:thumbnail]   = @doc.xpath("//meta[@property='og:image']").first[:content] rescue nil
+    self[:thumbnail]   = (@doc.xpath("//link[@rel='image_src']").first[:href] rescue nil) if self[:thumbnail].empty?
 
-      self[:name] = doc.xpath("//title").first.text.gsub(/^\s+|\s+$/,'')
-      self[:description] = doc.xpath("//meta[@name='description']").first[:content]
-    rescue
-      self[:name] = domain
-    end
-    self[:name]
+    canonical = @doc.xpath("//link[@rel='canonical']").first[:href] rescue nil
+    self[:url] = canonical if canonical.present?
   end
 
   def article?
