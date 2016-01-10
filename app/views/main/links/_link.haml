@@ -1,7 +1,7 @@
 .bucket.link{ :href=>@link.path }
   - unless @bucket
     %a.label.label-info.bucket-label{ :href=>@link.bucket.path }= @link.bucket.name
-  .img= image_tag @link.thumbnail, :draggable=>"true", :ondragstart=>"App.link_drag(event, #{@link.id})"
+  .img= link_thumb @link, :draggable=>"true", :ondragstart=>"App.link_drag(event, #{@link.id})"
   .tags
     - for tag in @link.tags
       %a.label.label-info{ :href=>"/links:#{tag}" }= tag

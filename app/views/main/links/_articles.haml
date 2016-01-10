@@ -7,7 +7,7 @@
         %td
           %a{ :href=>"/domain/#{el.domain}" }= image_tag el.ico, :style=>'width:16px; height:16px;  '
         %td
-          %a{ :href=>el.url, :target=>:_new }= image_tag el.thumbnail, :style=>"width:150px; height:112px; border:1px solid #ccc;"
+          %a{ :href=>el.url, :target=>:_new }= link_thumb el, :style=>"width:150px; height:112px; border:1px solid #ccc;"
         %td
           %b= el.as_link
           %br
