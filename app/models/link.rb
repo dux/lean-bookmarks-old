@@ -73,7 +73,7 @@ class Link < MasterModel
     canonical = @doc.xpath("//link[@rel='canonical']").first[:href] rescue nil
     self[:url] = canonical if canonical.present?
   rescue
-    ap $!.message
+    pp $!.message
   end
 
   def article?
