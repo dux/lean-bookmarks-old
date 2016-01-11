@@ -17,10 +17,6 @@ class Link < MasterModel
     errors.add(:url, 'URL is not link') if self[:url].present? && self[:url] !~ /^https?:\/\//
   end
 
-  before_create do
-    fill_missing_data
-  end
-
   def self.can(what=:read)
     where(:created_by=>User.current.id)
   end
@@ -69,13 +65,15 @@ class Link < MasterModel
   def fill_missing_data
     data = RestClient.get self[:url]
     @doc = Nokogiri::HTML(data)
-    self[:name]        ||= @doc.xpath("//title").first.text.gsub(/^\s+|\s+$/,'')
+    self[:name]        ||= @doc.xpath("//title").first.text.gsub(/^\s+|\s+$/,'') rescue nil
     self[:description] = @doc.xpath("//meta[@name='description']").first[:content] rescue nil
     self[:thumbnail]   = @doc.xpath("//meta[@property='og:image']").first[:content] rescue nil
     self[:thumbnail]   = (@doc.xpath("//link[@rel='image_src']").first[:href] rescue nil) if self[:thumbnail].empty?
 
     canonical = @doc.xpath("//link[@rel='canonical']").first[:href] rescue nil
     self[:url] = canonical if canonical.present?
+  rescue
+    ap $!.message
   end
 
   def article?

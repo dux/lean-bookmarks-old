@@ -16,6 +16,7 @@ class LinkApi < AppApi
 
     bm = Link.new(:url=>params[:url], :name=>params[:name], :description=>params[:description], :tags=>params[:tags], :bucket_id=>params[:bucket_id])
     bm.tags = [params[:tag]] if params[:tag]
+    bm.fill_missing_data
     bm.save!
     bm.bucket.touch
     @message = 'Link added'
@@ -41,7 +42,7 @@ class LinkApi < AppApi
 
   def refresh
     @link.fill_missing_data
-    @link.save
+    @link.save!
     @message = 'ok'
     @link.attributes
   end

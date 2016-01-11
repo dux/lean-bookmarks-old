@@ -62,7 +62,7 @@
 
       - unless @exists_in.empty?
         %hr
-        %h5 Exists in      
+        %h5 Exists in
         - for el in @exists_in
           = render el
 
@@ -78,6 +78,7 @@
         = input :is_article, :as=>:checkbox
         = input :url
         = input :tags, :as=>:tag
+        = input :my_description, :as=>:memo, :style=>"height:60px;"
         = input :description, :as=>:memo, :id=>'bm_desc', :style=>"height:95px;"
         = submit @link.id ? 'Update existing' : 'Create link' do
           or <a onclick="$('#step1, #step2').toggle();">select bucket</a> again.
