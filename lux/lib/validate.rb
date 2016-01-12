@@ -5,7 +5,7 @@ class Validate
     raise 'Email is missing @' unless email.include?('@')
     raise 'Email is missing valid domain' unless email =~ /\.\w{2,4}$/
     raise 'Bad email format' unless email =~ /^[\w_\-\.]+\@[\w_\-\.]+$/i
-    false
+    true
   end
 
   def self.email!(email=nil)
@@ -14,8 +14,8 @@ class Validate
   end
 
   def self.url(url)
-    raise 'Not valid URL' unless url =~ URI::regexp
-    false
+    raise 'Not valid URL' unless url =~ /https?:\/\/\w+/
+    true
   end
 
   def self.check_oib(oib) # iso 7064 - module 10,11
@@ -37,3 +37,4 @@ class Validate
   end
 
 end
+

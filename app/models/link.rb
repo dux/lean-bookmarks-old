@@ -14,7 +14,7 @@ class Link < MasterModel
   scope :not_article, -> { where('coalesce(is_article, false)=?', false) }
 
   validate do
-    errors.add(:url, 'URL is not link') if self[:url].present? && self[:url] !~ /^https?:\/\//
+    errors.add(:url, 'URL is not link') if self[:url].present? && !(Validate.url(self[:url]) rescue false)
   end
 
   def self.can(what=:read)
@@ -63,7 +63,7 @@ class Link < MasterModel
   end
 
   def fill_missing_data
-    data = RestClient.get self[:url]
+    data = RestClient.get self[:url], { :user_agent=>'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36' }
     @doc = Nokogiri::HTML(data)
     self[:name]        ||= @doc.xpath("//title").first.text.gsub(/^\s+|\s+$/,'') rescue nil
     self[:description] = @doc.xpath("//meta[@name='description']").first[:content] rescue nil
