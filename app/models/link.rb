@@ -14,7 +14,7 @@ class Link < MasterModel
   scope :not_article, -> { where('coalesce(is_article, false)=?', false) }
 
   validate do
-    errors.add(:url, 'URL is not link') if self[:url].present? && !(Validate.url(self[:url]) rescue false)
+    errors.add(:url, Validate.last_error) unless Validate.test(:url, self[:url])
   end
 
   def self.can(what=:read)
@@ -71,7 +71,7 @@ class Link < MasterModel
     self[:thumbnail]   = (@doc.xpath("//link[@rel='image_src']").first[:href] rescue nil) if self[:thumbnail].empty?
 
     canonical = @doc.xpath("//link[@rel='canonical']").first[:href] rescue nil
-    self[:url] = canonical if canonical.present?
+    self[:url] = canonical if canonical.present? && (Validate.url(self[:url]) rescue false)
   rescue
     pp $!.message
   end

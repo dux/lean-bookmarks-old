@@ -1,6 +1,7 @@
-class Validate
+module Validate
+  extend self
 
-  def self.email(email)
+  def email(email)
     raise 'Email must have 8 characters at least' unless email.to_s.length > 7
     raise 'Email is missing @' unless email.include?('@')
     raise 'Email is missing valid domain' unless email =~ /\.\w{2,4}$/
@@ -8,17 +9,17 @@ class Validate
     true
   end
 
-  def self.email!(email=nil)
+  def email!(email=nil)
     raise 'No email defined' unless email
     email(email)
   end
 
-  def self.url(url)
-    raise 'Not valid URL' unless url =~ /https?:\/\/\w+/
+  def url(url)
+    raise "Not valid URL #{url}" unless url =~ /https?:\/\/\w+/
     true
   end
 
-  def self.check_oib(oib) # iso 7064 - module 10,11
+  def check_oib(oib) # iso 7064 - module 10,11
     oib = oib.to_s
     raise "OIB nije definiran" unless oib.to_s.present?
     raise "OIB nije sastavljen od brojeva" if oib =~ /[^\d]/
@@ -36,5 +37,18 @@ class Validate
     raise "OIB nije ispravan"
   end
 
-end
+  def test(method, what)
+    Thread.current[:validate_error] = nil
+    begin
+      send method, what
+    rescue
+      Thread.current[:validate_error] = $!.message
+      false
+    end
+  end
 
+  def last_error
+    Thread.current[:validate_error]
+  end
+
+end

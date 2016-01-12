@@ -31,7 +31,7 @@ class BucketApi < LuxApi
   end
 
   def add_object
-    name = params[:name]    
+    name = params[:name]
 
     raise 'Name to short' unless name.to_s.length > 1
 
@@ -41,7 +41,7 @@ class BucketApi < LuxApi
       l = Link.new
       l.url = name
       l.bucket_id = @bucket.id
-      l.fetch_name
+      l.fill_missing_data
       l.save!
       l.bucket.touch
       return 'Link in bucket added'
