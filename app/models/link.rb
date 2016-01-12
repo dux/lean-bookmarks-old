@@ -71,7 +71,7 @@ class Link < MasterModel
     self[:thumbnail]   = (@doc.xpath("//link[@rel='image_src']").first[:href] rescue nil) if self[:thumbnail].empty?
 
     canonical = @doc.xpath("//link[@rel='canonical']").first[:href] rescue nil
-    self[:url] = canonical if canonical.present? && (Validate.url(self[:url]) rescue false)
+    self[:url] = canonical if canonical.present? && Validate.test(:url, canonical)
   rescue
     pp $!.message
   end
