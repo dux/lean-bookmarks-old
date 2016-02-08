@@ -16,6 +16,11 @@
 %hr
 
 #step1
+  - unless @exists_in.empty?
+    Exists in:
+    = @exists_in.map(&:as_link).to_sentence
+    %hr
+
   %h3 Select bucket for a link
 
   %table
@@ -59,12 +64,6 @@
               - if el.description
                 %br
                 %small= el.description
-
-      - unless @exists_in.empty?
-        %hr
-        %h5 Exists in
-        - for el in @exists_in
-          = render el
 
     .col-4
       %h4 create using form

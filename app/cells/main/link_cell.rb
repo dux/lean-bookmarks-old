@@ -39,7 +39,7 @@ class Main::LinkCell < LuxCell
 
   def add
     params[:title] = params[:title].to_s.fix
-    
+
     unless params[:title].present?
       params[:title] = Url.new(params[:url]).domain
     end
@@ -47,7 +47,6 @@ class Main::LinkCell < LuxCell
     @link = Link.new :url=>params[:url]
     @domain = Domain.get(@link.domain)
     @exists_in = Bucket.where('id in (select bucket_id from links where url=?)', params[:url])
-
   end
 
 end

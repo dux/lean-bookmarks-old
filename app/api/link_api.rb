@@ -14,7 +14,7 @@ class LinkApi < AppApi
       return l
     end
 
-    bm = Link.new(:url=>params[:url], :name=>params[:name], :description=>params[:description], :tags=>params[:tags], :bucket_id=>params[:bucket_id])
+    bm = Link.new(:url=>params[:url], :name=>params[:name], :description=>params[:description], :my_description=>params[:my_description], :tags=>params[:tags], :bucket_id=>params[:bucket_id])
     bm.tags = [params[:tag]] if params[:tag]
     bm.fill_missing_data
     bm.save!
@@ -24,10 +24,10 @@ class LinkApi < AppApi
   end
 
   def get_title
-    bm = Link.new :url=>params[:url], :name=>params[:name]
-    bm.fetch_name unless bm.name?
+    bm = Link.new :url=>params[:url]
+    bm.fill_missing_data
     @message = 'Fetched title'
-    { name:bm.name, description:bm.description }
+    bm.attributes.h.slice(:name, :description, :thumbnail)
   end
 
   def move
